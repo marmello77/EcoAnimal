@@ -1,0 +1,3 @@
+Analysis of Variance Table
+         npar  Sum Sq Mean Sq F value
+fit5.res    1 0.44845 0.44845  0.4485
