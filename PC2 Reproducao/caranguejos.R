@@ -6,9 +6,9 @@
 # Profs. Jose Carlos Motta Jr. & Marco A. R. Mello
 # Prática de Computador II
 # Tema: Reproducao
-# Agradecimentos: Alexandre Palaoro, primeiro autor do artigo, cedou-nos os
-# dados usados nesta prática
 # Artigo de base: http://dx.doi.org/10.1016/j.anbehav.2014.06.014 
+# Agradecimentos: Alexandre Palaoro, primeiro autor do artigo de base, cedou-nos
+# os dados usados nesta prática.
 ################################################################################
 
 
@@ -47,11 +47,11 @@ plot(dados$status2~dados$ap)
 
 # Plote a relação entre o status e o comprimento cefalotorácico, depois exporte
 # o gráfico como um arquivo PNG
-png(filename= "p1.png", res= 300, height= 3000, width= 3000)
+png(filename= "figuras/p1.png", res= 300, height= 2000, width= 3000)
 p1 = ggplot(dados, aes(x=cc, y=status2)) + 
   geom_point(colour = "#1855FA", size=4, alpha = 0.5) + 
   stat_smooth(method="glm", method.args=list(family="binomial"), se=FALSE) +
-  labs(x="Comprimento cefalotoracico", y = "Status") +
+  labs(x="Comprimento cefalotorácico", y = "Status") +
   theme(text = element_text(size=20),
         plot.title = element_text(size=40, hjust=0.5),
         axis.text.x = element_text(size = 20, angle=0, hjust=1),
@@ -67,7 +67,7 @@ fit1 = glm(dados$status2~dados$cc, family=binomial)
 summary(fit1)
 res1 = anova(fit1, test="Chisq")
 res1
-capture.output(res1, file = "resultados-cc.txt")
+capture.output(res1, file = "resultados/resultados-cc.txt")
 
 # Você tambem pode plotar o gráfico usando apenas o pacote base, com base nos
 # resultados do teste que acabou de fazer
@@ -84,7 +84,7 @@ curve (exp(fit1$coefficients[[1]]+fit1$coefficients[[2]]*x)/
 
 # Plote a relação entre o status e a altura do própodo, depois exporte o gráfico
 # como um arquivo PNG
-png(filename= "p2.png", res= 300, height= 3000, width= 3000)
+png(filename= "figuras/p2.png", res= 300, height= 2000, width= 3000)
 p2 = ggplot(dados, aes(x=ap, y=status2)) + 
   geom_point(colour = "#1855FA", size=4, alpha = 0.5) + 
   stat_smooth(method="glm", method.args=list(family="binomial"), se=FALSE) +
@@ -104,7 +104,7 @@ fit2 = glm(dados$status2~dados$ap, family=binomial)
 summary(fit2)
 res2 = anova(fit2, test="Chisq")
 res2
-capture.output(res2, file = "resultados-ap.txt")
+capture.output(res2, file = "resultados/resultados-ap.txt")
 
 # Você tambem pode plotar o gráfico usando apenas o pacote base, com base nos
 # resultados do teste que acabou de fazer
@@ -125,7 +125,7 @@ fit3 = glm(dados$status2~dados$ap+dados$cc, family=binomial)
 summary(fit3)
 res3 = anova(fit3, test="Chisq")
 res3
-capture.output(res3, file = "resultados-ap-cc.txt")
+capture.output(res3, file = "resultados/resultados-ap-cc.txt")
 
 
 ############################## TESTE 4 #########################################
@@ -138,7 +138,7 @@ fit4 = glmer(status2 ~ ap + cc + (1|dupla), family=binomial, data=dados)
 summary(fit4)
 res4 = anova(fit4, test="Chisq")
 res4
-capture.output(res4, file = "resultados-ap-cc-dupla.txt")
+capture.output(res4, file = "resultados/resultados-ap-cc-dupla.txt")
 isSingular(fit4, tol = 1e-05)
 
 
@@ -152,7 +152,7 @@ summary(fit5)
 fit5.res = resid(fit5)
 
 #Plote a relação entre os fatores, depois exporte o gráfico como um arquivo PNG
-png(filename= "p5.png", res= 300, height= 3000, width= 3000)
+png(filename= "figuras/p5.png", res= 300, height= 3000, width= 3000)
 p5 = ggplot(dados, aes(x=cc, y=ap), CI = F) +
   geom_smooth(method=lm, colour = "#1855FA") +
   geom_point(colour = "#1855FA", size=4, alpha = 0.5) +
@@ -172,7 +172,7 @@ dev.off()
 # Plote a relaçãoo entre status e os resíduos da relacao entre comprimento
 # cefalotorácico e altura do própodo, depois exporte o gráfico como um
 # arquivo PNG
-p6 = png(filename= "p6.png", res= 300, height= 3000, width= 3000)
+p6 = png(filename= "figuras/p6.png", res= 300, height= 2000, width= 3000)
 ggplot(dados, aes(x=fit5.res, y=status2)) + 
   geom_point(colour = "#1855FA", size=4, alpha = 0.5) + 
   stat_smooth(method="glm", method.args=list(family="binomial"), se=FALSE) +
@@ -192,5 +192,34 @@ fit6 = glmer(status2 ~ fit5.res + (1|dupla), family=binomial, data=dados)
 summary(fit6)
 res6 = anova(fit6, test="Chisq")
 res6
-capture.output(res6, file = "resultados-res-dupla.txt")
+capture.output(res6, file = "resultados/resultados-res-dupla.txt")
 isSingular(fit6, tol = 1e-05)
+
+
+########################### Para saber mais ####################################
+
+# Bolker, B. M., Brooks, M. E., Clark, C. J., Geange, S. W., Poulsen, J. R.,
+# Stevens, M. H. H., & White, J.-S. S. (2009). Generalized linear mixed models:
+# a practical guide for ecology and evolution. Trends in Ecology & Evolution,
+# 24(3), 127–135. https://doi.org/10.1016/j.tree.2008.10.008
+
+# Dobson, A. J., & Barnett, A. J. (2008). An introduction to generalized
+# linear models (3rd ed.). CRC Press.
+
+# Ellison, A. M., Gotelli, N. J., Inouye, B. D., & Strong, D. R. (2014). 
+# P values, hypothesis testing, and model selection: it’s déjà vu all over
+# again. Ecology, 95(3), 609–610. https://doi.org/10.1890/13-1911.1
+
+# Zuur, A. F., Ieno, E. N., Walker, N., Saveliev, A. A., & Smith, G. M.
+# (2009). Mixed effects models and extensions in ecology with R (1st ed.). 
+# Springer New York. https://doi.org/10.1007/978-0-387-87458-6
+
+# Zuur, A. F., Ieno, E. N., & Elphick, C. S. (2010). A protocol for data
+# exploration to avoid common statistical problems. Methods in Ecology and
+# Evolution, 1(1), 3–14. https://doi.org/10.1111/j.2041-210X.2009.00001.x
+
+# Regressão logística na Wikipedia:
+#https://pt.wikipedia.org/wiki/Regressão_logística
+
+# GLM na Wikipedia:
+# https://en.wikipedia.org/wiki/Generalized_linear_model 

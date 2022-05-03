@@ -76,7 +76,7 @@ p1 #essa nuvem em torno da reta de tendência é o intervalo de confiança
 
 # Quer exportar o gráfico como uma imagem de alta resolução usando comandos,
 # ao invés da janelinha de export? Experimente esta solução:
-png(filename= "p1.png", res= 300, height= 3000, width= 3500)
+png(filename= "figuras/p1.png", res= 300, height= 3000, width= 3500)
 p1
 dev.off()
 
@@ -93,12 +93,16 @@ resultados1
 
 # Quer exportar os resultados como um arquivo de texto? Use esta solução,
 # por exemplo.
-capture.output(resultados1, file = "res1.txt")
+capture.output(resultados1, file = "resultados/res1.txt")
 
 # Outra forma de testar a significância seria através de uma análise de
 # variância (ANOVA). Experimente essa alternativa.
-res1 = anova(fit1, test="Chisq")
-res1 #E ai? Mudou alguma coisa?
+resultados2 = anova(fit1, test="Chisq")
+resultados2 #E ai? Mudou alguma coisa?
+
+# Quer exportar os resultados como um arquivo de texto? Use esta solução,
+# por exemplo.
+capture.output(resultados2, file = "resultados/res2.txt")
 
 # Você pode tambem calcular a odds ratio, que te informa o quanto o Y muda a
 # cada mudança de 1 unidade do X.
@@ -111,14 +115,24 @@ exp(cbind(coef(fit1), confint(fit1)))
 # modelos: um contendo o fator de interesse (fit1, criado alguns passos atrás)
 # e outro sem ele (nulo). Veja como fazê-lo.
 nulo = glm(preytype~1, family=binomial(link="logit")) 
-anova(nulo, fit1, test="Chisq") #E ai? Mudou alguma coisa?
+resultados3 = anova(nulo, fit1, test="Chisq") 
+resultados3 #E ai? Mudou alguma coisa?
+
+# Quer exportar os resultados como um arquivo de texto? Use esta solução,
+# por exemplo.
+capture.output(resultados3, file = "resultados/res3.txt")
 
 # Não faltam formas de se testar a significância de um GLM. Uma terceira
 # alternativa é por seleção de modelos, usando o AICc: critério de informacao
 # de Akaike corrigido. Escolhe-se o modelo que apresenta menor valor de AICc.
 # Considera-se a diferença (delta) entre dois modelos significativa, apenas se
 # AICc1 - AICc2 > 2.
-AICctab(fit1,nulo)
+resultados4 = AICctab(fit1,nulo)
+resultados4
+
+# Quer exportar os resultados como um arquivo de texto? Use esta solução,
+# por exemplo.
+capture.output(resultados4, file = "resultados/res4.txt")
 
 # Caso você decida que mais de um fator importa neste caso, pode fazer um modelo
 # multifatorial, como neste exemplo. Esses modelos podem incluir a interação
@@ -126,12 +140,36 @@ AICctab(fit1,nulo)
 fit2 = glm(preytype~moosedensity+timesincekill, family=binomial(link="logit"))
 
 # Confira o resultado.
-summary(fit2)
+resultados5 = summary(fit2)
+resultados5
+
+# Quer exportar os resultados como um arquivo de texto? Use esta solução,
+# por exemplo.
+capture.output(resultados5, file = "resultados/res5.txt")
 
 
-################################################################################
+########################### Para saber mais ####################################
 
-#Sugestões de leitura:
+
+# Bolker, B. M., Brooks, M. E., Clark, C. J., Geange, S. W., Poulsen, J. R.,
+# Stevens, M. H. H., & White, J.-S. S. (2009). Generalized linear mixed models:
+# a practical guide for ecology and evolution. Trends in Ecology & Evolution,
+# 24(3), 127–135. https://doi.org/10.1016/j.tree.2008.10.008
+
+# Dobson, A. J., & Barnett, A. J. (2008). An introduction to generalized
+# linear models (3rd ed.). CRC Press.
+
+# Ellison, A. M., Gotelli, N. J., Inouye, B. D., & Strong, D. R. (2014). 
+# P values, hypothesis testing, and model selection: it’s déjà vu all over
+# again. Ecology, 95(3), 609–610. https://doi.org/10.1890/13-1911.1
+
+# Zuur, A. F., Ieno, E. N., Walker, N., Saveliev, A. A., & Smith, G. M.
+# (2009). Mixed effects models and extensions in ecology with R (1st ed.). 
+# Springer New York. https://doi.org/10.1007/978-0-387-87458-6
+
+# Zuur, A. F., Ieno, E. N., & Elphick, C. S. (2010). A protocol for data
+# exploration to avoid common statistical problems. Methods in Ecology and
+# Evolution, 1(1), 3–14. https://doi.org/10.1111/j.2041-210X.2009.00001.x
 
 # Regressão logística na Wikipedia:
 #https://pt.wikipedia.org/wiki/Regressão_logística

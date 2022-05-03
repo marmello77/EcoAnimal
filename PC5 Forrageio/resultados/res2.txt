@@ -1,0 +1,14 @@
+Analysis of Deviance Table
+
+Model: binomial, link: logit
+
+Response: preytype
+
+Terms added sequentially (first to last)
+
+
+             Df Deviance Resid. Df Resid. Dev Pr(>Chi)  
+NULL                           364     432.48           
+moosedensity  1   5.4235       363     427.05  0.01987 *
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1

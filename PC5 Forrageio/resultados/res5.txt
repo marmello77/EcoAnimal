@@ -1,0 +1,25 @@
+
+Call:
+glm(formula = preytype ~ moosedensity + timesincekill, family = binomial(link = "logit"))
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.0372  -1.4597   0.7733   0.8467   0.9506  
+
+Coefficients:
+              Estimate Std. Error z value Pr(>|z|)  
+(Intercept)    0.56016    0.23143   2.420   0.0155 *
+moosedensity   0.14958    0.08295   1.803   0.0713 .
+timesincekill  0.04052    0.04632   0.875   0.3817  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 406.03  on 341  degrees of freedom
+Residual deviance: 401.86  on 339  degrees of freedom
+  (23 observations deleted due to missingness)
+AIC: 407.86
+
+Number of Fisher Scoring iterations: 4
+
