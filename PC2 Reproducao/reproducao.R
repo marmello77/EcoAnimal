@@ -2,41 +2,29 @@
 # Universidade de São Paulo
 # Instituto de Biociências
 # Departamento de Ecologia
-# Topicos Avancados em Ecologia de Animais (BIE0315)
-# Profs. Jose Carlos Motta Jr. & Marco A. R. Mello
-# Prática de Computador II
-# Tema: Reproducao
-# Artigo de base: http://dx.doi.org/10.1016/j.anbehav.2014.06.014 
-# Agradecimentos: Alexandre Palaoro, primeiro autor do artigo de base, cedou-nos
-# os dados usados nesta prática.
+# Topicos Avançados em Ecologia de Animais (BIE0315)
+# Profs. José Carlos Motta Jr. & Marco A. R. Mello
+# Prática de Computador II: Reprodução
+# README: https://github.com/marmello77/EcoAnimal#readme
 ################################################################################
 
-
-# Defina o diretório de trabalho como sendo a origem deste script
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
-# Remova todos os objetos prévios
 rm(list= ls())
 
-# Limpe o console
 cat("\014")  
 
-# Carregue os pacotes necessarios
 library(ggplot2)
 library(lme4)
 
-# Importe os dados e inspecione-os
 dados<- read.delim("dados.txt", header=T)
 dim(dados)
 head(dados)
 tail(dados)
 
-# Transforme a variável "status" em numérica e binária, salvando-a como uma nova
-# variável
 dados$status2 <- ifelse(dados$status == "perdedor", 0, 1)
 head(dados)
 
-# Examine de forma rápida as relações es entre as variáveis
 plot(dados$cc~dados$ap)
 plot(dados$status2~dados$cc)
 plot(dados$status2~dados$ap)
@@ -45,8 +33,6 @@ plot(dados$status2~dados$ap)
 ############################## TESTE 1 #########################################
 
 
-# Plote a relação entre o status e o comprimento cefalotorácico, depois exporte
-# o gráfico como um arquivo PNG
 png(filename= "figuras/p1.png", res= 300, height= 2000, width= 3000)
 p1 = ggplot(dados, aes(x=cc, y=status2)) + 
   geom_point(colour = "#1855FA", size=4, alpha = 0.5) + 
@@ -61,16 +47,12 @@ p1 = ggplot(dados, aes(x=cc, y=status2)) +
 p1
 dev.off()
 
-# Teste se a relação é significativa e examine os valores estatísticos, depois
-# exporte os resultados como um arquivo TXT
 fit1 = glm(dados$status2~dados$cc, family=binomial)
 summary(fit1)
 res1 = anova(fit1, test="Chisq")
 res1
 capture.output(res1, file = "resultados/resultados-cc.txt")
 
-# Você tambem pode plotar o gráfico usando apenas o pacote base, com base nos
-# resultados do teste que acabou de fazer
 plot(dados$status2~dados$cc,
      xlab = "Comprimento do corpo",
      ylab = "Status")
@@ -82,8 +64,6 @@ curve (exp(fit1$coefficients[[1]]+fit1$coefficients[[2]]*x)/
 ############################## TESTE 2 #########################################
 
 
-# Plote a relação entre o status e a altura do própodo, depois exporte o gráfico
-# como um arquivo PNG
 png(filename= "figuras/p2.png", res= 300, height= 2000, width= 3000)
 p2 = ggplot(dados, aes(x=ap, y=status2)) + 
   geom_point(colour = "#1855FA", size=4, alpha = 0.5) + 
@@ -98,16 +78,12 @@ p2 = ggplot(dados, aes(x=ap, y=status2)) +
 p2
 dev.off()
 
-# Teste se a relaçãoo é  significativa e examine os valores estatísstivos, 
-# depois exporte os resultados como um arquivo TXT
 fit2 = glm(dados$status2~dados$ap, family=binomial)
 summary(fit2)
 res2 = anova(fit2, test="Chisq")
 res2
 capture.output(res2, file = "resultados/resultados-ap.txt")
 
-# Você tambem pode plotar o gráfico usando apenas o pacote base, com base nos
-# resultados do teste que acabou de fazer
 plot(dados$status2~dados$ap,
      xlab = "Comprimento do corpo",
      ylab = "Status")
@@ -119,8 +95,6 @@ curve (exp(fit2$coefficients[[1]]+fit2$coefficients[[2]]*x)/
 ############################## TESTE 3 #########################################
 
 
-# Teste como tanto o comprimento cefalotorácico quanto a altura do própodo
-# determinam o status, depois exporte os resultados como um arquivo TXT
 fit3 = glm(dados$status2~dados$ap+dados$cc, family=binomial)
 summary(fit3)
 res3 = anova(fit3, test="Chisq")
@@ -131,9 +105,6 @@ capture.output(res3, file = "resultados/resultados-ap-cc.txt")
 ############################## TESTE 4 #########################################
 
 
-#Teste como tanto o comprimento cefalotorácico quanto a altura do própodo 
-# determinam o status, mas considerando a identidade da dupla como um fator
-# aleatório, depois exporte os resultados como um arquivo TXT
 fit4 = glmer(status2 ~ ap + cc + (1|dupla), family=binomial, data=dados)
 summary(fit4)
 res4 = anova(fit4, test="Chisq")
@@ -145,13 +116,10 @@ isSingular(fit4, tol = 1e-05)
 ############################## TESTE 5 #########################################
 
 
-#Teste a relação entre os fatores usados nas análises anteriores, salvando os
-# resíduos dessa relação para fazer uma nova análise
 fit5 = lm(cc ~ ap, data=dados) 
 summary(fit5)
 fit5.res = resid(fit5)
 
-#Plote a relação entre os fatores, depois exporte o gráfico como um arquivo PNG
 png(filename= "figuras/p5.png", res= 300, height= 3000, width= 3000)
 p5 = ggplot(dados, aes(x=cc, y=ap), CI = F) +
   geom_smooth(method=lm, colour = "#1855FA") +
@@ -169,9 +137,6 @@ p5 = ggplot(dados, aes(x=cc, y=ap), CI = F) +
 p5
 dev.off()
 
-# Plote a relaçãoo entre status e os resíduos da relacao entre comprimento
-# cefalotorácico e altura do própodo, depois exporte o gráfico como um
-# arquivo PNG
 p6 = png(filename= "figuras/p6.png", res= 300, height= 2000, width= 3000)
 ggplot(dados, aes(x=fit5.res, y=status2)) + 
   geom_point(colour = "#1855FA", size=4, alpha = 0.5) + 
@@ -186,40 +151,9 @@ ggplot(dados, aes(x=fit5.res, y=status2)) +
 p6
 dev.off()
 
-# Teste se a relação é significativa e examine os valores estatísticos, depois
-# exporte os resultados como um arquivo TXT
 fit6 = glmer(status2 ~ fit5.res + (1|dupla), family=binomial, data=dados)
 summary(fit6)
 res6 = anova(fit6, test="Chisq")
 res6
 capture.output(res6, file = "resultados/resultados-res-dupla.txt")
 isSingular(fit6, tol = 1e-05)
-
-
-########################### Para saber mais ####################################
-
-# Bolker, B. M., Brooks, M. E., Clark, C. J., Geange, S. W., Poulsen, J. R.,
-# Stevens, M. H. H., & White, J.-S. S. (2009). Generalized linear mixed models:
-# a practical guide for ecology and evolution. Trends in Ecology & Evolution,
-# 24(3), 127–135. https://doi.org/10.1016/j.tree.2008.10.008
-
-# Dobson, A. J., & Barnett, A. J. (2008). An introduction to generalized
-# linear models (3rd ed.). CRC Press.
-
-# Ellison, A. M., Gotelli, N. J., Inouye, B. D., & Strong, D. R. (2014). 
-# P values, hypothesis testing, and model selection: it’s déjà vu all over
-# again. Ecology, 95(3), 609–610. https://doi.org/10.1890/13-1911.1
-
-# Zuur, A. F., Ieno, E. N., Walker, N., Saveliev, A. A., & Smith, G. M.
-# (2009). Mixed effects models and extensions in ecology with R (1st ed.). 
-# Springer New York. https://doi.org/10.1007/978-0-387-87458-6
-
-# Zuur, A. F., Ieno, E. N., & Elphick, C. S. (2010). A protocol for data
-# exploration to avoid common statistical problems. Methods in Ecology and
-# Evolution, 1(1), 3–14. https://doi.org/10.1111/j.2041-210X.2009.00001.x
-
-# Regressão logística na Wikipedia:
-#https://pt.wikipedia.org/wiki/Regressão_logística
-
-# GLM na Wikipedia:
-# https://en.wikipedia.org/wiki/Generalized_linear_model 

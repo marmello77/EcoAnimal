@@ -10,7 +10,7 @@ E-mail: [marmello\@usp.br](mailto:marmello@usp.br){.email}.
 
 Publicado originalmente em 02/05/2022 e atualizado constantemente.
 
-Feito em R version 4.1.2 (2021-11-01) -- "Bird Hippie"
+Feito em  version 4.1.3 (2022-03-10) -- "One Push-Up"
 
 ## Aviso
 
@@ -18,6 +18,12 @@ Você pode usar este software livremente para quaisquer fins por sua conta e ris
 
 [Versão antiga](https://github.com/marmello77/EcoAnimal2019).
 
+## Escopo
+
+Não é necessário usar o material disponiblizado neste repositório para fazer as práticas da disciplina! Se você quiser apenas fazer o básico e garantir a sua nota, foque no conteúdo disponibilizado no moodle.
+
+Este material foi feito para os alunos que desejam ir além do conteúdo básico planejado. Portanto, se você tiver familiriadade com programação, especialmente na linguagem R, e curtir estatística, aqui você descobrirá muitos caminhos interessantes a serem explorados. 
+
 ## Agradecimentos
 
-Agradeço ao Prof. Motta Jr., coordenador da disciplina, e a todos os tutores e monitores, que ao longo dos anos foram me ajudando a melhorar estas práticas e seus respectivos códigos. Um salve especial vai para a comunidade do [StackOverflow](https://stackoverflow.com), onde resolvermos a maioria dos nossos problemas.
+Agradeço ao Prof. Motta Jr., coordenador da disciplina, a todos os tutores e monitores que ao longo dos anos foram me ajudando a melhorar estas práticas e seus respectivos códigos, e aos colegas que me ajudam a tirar dúvidas e desatar nós. Um salve especial vai para a comunidade do [StackOverflow](https://stackoverflow.com), onde resolvo a maioria dos meus dilemas de programação.

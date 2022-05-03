@@ -11,4 +11,4 @@ Terms added sequentially (first to last)
 NULL                        59     83.178           
 dados$cc  1   4.3587        58     78.819  0.03682 *
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1

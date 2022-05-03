@@ -11,7 +11,7 @@ Coefficients:
 (Intercept)   0.63556    0.17731   3.584 0.000338 ***
 moosedensity  0.18032    0.08218   2.194 0.028226 *  
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
