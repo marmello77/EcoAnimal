@@ -8,11 +8,11 @@ Autor: Marco A. R. Mello.
 
 E-mail: [marmello\@usp.br](mailto:marmello@usp.br){.email}.
 
-Publicado originalmente em 02/05/2022 e atualizado constantemente.
+Publicado originalmente em 02/mai/22 e atualizado constantemente.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6514304.svg)](https://doi.org/10.5281/zenodo.6514304)
 
-Feito em  version 4.1.3 (2022-03-10) -- "One Push-Up"
+Feito em R version 4.1.3 (2022-03-10) -- "One Push-Up"
 
 ## Aviso
 
