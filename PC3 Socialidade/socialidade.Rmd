@@ -1,0 +1,42 @@
+---
+title: "Prática de Computador III: Socialidade"
+output: pdf_document
+author: "Marco A. R. Mello"
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::knit_hooks$set(inline = function(x) {
+prettyNum(x, big.mark=",")
+})
+```
+
+Universidade de São Paulo
+
+Instituto de Biociências
+
+Departamento de Ecologia
+
+[Tópicos Avançados em Ecologia de Animais
+(BIE0315)](https://uspdigital.usp.br/jupiterweb/obterDisciplina?sgldis=BIE0315&verdis=4)
+
+Profs. José Carlos Motta Jr. & Marco A. R. Mello
+
+Artigo de base: [Guimarães Jr. et al. (2007, Physical Review E)](https://doi.org/10.1103/PhysRevE.76.042901)
+
+Agradecimentos: O primeiro autor do artigo de base tirou nossas dúvidas sobre os resultados de seu trabalho.
+
+[README](https://github.com/marmello77/EcoAnimal#readme)
+
+
+## Instruções 
+
+Nesta prática, usaremos a solução apresentada no roteiro: fazer as simulações diretamente na plataforma online NetLogo Web. Siga as instruções dadas no roteiro. 
+
+
+## Para saber mais
+
+[O modelo SIR e o achatamento da curva](https://biologiadeprogramas.wordpress.com/2020/03/22/o-modelo-sir-e-o-achatamento-da-curva/)
