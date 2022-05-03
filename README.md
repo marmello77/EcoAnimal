@@ -14,17 +14,18 @@ Publicado originalmente em 02/mai/22 e atualizado constantemente.
 
 Feito em R version 4.1.3 (2022-03-10) -- "One Push-Up"
 
+
 ## Aviso
 
 Você pode usar este software livremente para quaisquer fins por sua conta e risco, seguindo a licença mencionada no repositório. Não assumimos nenhuma responsabilidade pelo uso deste software, não fornecemos nenhuma licença ou título sob qualquer patente, direito autoral ou trabalho de máscara ao produto. Reservamo-nos o direito de fazer alterações no software sem notificação. Também não fazemos nenhuma declaração ou garantia de que este software seja adequado para o uso especificado sem os devidos testes ou modificações. Se este software ajudar você a produzir qualquer trabalho acadêmico (artigo, livro, capítulo, patente, dissertação, tese, monografia, palestra, defesa, aula etc.), por favor, credite os autores e cite a fonte, usando o DOI estável para este repositório.
 
-[Versão antiga](https://github.com/marmello77/EcoAnimal2019).
 
 ## Escopo
 
 Não é necessário usar o material disponiblizado neste repositório para fazer as práticas da disciplina! Se você quiser apenas fazer o básico e garantir a sua nota, foque no conteúdo disponibilizado no moodle.
 
 Este material foi feito para os alunos que desejam ir além do conteúdo básico planejado. Portanto, se você tiver familiriadade com programação, especialmente na linguagem R, e curtir estatística, aqui você descobrirá muitos caminhos interessantes a serem explorados. 
+
 
 ## Agradecimentos
 

@@ -1,0 +1,46 @@
+---
+title: "Prática de Computador I: Método Científico"
+output: pdf_document
+author: "Marco A. R. Mello"
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::knit_hooks$set(inline = function(x) {
+prettyNum(x, big.mark=",")
+})
+```
+
+Universidade de São Paulo
+
+Instituto de Biociências
+
+Departamento de Ecologia
+
+[Tópicos Avançados em Ecologia de Animais
+(BIE0315)](https://uspdigital.usp.br/jupiterweb/obterDisciplina?sgldis=BIE0315&verdis=4)
+
+Profs. José Carlos Motta Jr. & Marco A. R. Mello
+
+Artigo de base: [Muchhala (2006, Nature)](https://doi.org/10.1038/444701a)
+
+Agradecimentos: Renata Muylaert escreveu o post sobre como plotar mapais mentais usando LaTeX.
+
+[README](https://github.com/marmello77/EcoAnimal#readme)
+
+
+## Instruções 
+
+Nesta prática, usaremos a opção mais prática para fazer um mapa mental por programação. Esta solução está baseada na linguagem LaTeX, programada na plataforma Overleaf. Trata-se de uma plataforma online e gratuita. Basta se cadastrar para poder usá-la.
+
+Para experimentar essa solução, leia este [post no blog Sobrevivendo na Ciência](https://marcoarmello.wordpress.com/2022/04/13/como-programar-um-mapa-mental/) e siga as instruções dadas.
+
+
+## Para saber mais
+
+[Mapa mental: organizando suas ideias](https://marcoarmello.wordpress.com/2015/04/15/mapasmentais/)
+
+[Como programar um mapa mental](https://marcoarmello.wordpress.com/2022/04/13/como-programar-um-mapa-mental/)
