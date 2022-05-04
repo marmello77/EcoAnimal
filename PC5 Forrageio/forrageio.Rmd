@@ -105,7 +105,7 @@ Examine quantas presas de cada tipo foram mortas pelos lobos. Ha várias
 formas de produzir esse resultado: você conhece outras além desta?
 
 ```{r}
-counts = table(preytype) # 0  = corças, 1 = alces
+counts = table(tipopresa) # 0  = corças, 1 = alces
 counts
 barplot(counts,
         xlab = "Tipo de presa",
@@ -123,17 +123,17 @@ aos fatores de sua escolha. Dá para alterar várias coisas nos parâmetros
 que geram as camadas de desenho do ggplot.
 
 ```{r}
-p1 = ggplot(dados, aes(x=moosedensity, y=preytype)) + 
+p1 = ggplot(dados, aes(x=alces, y=tipopresa)) + 
   geom_point(colour = "blue", size=4, alpha = 0.3) + 
   stat_smooth(method="glm", method.args=list(family="binomial"),
               se=T, colour = "blue", fill = "blue", alpha = 0.1) +
   labs(x="Densidade de alces por 10 km2", y = "Corças | Alces") +
   theme(text = element_text(size=20),
-        plot.title = element_text(size=40, hjust=0.5),
-        axis.text.x = element_text(size = 20, angle=0, hjust=1),
-        axis.text.y = element_text(size = 20, angle=0, vjust=1),
-        axis.title.x = element_text(size = 30, angle=0),
-        axis.title.y = element_text(size = 30, angle=90))
+        plot.title = element_text(size=30, hjust=0.5),
+        axis.text.x = element_text(size = 10, angle=0, hjust=1),
+        axis.text.y = element_text(size = 10, angle=0, vjust=1),
+        axis.title.x = element_text(size = 20, angle=0),
+        axis.title.y = element_text(size = 20, angle=90))
 ```
 
 Dê uma olhada no gráfico produzido.
@@ -159,7 +159,7 @@ bem parecida com uma regressao logística, que discutimos em outras
 aulas.
 
 ```{r}
-fit1 = glm(preytype~moosedensity, family=binomial(link="logit")) 
+fit1 = glm(tipopresa~alces, family=binomial(link="logit")) 
 ```
 
 Salve o resumo dos resultados como um objeto e depois dê uma olhada. A
@@ -215,7 +215,7 @@ modelos: um contendo o fator de interesse (fit1, criado alguns passos
 atrás) e outro sem ele (nulo). Veja como fazê-lo.
 
 ```{r}
-nulo = glm(preytype~1, family=binomial(link="logit")) 
+nulo = glm(tipopresa~1, family=binomial(link="logit")) 
 resultados3 = anova(nulo, fit1, test="Chisq") 
 resultados3 #E ai? Mudou alguma coisa?
 ```
@@ -254,7 +254,7 @@ interação entre os fatores, mas vamos deixar essa complicação adicional
 para outra hora.
 
 ```{r}
-fit2 = glm(preytype~moosedensity+timesincekill, family=binomial(link="logit"))
+fit2 = glm(tipopresa~alces+tempocacada, family=binomial(link="logit"))
 ```
 
 Confira o resultado.

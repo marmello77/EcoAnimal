@@ -1,7 +1,7 @@
 Analysis of Deviance Table
 
-Model 1: preytype ~ 1
-Model 2: preytype ~ moosedensity
+Model 1: tipopresa ~ 1
+Model 2: tipopresa ~ alces
   Resid. Df Resid. Dev Df Deviance Pr(>Chi)  
 1       364     432.48                       
 2       363     427.05  1   5.4235  0.01987 *

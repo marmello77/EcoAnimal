@@ -25,17 +25,18 @@ dados = read.delim("dados.txt", na.strings = "NA")
 dim(dados)
 head(dados)
 tail(dados)
+colnames(dados)
 
 attach(dados)
 
-counts = table(preytype) # 0  = corças, 1 = alces
+counts = table(tipopresa) # 0  = corças, 1 = alces
 counts
 barplot(counts,
         xlab = "Tipo de presa",
-        names=c("Corças","Alces"),
-        ylab = "Frequencia")
+        names = c("Corças","Alces"),
+        ylab = "Frequência")
 
-p1 = ggplot(dados, aes(x=moosedensity, y=preytype)) + 
+p1 = ggplot(dados, aes(x=alces, y=tipopresa)) + 
   geom_point(colour = "blue", size=4, alpha = 0.3) + 
   stat_smooth(method="glm", method.args=list(family="binomial"),
               se=T, colour = "blue", fill = "blue", alpha = 0.1) +
@@ -53,7 +54,7 @@ png(filename= "figuras/p1.png", res= 300, height= 3000, width= 3500)
 p1
 dev.off()
 
-fit1 = glm(preytype~moosedensity, family=binomial(link="logit")) 
+fit1 = glm(tipopresa~alces, family=binomial(link="logit")) 
 
 resultados1 = summary(fit1)
 resultados1
@@ -61,7 +62,7 @@ resultados1
 capture.output(resultados1, file = "resultados/res1.txt")
 
 resultados2 = anova(fit1, test="Chisq")
-resultados2 #E ai? Mudou alguma coisa?
+resultados2 
 
 capture.output(resultados2, file = "resultados/res2.txt")
 
@@ -69,9 +70,9 @@ exp(coef(fit1))
 
 exp(cbind(coef(fit1), confint(fit1)))  
 
-nulo = glm(preytype~1, family=binomial(link="logit")) 
+nulo = glm(tipopresa~1, family=binomial(link="logit")) 
 resultados3 = anova(nulo, fit1, test="Chisq") 
-resultados3 #E ai? Mudou alguma coisa?
+resultados3
 
 capture.output(resultados3, file = "resultados/res3.txt")
 
@@ -80,7 +81,7 @@ resultados4
 
 capture.output(resultados4, file = "resultados/res4.txt")
 
-fit2 = glm(preytype~moosedensity+timesincekill, family=binomial(link="logit"))
+fit2 = glm(tipopresa~alces+tempocacada, family=binomial(link="logit"))
 
 resultados5 = summary(fit2)
 resultados5

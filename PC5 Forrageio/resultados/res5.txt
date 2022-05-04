@@ -1,16 +1,16 @@
 
 Call:
-glm(formula = preytype ~ moosedensity + timesincekill, family = binomial(link = "logit"))
+glm(formula = tipopresa ~ alces + tempocacada, family = binomial(link = "logit"))
 
 Deviance Residuals: 
     Min       1Q   Median       3Q      Max  
 -2.0372  -1.4597   0.7733   0.8467   0.9506  
 
 Coefficients:
-              Estimate Std. Error z value Pr(>|z|)  
-(Intercept)    0.56016    0.23143   2.420   0.0155 *
-moosedensity   0.14958    0.08295   1.803   0.0713 .
-timesincekill  0.04052    0.04632   0.875   0.3817  
+            Estimate Std. Error z value Pr(>|z|)  
+(Intercept)  0.56016    0.23143   2.420   0.0155 *
+alces        0.14958    0.08295   1.803   0.0713 .
+tempocacada  0.04052    0.04632   0.875   0.3817  
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
