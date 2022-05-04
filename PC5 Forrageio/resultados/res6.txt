@@ -1,23 +1,23 @@
 
 Call:
-glm(formula = tipopresa ~ alces, family = binomial(link = "logit"))
+glm(formula = tipopresa ~ corcas, family = binomial(link = "logit"))
 
 Deviance Residuals: 
     Min       1Q   Median       3Q      Max  
--1.9687  -1.4856   0.7746   0.8603   0.9220  
+-1.6529  -1.3905   0.7675   0.7675   1.2401  
 
 Coefficients:
             Estimate Std. Error z value Pr(>|z|)    
-(Intercept)  0.63556    0.17731   3.584 0.000338 ***
-alces        0.18032    0.08218   2.194 0.028226 *  
+(Intercept)   1.0714     0.1320   8.119 4.69e-16 ***
+corcas       -0.1072     0.0488  -2.197    0.028 *  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
     Null deviance: 432.48  on 364  degrees of freedom
-Residual deviance: 427.05  on 363  degrees of freedom
-AIC: 431.05
+Residual deviance: 427.78  on 363  degrees of freedom
+AIC: 431.78
 
 Number of Fisher Scoring iterations: 4
 
