@@ -10,7 +10,7 @@ E-mail: [marmello\@usp.br](mailto:marmello@usp.br){.email}.
 
 Publicado originalmente em 02/mai/22 e atualizado constantemente.
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6514304.svg)](https://doi.org/10.5281/zenodo.6514304)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6515434.svg)](https://doi.org/10.5281/zenodo.6515434)
 
 Feito em R version 4.1.3 (2022-03-10) -- "One Push-Up"
 
