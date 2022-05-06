@@ -27,6 +27,24 @@ Não é necessário usar o material disponiblizado neste repositório para fazer
 Este material foi feito para os alunos que desejam ir além do conteúdo básico planejado. Portanto, se você tiver familiaridade com programação, especialmente na linguagem R, e curtir estatística, aqui você descobrirá muitos caminhos interessantes a serem explorados. 
 
 
+## Instruções
+
+1. As pastas deste repositório contêm os materiais usados nas respectivas práticas de computador (PC) da disciplina.
+
+2. Para fazer as atividades da prática desejada, primeiro abra a pasta escolhida e familiarize-se com os arquivos contidos nela. 
+
+3. Depois leia o roteiro da prática, em formato PDF, para entender do que ela trata.
+
+4. Quando houver, examine com cuidado os arquivos XLSX, que contém os dados e metadados.
+
+5. Por fim, faça as análises propostas. Se você tiver muita familiaridade com R, pode rodar diretamente o arquivo em formato R com os scripts das análises. Alternativamente, você pode rodar o tutorial em formato Rmd, que oferece uma experiência de análisa guiada.
+
+
+## Feedback
+
+Se você quiser fazer perguntas, sugestões ou correções, por favor, abra um [issue](https://github.com/marmello77/EcoAnimal/issues) ou faça um [pull request](https://github.com/marmello77/EcoAnimal/pulls).
+
+
 ## Agradecimentos
 
 Agradeço ao Prof. Motta Jr., coordenador da disciplina, a todos os tutores e monitores que ao longo dos anos foram me ajudando a melhorar estas práticas e seus respectivos códigos, e aos colegas que me ajudam a tirar dúvidas e desatar nós. Um salve especial vai para a comunidade do [StackOverflow](https://stackoverflow.com), onde resolvo a maioria dos meus dilemas de programação.
