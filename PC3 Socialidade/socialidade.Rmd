@@ -150,7 +150,7 @@ matplot(x = times, y = out, type = "l",
         lwd = 1, lty = 1, bty = "l",
         col = c("blue", "red", "grey"))
 
-legend(80, 0.9, c("Suscetíveis", "Infectados", "Recuperados"),
+legend(70, 0.9, c("Suscetíveis", "Infectados", "Recuperados"),
        pch = 1, 
        col = c("blue", "red", "grey"), 
        bty = "n")
@@ -202,6 +202,10 @@ plot(sm[[1]]$NS~sm[[1]]$times,
      ylab = "Suscetíveis, Infectados e Recuperados")
 lines(sm[[1]]$NI~sm[[1]]$times,col="red")
 lines(sm[[1]]$NR~sm[[1]]$times,col="grey")
+legend(120, 30, c("Suscetíveis", "Infectados", "Recuperados"),
+       pch = 1, 
+       col = c("blue", "red", "grey"), 
+       bty = "n")
 ```
 
 

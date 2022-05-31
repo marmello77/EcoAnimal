@@ -96,11 +96,21 @@ sm <- sir(g,            #a rede que você criou
           gamma = 0.02, #probabilidade de recuperação
           no.sim = 1)   #número de rodadas de simulação
 
-plot(sm[[1]]$NS~sm[[1]]$times,
+
+png(filename= "figuras/p2.png", res= 300, height= 2000, width= 3000)
+
+p2 <- plot(sm[[1]]$NS~sm[[1]]$times,
      col = "blue",
      type = "l",
      xlab = "Tempo",
      ylab = "Suscetíveis, Infectados e Recuperados")
 lines(sm[[1]]$NI~sm[[1]]$times,col="red")
 lines(sm[[1]]$NR~sm[[1]]$times,col="grey")
+legend(100, 30, c("Suscetíveis", "Infectados", "Recuperados"),
+       pch = 1, 
+       col = c("blue", "red", "grey"), 
+       bty = "n")
 
+p2
+
+dev.off()
