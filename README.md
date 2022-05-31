@@ -35,7 +35,7 @@ Este material foi feito para os alunos que desejam ir além do conteúdo básico
 
 3. Depois leia o roteiro da prática, em formato PDF, para entender do que ela trata.
 
-4. Quando houver, examine com cuidado os arquivos XLSX, que contêm os dados e metadados.
+4. Quando houver, examine com cuidado os arquivos XLSX, que contêm a versão completa com dados e metadados. Os arquivos CSV e TXT contêm os dados processados ou simplificados.
 
 5. Por fim, faça as análises propostas. Se você tiver muita familiaridade com R, pode rodar diretamente o arquivo em formato R com os scripts das análises. Alternativamente, você pode rodar o tutorial em formato Rmd, que oferece uma experiência de análisa guiada.
 
