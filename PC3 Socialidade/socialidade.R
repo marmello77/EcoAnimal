@@ -22,7 +22,6 @@ library(rJava)
 ########################## MODELO SIR BÁSICO ###################################
 
 
-# Crie uma função SIR
 sir <- function(time, state, parameters) {
   
   with(as.list(c(state, parameters)), {
@@ -35,26 +34,16 @@ sir <- function(time, state, parameters) {
   })
 }
 
-# Defina os parâmetros
-# Proporção em cada compartimento: Suscetíveis = S, Infectados = I,
-# Recuperados = R
+
 init <- c(S = 0.99, I = 0.01, R = 0.0)
-## beta: taxa de infeção; gamma: taxa de recuperação
 parameters <- c(beta = 1.025, gamma = 0.2)
-## Escala de tempo
 times <- seq(0, 100, by = 1)
 
-# Resolva as equações diferenciais com a função ode (General Solver for
-# Ordinary Differential Equations)
 out <- ode(y = init, times = times, func = sir, parms = parameters)
-## Converta o resultado em data frame
 out <- as.data.frame(out)
-## Delete a variável de tempo
 out$time <- NULL
-## Inspecione o resultado
-head(out, 10)
+head(out)
 
-## Plote as curvas SIR
 png(filename= "figuras/p1.png", res= 300, height= 2000, width= 3000)
 
 p1 <- matplot(x = times, y = out, type = "l",
@@ -79,8 +68,6 @@ dev.off()
 
 rm(list= ls())
 
-# Crie uma rede com estrutura de mundo pequeno (aka "small world" ou
-# Watts-Strogatz)
 g <- sample_smallworld(dim = 1,      #tamanho inicial da rede
                        size = 43,    #tamanho final da rede
                        nei = 12,     #grau médio
@@ -89,7 +76,6 @@ g <- sample_smallworld(dim = 1,      #tamanho inicial da rede
                        multiple = F) #pode haver elos múltiplos ou não?
 
 plot(g)
-
 
 sm <- sir(g,            #a rede que você criou
           beta = 0.02,  #probabilibidade de infecção
