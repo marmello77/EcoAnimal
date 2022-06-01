@@ -24,7 +24,7 @@ Você pode usar este software livremente para quaisquer fins por sua conta e ris
 
 Não é necessário usar o material disponiblizado neste repositório para fazer as práticas da disciplina! Se você quiser apenas fazer o básico e garantir a sua nota, foque no conteúdo disponibilizado no moodle.
 
-Este material foi feito para os alunos que desejam ir além do conteúdo básico planejado. Portanto, se você tiver familiaridade com programação, especialmente na linguagem R, e curtir estatística, aqui você descobrirá muitos caminhos interessantes a serem explorados. 
+Este material foi feito para os alunos que desejam ir além do conteúdo básico. Portanto, se você tiver familiaridade com programação, especialmente na linguagem R, e curtir estatística, aqui você descobrirá muitos caminhos interessantes a serem explorados. 
 
 
 ## Instruções
