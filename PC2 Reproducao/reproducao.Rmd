@@ -56,6 +56,8 @@ de referência, gentilmente nos cedeu os dados usados nesta prática.
 
 Primeiro, leia o tutorial desta prática, disponível aqui em formato PDF e também no moodle da disciplina.
 
+Neste tutorial, apresentamos algumas soluções baseadas em programação para as atividades propostas no roteiro. Aqui você encontrará inclusive sugestões de gráficos eficientes para fazer uma análise visual dos dados.
+
 Defina o diretório de trabalho como sendo a origem deste script.
 
 ```{r}

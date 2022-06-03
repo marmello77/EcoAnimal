@@ -25,10 +25,10 @@ Departamento de Ecologia
 
 Profs. José Carlos Motta Jr. & Marco A. R. Mello
 
-Artigo de base: [Sand et al. (2016, PLoS
+Artigo de referência: [Sand et al. (2016, PLoS
 One)](https://doi.org/10.1371/journal.pone.0168062)
 
-Agradecimentos: O primeiro autor do artigo de base, Prof. Sand, respondeu as nossas mensagens e tirou várias dúvidas sobre os dados. Os tutores Silara Batista e Bruno Ferreto ajudaram a melhor o código para as análises, dando várias contribuições importantes.
+Agradecimentos: O primeiro autor do artigo de referência, Prof. Sand, respondeu as nossas mensagens e tirou várias dúvidas sobre os dados. Os tutores Silara Batista e Bruno Ferreto ajudaram a melhorar o código para as análises, dando várias contribuições importantes.
 
 [README](https://github.com/marmello77/EcoAnimal#readme)
 

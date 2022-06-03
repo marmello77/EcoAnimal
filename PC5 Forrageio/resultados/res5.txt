@@ -12,7 +12,7 @@ Coefficients:
 alces        0.14958    0.08295   1.803   0.0713 .
 tempocacada  0.04052    0.04632   0.875   0.3817  
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 (Dispersion parameter for binomial family taken to be 1)
 

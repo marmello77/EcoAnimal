@@ -68,19 +68,19 @@ dev.off()
 
 rm(list= ls())
 
-g <- sample_smallworld(dim = 1,      #tamanho inicial da rede
-                       size = 43,    #tamanho final da rede
-                       nei = 12,     #grau médio
-                       p = 0.05,     #probabilidade de reconexão
-                       loops = F,    #a rede pode ter loops ou não?
-                       multiple = F) #pode haver elos múltiplos ou não?
+g <- sample_smallworld(dim = 1,      
+                       size = 43,    
+                       nei = 12,     
+                       p = 0.05,     
+                       loops = F,    
+                       multiple = F) 
 
 plot(g)
 
-sm <- sir(g,            #a rede que você criou
-          beta = 0.02,  #probabilibidade de infecção
-          gamma = 0.02, #probabilidade de recuperação
-          no.sim = 1)   #número de rodadas de simulação
+sm <- sir(g,            
+          beta = 0.02,  
+          gamma = 0.02, 
+          no.sim = 1)   
 
 
 png(filename= "figuras/p2.png", res= 300, height= 2000, width= 3000)

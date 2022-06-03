@@ -25,9 +25,9 @@ Departamento de Ecologia
 
 Profs. José Carlos Motta Jr. & Marco A. R. Mello
 
-Artigo de base: [Guimarães Jr. et al. (2007, Physical Review E)](https://doi.org/10.1103/PhysRevE.76.042901)
+Artigo de referência: [Guimarães Jr. et al. (2007, Physical Review E)](https://doi.org/10.1103/PhysRevE.76.042901)
 
-Agradecimentos: O primeiro autor do artigo de base tirou nossas dúvidas sobre os resultados de seu trabalho.
+Agradecimentos: O primeiro autor do artigo de referência, Prof. Paulo Guimarães Jr., tirou nossas dúvidas sobre o seu trabalho.
 
 [README](https://github.com/marmello77/EcoAnimal#readme)
 
@@ -45,10 +45,10 @@ Agradecimentos: O primeiro autor do artigo de base tirou nossas dúvidas sobre o
 
 ## Preparativos{#preparativos}
 
-Leia o tutorial desta prática, disponível aqui em formato PDF e também
+Primeiro, leia o tutorial desta prática, disponível aqui em formato PDF e também
 no moodle da disciplina.
 
-Aqui faremos simulações de modelos SIR usando não o NetLogo, mas pacotes de R.
+Aqui faremos simulações de modelos SIR usando não o NetLogo, mas o R. Começaremos com uma simulação básica e depois partiremos para um modelo aplicado sobre uma estrutura de rede.
 
 Defina o diretório de trabalho como sendo a origem deste script.
 
@@ -165,7 +165,7 @@ Primeiro, remova os objetivos criados anteriormente.
 rm(list= ls())
 ```
 
-Crie uma rede com estrutura de mundo pequeno (Watts-Strogatz), tipicamente observada em redes sociais.
+Crie uma rede com estrutura de mundo pequeno (aka "small world" ou Watts-Strogatz), tipicamente observada em redes sociais. Voce pode escolher outro modelo teórico para estruturar a rede que vai usar, pois o pacote igraph tem dezenas de opções de modelos determinísticos e probabilísticos. Note que ajustamos os parâmetros da função de acordo com a estrutura da rede social de orcas estudada no artigo de referência.
 
 ```{r}
 g <- sample_smallworld(dim = 1,      #tamanho inicial da rede

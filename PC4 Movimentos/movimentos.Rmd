@@ -25,9 +25,9 @@ Departamento de Ecologia
 
 Profs. José Carlos Motta Jr. & Marco A. R. Mello
 
-Artigo de base: [Kerches-Rogeri et al. (2020, Journal of Animal Ecology)](https://doi.org/10.1111/1365-2656.13339)
+Artigo de referência: [Kerches-Rogeri et al. (2020, Journal of Animal Ecology)](https://doi.org/10.1111/1365-2656.13339)
 
-Agradecimentos: [Renata Muylaert escreveu o [código original](https://github.com/renatamuy/mapas) usado para plotar os mapas.
+Agradecimentos: [Renata Muylaert escreveu o [código original](https://github.com/renatamuy/mapas) usado para plotar os mapas. A primeira autora do artigo de referência, Patrícia Rogeri, nos passou uma versão resumida dos dados para ser usada nesta prática.
 
 [README](https://github.com/marmello77/EcoAnimal#readme)
 
@@ -155,7 +155,7 @@ lats<-c(min(pontos$lat)-0.01, max(pontos$lat)+0.01)
 
 ## Mapa simples{#simples}
 
-Plote os pontos em um mapa simples, só para ver como eles se distribuem.
+Plote os pontos em um mapa simples, só para ver como eles se distribuem. Fica bem distorcido, mas serve como um primeiro passo.
 
 ```{r}
 plot(pontos$lat~pontos$long)
@@ -204,7 +204,7 @@ A escala fica grosseira demais para o caso estudado, nem dá para ver a distrui�
 
 ## Mapa da área de estudo{#estudo}
 
-Plote novamente o mapa, mas focando apenas na escala da área de estudo.
+Plote novamente o mapa, mas focando apenas na escala da área de estudo. Note como ficou bem melhor e com as dimensões corretas.
 
 ```{r}
 g2 <- ggplot() + geom_polygon(data = area,
