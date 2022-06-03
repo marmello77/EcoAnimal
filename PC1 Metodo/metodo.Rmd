@@ -25,7 +25,7 @@ Departamento de Ecologia
 
 Profs. José Carlos Motta Jr. & Marco A. R. Mello
 
-Artigo de base: [Muchhala (2006, Nature)](https://doi.org/10.1038/444701a)
+Artigo de referência: [Muchhala (2006, Nature)](https://doi.org/10.1038/444701a)
 
 Agradecimentos: Renata Muylaert escreveu o post sobre como plotar mapais mentais usando LaTeX.
 
@@ -34,7 +34,9 @@ Agradecimentos: Renata Muylaert escreveu o post sobre como plotar mapais mentais
 
 ## Instruções 
 
-Nesta prática, usaremos a opção mais prática para fazer um mapa mental por programação. Esta solução está baseada na linguagem LaTeX, programada na plataforma Overleaf. Trata-se de uma plataforma online e gratuita. Basta se cadastrar para poder usá-la.
+Primeiro, leia o tutorial desta prática, disponível aqui em formato PDF e também no moodle da disciplina.
+
+Aqui apresentamos uma solução alternativa para fazer um mapa mental por programação. Ela se baseia na linguagem LaTeX, programada na plataforma Overleaf. Trata-se de uma plataforma online e gratuita. Basta se cadastrar para poder usá-la.
 
 Para experimentar essa solução, leia este [post no blog Sobrevivendo na Ciência](https://marcoarmello.wordpress.com/2022/04/13/como-programar-um-mapa-mental/) e siga as instruções dadas.
 

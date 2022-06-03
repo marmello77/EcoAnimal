@@ -25,12 +25,12 @@ Departamento de Ecologia
 
 Profs. José Carlos Motta Jr. & Marco A. R. Mello
 
-Artigo de base: [Palaoro et al. (2014 Animal
+Artigo de referência: [Palaoro et al. (2014 Animal
 Behaviour)](http://dx.doi.org/10.1016/j.anbehav.2014.06.014)
 
 Agradecimentos: [Alexandre
 Palaoro](https://github.com/alexandrepalaoro), primeiro autor do artigo
-de base, gentilmente nos cedeu os dados usados nesta prática.
+de referência, gentilmente nos cedeu os dados usados nesta prática.
 
 [README](https://github.com/marmello77/EcoAnimal#readme)
 
@@ -54,8 +54,7 @@ de base, gentilmente nos cedeu os dados usados nesta prática.
 
 ## Preparativos{#preparativos}
 
-Leia o tutorial desta prática, disponível aqui em formato PDF e também
-no moodle da disciplina.
+Primeiro, leia o tutorial desta prática, disponível aqui em formato PDF e também no moodle da disciplina.
 
 Defina o diretório de trabalho como sendo a origem deste script.
 
