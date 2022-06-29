@@ -119,3 +119,36 @@ resultados6 = summary(fit3)
 resultados6
 
 capture.output(resultados6, file = "resultados/res6.txt")
+
+
+## Figura 2 usando apenas o base
+
+fit3 = glm(tipopresa~alces, data=dados, family=binomial)
+newdat3 <- data.frame(hp=seq(min(dados$tipopresa),
+                            max(dados$alces),
+                            len=nrow(dados)))
+newdat3$tipopresa = predict(fit3, newdata=newdat3,
+                    type="response")
+plot(tipopresa~alces, data=dados, col="red4",
+     ylab = "Corças|Alces",
+     xlab = "Densidade de alces")
+lines(tipopresa~alces, newdat3, col="green4", lwd=2)
+
+
+fit4 = glm(tipopresa~corcas, data=dados, family=binomial)
+newdat4 <- data.frame(hp=seq(min(dados$tipopresa),
+                             max(dados$corcas),
+                             len=nrow(dados)))
+newdat4$tipopresa = predict(fit4, newdata=newdat4,
+                            type="response")
+plot(tipopresa~corcas, data=dados, col="red4",
+     ylab = "Corças|Alces",
+     xlab = "Densidade de corças")
+lines(tipopresa~corcas, newdat4, col="green4", lwd=2)
+
+
+fit = glm(vs ~ hp, data=mtcars, family=binomial)
+newdat <- data.frame(hp=seq(min(mtcars$hp), max(mtcars$hp),len=100))
+newdat$vs = predict(fit, newdata=newdat, type="response")
+plot(vs~hp, data=mtcars, col="red4")
+lines(vs ~ hp, newdat, col="green4", lwd=2)
