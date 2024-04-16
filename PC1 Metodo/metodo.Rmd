@@ -14,35 +14,266 @@ prettyNum(x, big.mark=",")
 })
 ```
 
-Universidade de São Paulo
+Para entender o contexto deste tutorial e creditar seus autores, leia o
+[README](https://github.com/marmello77/EcoAnimal/blob/main/README.md).
 
-Instituto de Biociências
+## Instruções gerais
 
-Departamento de Ecologia
+1.  Mude o modo de vizualização aqui no RStudio para `Visual`;
 
-[Tópicos Avançados em Ecologia de Animais
-(BIE0315)](https://uspdigital.usp.br/jupiterweb/obterDisciplina?sgldis=BIE0315&verdis=4)
+2.  Clique no triângulo verde da primeira caixinha de código (dentro
+    dela, no alto à direita), logo acima;
 
-Profs. José Carlos Motta Jr. & Marco A. R. Mello
+3.  Leia atentamente este roteiro e faça a prática junto com o seu
+    grupo;
 
-Artigo de referência: [Muchhala (2006, Nature)](https://doi.org/10.1038/444701a)
+4.  Tente fazer a prática sem a ajuda dos docentes. Caso não consiga,
+    peça-nos ajuda;
 
-Agradecimentos: Renata Muylaert escreveu o post sobre como plotar mapais mentais usando LaTeX.
+5.  No relatório a ser entregue, adicione um cabeçalho com os nomes
+    completos dos integrantes do grupo, incluindo seus números USP e a
+    data da prática;
 
-[README](https://github.com/marmello77/EcoAnimal#readme)
+6.  O relatório deve ser entregue através da tarefa criada no moodle da
+    disciplina, no formato pedido;
 
+7.  Não serão aceitos relatórios entregues fora do prazo determinado.
 
-## Instruções 
+## Traduções automáticas
 
-Primeiro, leia o tutorial desta prática, disponível aqui em formato PDF e também no moodle da disciplina.
+Parte do conteúdo externo, usada nesta disciplina, foi produzida em
+inglês. Se você não souber ler ou ouvir fluentemente em inglês, pode
+usar uma ferramenta automática para te ajudar, como o [Google
+Translate](https://translate.google.com).\
+\
+No caso de artigos e textos em geral, siga estes passos:
 
-Aqui apresentamos uma solução alternativa para fazer um mapa mental por programação. Ela se baseia na linguagem LaTeX, programada na plataforma Overleaf. Trata-se de uma plataforma online e gratuita. Basta se cadastrar para poder usá-la.
+1.  Visite o [Google Translate](https://translate.google.com);
 
-Para experimentar essa solução, leia este [post no blog Sobrevivendo na Ciência](https://marcoarmello.wordpress.com/2022/04/13/como-programar-um-mapa-mental/) e siga as instruções dadas.
+2.  Clique na aba "Documentos";
 
+3.  Clique em "Procurar no computador" e selecione o arquivo PDF, DOC ou
+    RTF;
+
+4.  Escolha os idiomas de origem e destino;
+
+5.  Clique em "Traduzir";
+
+6.  Leia a versão traduzida online ou salve-a como PDF.
+
+No caso de websites, siga estes passos:
+
+1.  Visite o [Google Translate](https://translate.google.com);
+
+2.  Clique na aba "Sites";
+
+3.  Copie a URL do site desejado e cole-a no campo "Site";
+
+4.  Escolha os idiomas de origem e destino;
+
+5.  Clique na seta azul;
+
+6.  Leia a versão traduzida online na aba aberta pelo tradutor.
+
+No caso de vídeos do YouTube, você pode ativar legendas em português
+seguindo estas instruções:\
+<https://support.google.com/youtube/answer/100078?hl=pt-BR&co=GENIE.Platform%3DDesktop>
+
+## **Objetivo**
+
+Para aprender como se faz ciência ou para entender mais a fundo artigos
+científicos, é fundamental saber como funciona o método científico.
+Assim, esta aula prática visa complementar a aula teórica,
+proporcionando uma oportunidade de consolidar os conhecimentos
+aprendidos. Faremos a dissecção do artigo de base e ainda aprenderemos
+como desenhar um mapa mental por programação.
+
+## Artigo de base
+
+[Muchhala (2006, Nature)](https://doi.org/10.1038/444701a)
+
+## **Passos iniciais**
+
+1.  Leia o artigo de base com atenção, mais de uma vez, se preciso;
+
+2.  Identifique no texto os seguintes *elementos do método científico*:
+    **problema**, **pergunta**, **hipótese**, **premissas**,
+    **previsões** e **conclusão**. Descreva-os de forma sucinta, usando
+    frases curtas. Anote essas descrições em um arquivo de texto à
+    parte;
+
+3.  Pense sobre como esses elementos se relacionam entre si, com base no
+    que foi ensinado na aula teórica;
+
+4.  Organize essas descrições curtas na forma de um esboço de mapa
+    mental, feito à mão ou no computador;
+
+5.  Siga o passo a passo para desenhar o mapa mental aqui no R.
+
+## Desenhando o mapa mental
+
+Diga ao RStudio que o diretório de trabalho é o mesmo onde está este
+arquivo de tutorial. Para executar as linhas de código desta e das
+demais caixinhas do tutorial, clique no triângulo verde da caixinha
+desejada, no alto à direita
+
+```{r}
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+```
+
+Limpe os objetos criados e o console:
+
+```{r}
+rm(list= ls())
+
+cat("\014")  
+```
+
+Carregue os pacotes necessários:
+
+```{r}
+library(DiagrammeR)
+```
+
+Crie um mapa mental (*aka*, diagrama ou grafo) vazio. Depois você
+adicionará os elementos (*nodes*) e as conexões (*edges*):
+
+```{r}
+mapa <- create_graph()
+```
+
+Crie os dois primeiros elementos do seu mapa mental. Um deles representa
+o problema e o outro, a pergunta:
+
+```{r}
+mapa <- add_node(mapa, label = "Problema",
+                  type = "problema",
+                  node_aes = node_aes(shape = "rectangle",
+                                      height = 0.9,
+                                      width = 0.9,
+                                      fontsize = 8,
+                                      fillcolor = c("white"),#cor do enchimento
+                                      color = c("red")))#cor da borda
+mapa <- add_node(mapa, label = "Pergunta", 
+                  type = "pergunta",
+                  node_aes = node_aes(shape = "triangle",
+                                      height = 0.7,
+                                      width = 0.7,
+                                      fontsize = 5,
+                                      fillcolor = c("white"),
+                                      color = c("blue")))
+```
+
+Crie a conexão entre esses dois primeiros elementos:
+
+```{r}
+mapa <- add_edge(mapa, "Problema", "Pergunta", edge_aes = NULL, edge_data = NULL)
+
+```
+
+Cheque a estrutura dos elementos e das conexões do seu mapa mental:
+
+```{r}
+mapa %>% get_node_df()
+mapa %>% get_edge_df()
+
+```
+
+Plote o mapa mental para ver como ele está ficando:
+
+```{r}
+render_graph(mapa)
+
+```
+
+Ótimo! Você já tem um embrião do seu mapa mental feito por programação.
+Agora você pode ir adicionando a ele mais elementos e conexões, até
+chegar à mesma estrutura do seu esboço original.
+
+Por exemplo, se você quiser incluir uma hipótese no mapa mental, basta
+adicionar a ele mais um elemento e uma conexão:
+
+```{r}
+mapa <- add_node(mapa, label = "Hipótese 1",
+                  type = "hipotese",
+                  node_aes = node_aes(shape = "ellipse",
+                                      fontsize = 5,
+                                      fillcolor = c("white"),
+                                      color = c("darkgreen")))
+
+mapa <- add_edge(mapa, "Pergunta", "Hipótese 1",
+                 edge_aes = NULL,
+                 edge_data = NULL)
+
+```
+
+Veja como ficou a nova versão:
+
+```{r}
+render_graph(mapa)
+
+```
+
+E se você quiser adicionar duas premissas que sustentam essa hipótese?
+Como faria essa modificação? Pense...
+
+...
+
+Pensou? Então copie, cole e adapte na caixinha abaixo as linhas de
+código necessárias para fazer a modificação desejada. Depois clique no
+triângulo verde da caixinha, no alto à direita:
+
+```{r}
+
+```
+
+Deu certo? Então plote a nova versão do seu mapa mental:
+
+```{r}
+render_graph(mapa)
+
+```
+
+Agora adicione ao seu mapa mental os elementos e conexões que faltam, na
+caixinha abaixo:
+
+```{r}
+
+```
+
+Plote a nova versão do seu mapa mental:
+
+```{r}
+render_graph(mapa)
+
+```
+
+Para salvar o seu mapa como uma figura, você precisa exportá-lo:
+
+```{r}
+export_graph(mapa, file_name = "mapa_mental.png",
+             file_type = "png",
+             width = 3000,
+             height = 3000)
+```
+
+## Passos finais
+
+1.  Dê uma olhada no diretório de trabalho para encontrar o seu mapa
+    mental;
+
+2.  Cole o seu mapa mental em um arquivo de PowerPoint ou de outro
+    programa de slides da sua preferência;
+
+3.  Pegue aquele arquivo de texto com suas anotações, feitas lá no
+    começo. Adicione ao mapa mental caixas de texto explicando em frases
+    curtas os elementos do método científico extraídos a partir do
+    artigo de base;
+
+4.  Exporte seu mapa mental em formato PDF e carregue-o no link do
+    moodle para entregar o relatório.
 
 ## Para saber mais
 
-[Mapa mental: organizando suas ideias](https://marcoarmello.wordpress.com/2015/04/15/mapasmentais/)
-
-[Como programar um mapa mental](https://marcoarmello.wordpress.com/2022/04/13/como-programar-um-mapa-mental/)
+[Mapa mental: organizando as suas
+ideias](https://marcoarmello.wordpress.com/2015/04/15/mapasmentais/)
