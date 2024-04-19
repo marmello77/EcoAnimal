@@ -1,5 +1,5 @@
 ---
-title: "Prática de Computador I: Método Científico"
+title: "EcoAnimal USP, Prática de Computador I: Método Científico"
 output: pdf_document
 author: "Marco A. R. Mello"
 editor_options: 
@@ -39,49 +39,9 @@ Para entender o contexto deste tutorial e creditar seus autores, leia o
 
 7.  Não serão aceitos relatórios entregues fora do prazo determinado.
 
-## Traduções automáticas
-
-Parte do conteúdo externo, usada nesta disciplina, foi produzida em
-inglês. Se você não souber ler ou ouvir fluentemente em inglês, pode
-usar uma ferramenta automática para te ajudar, como o [Google
-Translate](https://translate.google.com).\
-\
-No caso de artigos e textos em geral, siga estes passos:
-
-1.  Visite o [Google Translate](https://translate.google.com);
-
-2.  Clique na aba "Documentos";
-
-3.  Clique em "Procurar no computador" e selecione o arquivo PDF, DOC ou
-    RTF;
-
-4.  Escolha os idiomas de origem e destino;
-
-5.  Clique em "Traduzir";
-
-6.  Leia a versão traduzida online ou salve-a como PDF.
-
-No caso de websites, siga estes passos:
-
-1.  Visite o [Google Translate](https://translate.google.com);
-
-2.  Clique na aba "Sites";
-
-3.  Copie a URL do site desejado e cole-a no campo "Site";
-
-4.  Escolha os idiomas de origem e destino;
-
-5.  Clique na seta azul;
-
-6.  Leia a versão traduzida online na aba aberta pelo tradutor.
-
-No caso de vídeos do YouTube, você pode ativar legendas em português
-seguindo estas instruções:\
-<https://support.google.com/youtube/answer/100078?hl=pt-BR&co=GENIE.Platform%3DDesktop>
-
 ## **Objetivo**
 
-Para aprender como se faz ciência ou para entender mais a fundo artigos
+Para aprender como se faz ciência ou para entender de verdade artigos
 científicos, é fundamental saber como funciona o método científico.
 Assim, esta aula prática visa complementar a aula teórica,
 proporcionando uma oportunidade de consolidar os conhecimentos
@@ -94,13 +54,13 @@ como desenhar um mapa mental por programação.
 
 ## **Passos iniciais**
 
-1.  Leia o artigo de base com atenção, mais de uma vez, se preciso;
+1.  Releia o artigo de base com atenção, mais de uma vez, se preciso;
 
 2.  Identifique no texto os seguintes *elementos do método científico*:
     **problema**, **pergunta**, **hipótese**, **premissas**,
-    **previsões** e **conclusão**. Descreva-os de forma sucinta, usando
-    frases curtas. Anote essas descrições em um arquivo de texto à
-    parte;
+    **previsões** e **conclusão**. Descreva-os no contexto do artigo de
+    base sucintamente, usando frases curtas. Anote essas descrições em
+    um arquivo de texto à parte;
 
 3.  Pense sobre como esses elementos se relacionam entre si, com base no
     que foi ensinado na aula teórica;
@@ -108,14 +68,15 @@ como desenhar um mapa mental por programação.
 4.  Organize essas descrições curtas na forma de um esboço de mapa
     mental, feito à mão ou no computador;
 
-5.  Siga o passo a passo para desenhar o mapa mental aqui no R.
+5.  Siga o passo a passo para desenhar o mapa mental por programção, em
+    linguagem R.
 
 ## Desenhando o mapa mental
 
 Diga ao RStudio que o diretório de trabalho é o mesmo onde está este
 arquivo de tutorial. Para executar as linhas de código desta e das
-demais caixinhas do tutorial, clique no triângulo verde da caixinha
-desejada, no alto à direita
+demais caixinhas do tutorial, clique no triângulo verde da caixinha de
+código desejada, no alto à direita
 
 ```{r}
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
@@ -219,9 +180,10 @@ Como faria essa modificação? Pense...
 
 ...
 
-Pensou? Então copie, cole e adapte na caixinha abaixo as linhas de
-código necessárias para fazer a modificação desejada. Depois clique no
-triângulo verde da caixinha, no alto à direita:
+Pensou? Então copie, cole e adapte na caixinha abaixo apenas as linhas
+de código adicionais de que voce precisa para fazer a modificação
+desejada. Depois clique no triângulo verde da caixinha, no alto à
+direita:
 
 ```{r}
 
@@ -263,7 +225,7 @@ export_graph(mapa, file_name = "mapa_mental.png",
     mental;
 
 2.  Cole o seu mapa mental em um arquivo de PowerPoint ou de outro
-    programa de slides da sua preferência;
+    programa de slides ou gráfico da sua preferência;
 
 3.  Pegue aquele arquivo de texto com suas anotações, feitas lá no
     começo. Adicione ao mapa mental caixas de texto explicando em frases
