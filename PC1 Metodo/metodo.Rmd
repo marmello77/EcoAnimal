@@ -19,10 +19,11 @@ Para entender o contexto deste tutorial e creditar seus autores, leia o
 
 ## Instruções gerais
 
-1.  Mude o modo de vizualização aqui no RStudio para `Visual`;
+1.  Mude o modo de vizualização aqui no RStudio para `Visual`, clicando
+    no botão que fica no canto esquerdo da barra de formatação;
 
 2.  Clique no triângulo verde da primeira caixinha de código (dentro
-    dela, no alto à direita), logo acima;
+    dela, no alto à direita), logo acima desta seção;
 
 3.  Leia atentamente este roteiro e faça a prática junto com o seu
     grupo;
@@ -45,8 +46,9 @@ Para aprender como se faz ciência ou para entender de verdade artigos
 científicos, é fundamental saber como funciona o método científico.
 Assim, esta aula prática visa complementar a aula teórica,
 proporcionando uma oportunidade de consolidar os conhecimentos
-aprendidos. Faremos a dissecção do artigo de base e ainda aprenderemos
-como desenhar um mapa mental por programação.
+aprendidos além de adquirir novas habilidades. Aqui, faremos a dissecção
+do artigo de base e ainda aprenderemos como desenhar um mapa mental por
+programação.
 
 ## Artigo de base
 
@@ -68,12 +70,12 @@ como desenhar um mapa mental por programação.
 4.  Organize essas descrições curtas na forma de um esboço de mapa
     mental, feito à mão ou no computador;
 
-5.  Siga o passo a passo para desenhar o mapa mental por programção, em
-    linguagem R.
+5.  Siga o passo a passo para desenhar a versão final do seu mapa mental
+    por programação, em linguagem R.
 
 ## Desenhando o mapa mental
 
-Diga ao RStudio que o diretório de trabalho é o mesmo onde está este
+Diga ao `RStudio` que o diretório de trabalho é o mesmo onde está este
 arquivo de tutorial. Para executar as linhas de código desta e das
 demais caixinhas do tutorial, clique no triângulo verde da caixinha de
 código desejada, no alto à direita
@@ -82,7 +84,7 @@ código desejada, no alto à direita
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 ```
 
-Limpe os objetos criados e o console:
+Limpe os objetos criados anteriormente e também o console:
 
 ```{r}
 rm(list= ls())
@@ -104,7 +106,7 @@ mapa <- create_graph()
 ```
 
 Crie os dois primeiros elementos do seu mapa mental. Um deles representa
-o problema e o outro, a pergunta:
+o problema e o outro, a pergunta do artigo de base:
 
 ```{r}
 mapa <- add_node(mapa, label = "Problema",
@@ -181,7 +183,7 @@ Como faria essa modificação? Pense...
 ...
 
 Pensou? Então copie, cole e adapte na caixinha abaixo apenas as linhas
-de código adicionais de que voce precisa para fazer a modificação
+de código adicionais de que você precisa para fazer a modificação
 desejada. Depois clique no triângulo verde da caixinha, no alto à
 direita:
 
@@ -222,17 +224,17 @@ export_graph(mapa, file_name = "mapa_mental.png",
 ## Passos finais
 
 1.  Dê uma olhada no diretório de trabalho para encontrar o seu mapa
-    mental;
+    mental exportado como uma figura;
 
 2.  Cole o seu mapa mental em um arquivo de PowerPoint ou de outro
-    programa de slides ou gráfico da sua preferência;
+    programa de slides ou programa gráfico da sua preferência;
 
 3.  Pegue aquele arquivo de texto com suas anotações, feitas lá no
     começo. Adicione ao mapa mental caixas de texto explicando em frases
     curtas os elementos do método científico extraídos a partir do
     artigo de base;
 
-4.  Exporte seu mapa mental em formato PDF e carregue-o no link do
+4.  Exporte o seu mapa mental em formato PDF e carregue-o no link do
     moodle para entregar o relatório.
 
 ## Para saber mais

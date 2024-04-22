@@ -14,26 +14,108 @@ prettyNum(x, big.mark=",")
 })
 ```
 
-Universidade de São Paulo
+Para entender o contexto deste tutorial e creditar seus autores, leia o
+[README](https://github.com/marmello77/EcoAnimal/blob/main/README.md).
 
-Instituto de Biociências
+## Instruções gerais
 
-Departamento de Ecologia
+1.  Mude o modo de vizualização aqui no RStudio para `Visual`, clicando
+    no botão que fica no canto esquerdo da barra de formatação;
 
-[Tópicos Avançados em Ecologia de Animais
-(BIE0315)](https://uspdigital.usp.br/jupiterweb/obterDisciplina?sgldis=BIE0315&verdis=4)
+2.  Clique no triângulo verde da primeira caixinha de código (dentro
+    dela, no alto à direita), logo acima desta seção;
 
-Profs. José Carlos Motta Jr. & Marco A. R. Mello
+3.  Leia atentamente este roteiro e faça a prática junto com o seu
+    grupo;
 
-Artigo de referência: [Palaoro et al. (2014 Animal
+4.  Tente fazer a prática sem a ajuda dos docentes. Caso não consiga,
+    peça-nos ajuda;
+
+5.  No relatório a ser entregue, adicione um cabeçalho com os nomes
+    completos dos integrantes do grupo, incluindo seus números USP e a
+    data da prática;
+
+6.  O relatório deve ser entregue através da tarefa criada no moodle da
+    disciplina, no formato pedido;
+
+7.  Não serão aceitos relatórios entregues fora do prazo determinado.
+
+## Artigo de base
+
+[Palaoro et al. (2014 Animal
 Behaviour)](http://dx.doi.org/10.1016/j.anbehav.2014.06.014)
 
-Agradecimentos: [Alexandre
-Palaoro](https://github.com/alexandrepalaoro), primeiro autor do artigo
-de referência, gentilmente nos cedeu os dados usados nesta prática.
+## Agradecimentos
 
-[README](https://github.com/marmello77/EcoAnimal#readme)
+[Alexandre Palaoro](https://github.com/alexandrepalaoro), primeiro autor
+do artigo de referência, gentilmente nos cedeu os dados usados nesta
+prática.
 
+## **Objetivo**
+
+Um dos fenômenos mais importantes relacionados à reprodução animal é a
+seleção sexual. Nesta prática, treinaremos como testar interpretações
+concorrentes à luz das evidências disponíveis, usando a abordagem
+conhecida como inferência forte.
+
+## Contexto
+
+Nosso objeto de estudo são interações agonísticas entre machos. Essas
+interações visam resolver disputas por recursos, sejam fêmeas,
+território ou alimento. A disputa pode envolver confronto indireto,
+quando os machos avaliam as características um do outro e um deles
+desiste antes mesmo de lutar. Ou pode envolver confronto direto, quando
+os machos chegam às vias de fato, entrando em luta corporal. Essas lutas
+não costumam levar a danos sérios ou morte, pois é comum um dos machos
+desistir depois de avaliar suas chances de vencer e o que ele tem a
+perder. Para entender os mecanismos que determinam os resultados dessas
+lutas, usaremos como modelo de estudo caranguejos da espécie Aegla
+longirostri. Os dados foram analisados em um artigo científico (Palaoro
+et al. 2014, Animal Behaviour), cujo primeiro autor gentilmente nos
+cedeu a planilha.
+
+## Passos iniciais
+
+1.  No moodle da disciplina, baixe este roteiro e a planilha de dados.
+
+2.  Assista ao vídeo da luta entre caranguejos disponível no moodle.
+    Eles pertencem ao mesmo gênero daqueles usados como modelo de estudo
+    no artigo.
+
+3.  Veja a figura 1 a seguir, que apresenta informações importantes
+    sobre a morfologia dos caranguejos estudados no artigo original.
+
+4.  Examine os dados e metadados da planilha fornecida.
+
+5.  Qual dessas medidas fornecidas na planilha você acha que deve ser
+    mais importante para prever quem ganhará uma luta entre dois
+    caranguejos machos dessa espécie? Elabore um mapa mental contendo
+    problema, pergunta, hipóteses, premissas e previsões sobre isso,
+    usando as técnicas aprendidas nas videoaulas e práticas anteriores.
+
+6.  Elabore um ou mais gráficos que representem testes visuais dessas
+    previsões. Pode fazer os gráficos no software da sua preferência,
+    usando os dados da planilha. Não precisa fazer uma análise
+    estatística numérica (teste), mas apenas essa análise visual.
+
+7.  Complete o seu mapa mental, indicando se as previsões se confirmaram
+    ou não, apenas com base nos gráficos que plotou.
+
+8.  Inclua uma conclusão geral sucinta no seu mapa.
+
+9.  Salve o relatório em formato PDF e carregue-o no link de entrega no
+    moodle.
+
+### Figura 1
+
+![](images/Figura 1.png){width="564"}
+
+Legenda: (a) Representação de um macho da espécie de caranguejo Aegla
+longirostri adaptado de (Bond-Buckup 2003, apud Palaoro et al. 2014). A
+linha preta representa o comprimento do cefalotórax. (b) Representação
+esquemática da garra esquerda. LE: comprimento da garra; CH: altura da
+garra; (1): altura do dedo; (2): distância do fulcro ao primeiro
+tubérculo; (3): apodema.
 
 ## Sumário
 
@@ -51,32 +133,26 @@ de referência, gentilmente nos cedeu os dados usados nesta prática.
 
 [Para saber mais](#mais)
 
+## Preparativos {#preparativos}
 
-## Preparativos{#preparativos}
-
-Primeiro, leia o tutorial desta prática, disponível aqui em formato PDF e também no moodle da disciplina.
-
-Neste tutorial, apresentamos algumas soluções baseadas em programação para as atividades propostas no roteiro. Aqui você encontrará inclusive sugestões de gráficos eficientes para fazer uma análise visual dos dados.
-
-Defina o diretório de trabalho como sendo a origem deste script.
+Diga ao `RStudio` que o diretório de trabalho é o mesmo onde está este
+arquivo de tutorial. Para executar as linhas de código desta e das
+demais caixinhas do tutorial, clique no triângulo verde da caixinha de
+código desejada, no alto à direita
 
 ```{r}
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 ```
 
-Remova todos os objetos prévios.
+Limpe os objetos criados anteriormente e também o console:
 
 ```{r}
 rm(list= ls())
-```
 
-Limpe o console.
-
-```{r}
 cat("\014")  
 ```
 
-Carregue os pacotes necessários.
+Carregue os pacotes necessários:
 
 ```{r}
 library(ggplot2)
@@ -108,7 +184,7 @@ plot(dados$status2~dados$cc)
 plot(dados$status2~dados$ap)
 ```
 
-## Teste 1{#teste1}
+## Teste 1 {#teste1}
 
 Plote a relação entre o status e o comprimento cefalotorácico, depois
 exporte o gráfico como um arquivo PNG.
@@ -154,7 +230,7 @@ curve (exp(fit1$coefficients[[1]]+fit1$coefficients[[2]]*x)/
        add=T)
 ```
 
-## Teste 2{#teste2}
+## Teste 2 {#teste2}
 
 Plote a relação entre o status e a altura do própodo, depois exporte o
 gráfico como um arquivo PNG.
@@ -199,7 +275,7 @@ curve (exp(fit2$coefficients[[1]]+fit2$coefficients[[2]]*x)/
        add=T)
 ```
 
-## Teste 3{#teste3}
+## Teste 3 {#teste3}
 
 Teste como tanto o comprimento cefalotorácico quanto a altura do própodo
 determinam o status, depois exporte os resultados como um arquivo TXT.
@@ -212,7 +288,7 @@ res3
 capture.output(res3, file = "resultados/resultados-ap-cc.txt")
 ```
 
-## Teste 4{#teste4}
+## Teste 4 {#teste4}
 
 Teste como tanto o comprimento cefalotorácico quanto a altura do própodo
 determinam o status, mas considerando a identidade da dupla como um
@@ -227,7 +303,7 @@ capture.output(res4, file = "resultados/resultados-ap-cc-dupla.txt")
 isSingular(fit4, tol = 1e-05)
 ```
 
-## Teste 5{#teste5}
+## Teste 5 {#teste5}
 
 Teste a relação entre os fatores usados nas análises anteriores,
 salvando os resíduos dessa relação para fazer uma nova análise.
@@ -292,7 +368,7 @@ capture.output(res6, file = "resultados/resultados-res-dupla.txt")
 isSingular(fit6, tol = 1e-05)
 ```
 
-## Para saber mais{#mais}
+## Para saber mais {#mais}
 
 Bolker, B. M., Brooks, M. E., Clark, C. J., Geange, S. W., Poulsen, J.
 R., Stevens, M. H. H., & White, J.-S. S. (2009). Generalized linear
@@ -316,8 +392,8 @@ exploration to avoid common statistical problems. Methods in Ecology and
 Evolution, 1(1), 3--14.
 <https://doi.org/10.1111/j.2041-210X.2009.00001.x>
 
-Regressão logística na
-Wikipedia: <https://en.wikipedia.org/wiki/Logistic_regression>
+Regressão logística na Wikipedia:
+<https://en.wikipedia.org/wiki/Logistic_regression>
 
 GLM na Wikipedia:
 <https://en.wikipedia.org/wiki/Generalized_linear_model>

@@ -1,6 +1,6 @@
 # EcoAnimal
 
-Códigos e dados usados nas práticas da disciplina "Tópicos Avançados em Ecologia de Animais" ([BIE0315](https://uspdigital.usp.br/jupiterweb/obterDisciplina?nomdis=&sgldis=bie0315)), oferecida pelo Departamento de Ecologia, Instituto de Biociências, Universidade de São Paulo. A disciplina é ministrada pelos professores [José Carlos Motta Jr.](https://bv.fapesp.br/pt/pesquisador/6205/jose-carlos-motta-junior/), [Marco A. R. Mello](https://marcomellolab.wordpress.com) & [Francisco V. Dénes](https://bv.fapesp.br/pt/pesquisador/61270/francisco-voeroes-denes/).
+Códigos, dados e tutoriais usados nas práticas da disciplina "Tópicos Avançados em Ecologia de Animais" ([BIE0315](https://uspdigital.usp.br/jupiterweb/obterDisciplina?nomdis=&sgldis=bie0315)), oferecida pelo Departamento de Ecologia, Instituto de Biociências, Universidade de São Paulo. A disciplina é ministrada pelos professores [José Carlos Motta Jr.](https://bv.fapesp.br/pt/pesquisador/6205/jose-carlos-motta-junior/), [Marco A. R. Mello](https://marcomellolab.wordpress.com) & [Francisco V. Dénes](https://bv.fapesp.br/pt/pesquisador/61270/francisco-voeroes-denes/).
 
 Laboratório de Síntese Ecológica ([SintECO](https://marcomellolab.wordpress.com)).
 
@@ -16,11 +16,11 @@ Feito em R version 4.3.3 (2024-02-29) -- "Angel Food Cake"
 
 ## Aviso
 
-Você pode usar este software livremente para quaisquer fins por sua conta e risco, seguindo a licença mencionada no repositório. Não assumimos nenhuma responsabilidade pelo uso deste software, não fornecemos nenhuma licença ou título sob qualquer patente, direito autoral ou trabalho de máscara ao produto. Reservamo-nos o direito de fazer alterações no software sem notificação. Também não fazemos nenhuma declaração ou garantia de que este software seja adequado para o uso especificado sem os devidos testes ou modificações. Se este software ajudar você a produzir qualquer trabalho acadêmico (artigo, livro, capítulo, patente, dissertação, tese, monografia, palestra, pôster, defesa, aula, relatório e similares), por favor, credite os autores e cite a fonte, usando o DOI estável deste repositório.
+Você pode usar este software livremente para quaisquer fins por sua conta e risco, seguindo a licença mencionada neste repositório. Não assumimos nenhuma responsabilidade pelo uso deste software, não fornecemos nenhuma licença ou título sob qualquer patente, direito autoral ou trabalho de máscara ao produto. Reservamo-nos o direito de fazer alterações no software sem notificação. Também não fazemos nenhuma declaração ou garantia de que este software seja adequado para o uso especificado sem os devidos testes ou modificações. Se este software ajudar você a produzir qualquer trabalho acadêmico (artigo, livro, capítulo, patente, dissertação, tese, monografia, palestra, pôster, defesa, aula, relatório e similares), por favor, credite os autores e cite a fonte, usando o DOI estável deste repositório.
 
 ## Escopo
 
-Este repositório contém os tutoriais usados para guiar as práticas de computador (PC) da disciplina. Como esses tutoriais foram produzidos no formato de notebooks didáticos, não é necessário ter familiaridade com a linguagem R para fazer as práticas. Basta seguir atentamente as instruções.
+Este repositório contém os códigos, dados e tutoriais usados para guiar as práticas de computador (PCs) da disciplina. Como esses tutoriais foram produzidos no formato de *notebooks* didáticos, não é necessário ter familiaridade com a linguagem de programação R para fazer as práticas. Basta seguir atentamente as instruções.
 
 ## Aviso
 
@@ -32,9 +32,9 @@ Atualize o [R](https://www.r-project.org) e o [RStudio](https://posit.co) instal
 
 2.  Para fazer as atividades da prática escolhida, primeiro abra a respectiva pasta e familiarize-se com os arquivos contidos nela;
 
-3.  Depois, abra o respectivo tutorial (arquivo de R notebook em formato `RMD`) e dê uma boa lida nele, a fim de entender a proposta geral da prática;
+3.  Depois, abra o respectivo tutorial (arquivo de R notebook em formato `RMD`) e dê lida geral nele, a fim de entender a proposta da prática;
 
-4.  Quando houver, examine com cuidado os arquivos `XLSX`, que contêm a versão completa dos dados e metadados. Os arquivos `CSV` e `TXT` contêm apenas os dados processados ou simplificados que serão usados diretamente nas análises;
+4.  Quando houver, examine na mesma pasta os arquivos `XLSX`, que contêm a versão completa dos dados e metadados. Os arquivos `CSV` e `TXT` contêm apenas os dados processados ou simplificados que serão usados diretamente nas análises;
 
 5.  Por fim, faça as análises, simplesmente seguindo os passos do tutorial na ordem proposta e clicando nos botões de ação indicados.
 
@@ -78,4 +78,4 @@ Se você quiser fazer perguntas, sugestões ou correções, por favor, abra um [
 
 ## Agradecimentos
 
-Agradeço ao Prof. Motta Jr., coordenador da disciplina, ao Dr. Francisco Dénes, docente assistente, a todos os tutores e monitores que ao longo dos anos foram me ajudando a melhorar estas práticas e seus respectivos códigos, e aos colegas que me ajudam a tirar dúvidas e desatar nós. Um salve especial vai para a comunidade do [StackOverflow](https://stackoverflow.com), onde resolvo a maioria dos meus dilemas de programação.
+Agradeço ao Prof. Motta Jr., coordenador da disciplina, ao Dr. Francisco Dénes, docente assistente, a todos os tutores e monitores que ao longo dos anos foram me ajudando a melhorar estas práticas e seus respectivos códigos, e aos colegas que nos ajudam a tirar dúvidas e desatar nós. Um salve especial vai para a comunidade do [StackOverflow](https://stackoverflow.com), onde resolvemos a maioria dos nossos dilemas de programação.
