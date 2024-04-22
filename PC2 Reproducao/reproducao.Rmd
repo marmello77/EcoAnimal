@@ -1,5 +1,5 @@
 ---
-title: "Prática de Computador II: Reprodução"
+title: "EcoAnimal USP, Prática de Computador II: Reprodução"
 output: pdf_document
 author: "Marco A. R. Mello"
 editor_options: 
