@@ -47,12 +47,15 @@ res1 = anova(fit1, test="Chisq")
 res1
 capture.output(res1, file = "resultados/resultados-cc.txt")
 
+png("figuras/p1b.png", width = 1000, height = 700)
 plot(dados$status2~dados$cc,
      xlab = "Comprimento do corpo",
      ylab = "Status")
 curve (exp(fit1$coefficients[[1]]+fit1$coefficients[[2]]*x)/
          (1+exp(fit1$coefficients[[1]]+fit1$coefficients[[2]]*x)),
        add=T)
+dev.off()  
+
 
 
 ############################## TESTE 2 #########################################

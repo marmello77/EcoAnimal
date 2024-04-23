@@ -1,9 +1,11 @@
 ---
-title: "EcoAnimal USP, Prática de Computador II: Reprodução"
-output: pdf_document
+title: 'EcoAnimal USP, Prática de Computador II: Reprodução'
 author: "Marco A. R. Mello"
-editor_options: 
-  markdown: 
+output:
+  html_document:
+    df_print: paged
+editor_options:
+  markdown:
     wrap: 72
 ---
 
@@ -51,7 +53,7 @@ Behaviour)](http://dx.doi.org/10.1016/j.anbehav.2014.06.014)
 do artigo de referência, gentilmente nos cedeu os dados usados nesta
 prática.
 
-## **Objetivo**
+## Objetivo
 
 Um dos fenômenos mais importantes relacionados à reprodução animal é a
 seleção sexual. Nesta prática, treinaremos como testar hipóteses
@@ -82,49 +84,20 @@ gentilmente nos cedeu a planilha.
     daqueles usados como modelo de estudo no artigo de base;
 
 2.  Veja a figura 1 abaixo, que apresenta informações importantes sobre
-    a morfologia dos caranguejos estudados no artigo de base;
-
-3.  Examine os dados e metadados da planilha XLSX fornecida;
-
-4.  Qual dessas medidas fornecidas na planilha você acha que deve ser
-    mais importante para prever quem ganhará uma luta entre dois
-    caranguejos machos dessa espécie? Elabore um mapa mental contendo
-    problema, pergunta, hipóteses, premissas e previsões sobre isso,
-    usando as técnicas aprendidas nas aulas anteriores;
-
-5.  Elabore um ou mais gráficos que representem testes visuais dessas
-    previsões, seguindo as instruções da próxima seção;
+    a morfologia dos caranguejos estudados no artigo de base.
 
 ### Figura 1
 
-![](images/Figura%201.png){width="336"}
+Representação de um macho da espécie de caranguejo Aegla longirostri
+adaptado de (Bond-Buckup 2003, apud Palaoro et al. 2014). A linha preta
+representa o comprimento do cefalotórax. (b) Representação esquemática
+da garra esquerda. LE: comprimento da garra; CH: altura da garra; (1):
+altura do dedo; (2): distância do fulcro ao primeiro tubérculo; (3):
+apodema
 
-Legenda: (a) Representação de um macho da espécie de caranguejo Aegla
-longirostri adaptado de (Bond-Buckup 2003, apud Palaoro et al. 2014). A
-linha preta representa o comprimento do cefalotórax. (b) Representação
-esquemática da garra esquerda. LE: comprimento da garra; CH: altura da
-garra; (1): altura do dedo; (2): distância do fulcro ao primeiro
-tubérculo; (3): apodema.
+![](imagens/Figura%201.png){width="311" height="491"}
 
-## Plotando alguns exemplos de gráficos
-
-### Sumário
-
-[Preparativos](#preparativos)
-
-[Teste 1](#teste1)
-
-[Teste 2](#teste2)
-
-[Teste 3](#teste3)
-
-[Teste 4](#teste4)
-
-[Teste 5](#teste5)
-
-[Para saber mais](#mais)
-
-### Preparativos {#preparativos}
+## Preparativos
 
 Diga ao `RStudio` que o diretório de trabalho é o mesmo onde está este
 arquivo de tutorial. Para executar as linhas de código desta e das
@@ -156,25 +129,209 @@ library(ggplot2)
 library(lme4)
 ```
 
-Importe os dados e inspecione-os:
+## Passos intermediários
+
+1.  Examine os dados e metadados da planilha XLSX fornecida;
+
+2.  Qual dessas medidas fornecidas na planilha você acha que deve ser
+    mais importante para prever quem ganhará uma luta entre dois
+    caranguejos machos dessa espécie?
+
+3.  Descreva de maneira sucinta os elementos do método científico que
+    sustentam a sua expectativa: **problema**, **pergunta**,
+    **hipótese**, **premissas** e **previsão**. Use as técnicas
+    aprendidas nas aulas anteriores. Você pode trabalhar com múltiplas
+    hipóteses e previsões, se quiser.
+
+### Problema
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+### Pergunta
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+### Hipótese
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+### Premissas
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+### Previsões
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+## Mapa mental
+
+Agora é hora de organizar os elementos do método científico na forma de
+um mapa mental. Faça um esboço desse mapa à mão ou num programa de
+slides. Depois faça a versão final por programação.
+
+Aqui vai um mapa mental básico para você começar a programar.
+Modifique-o da forma que achar melhor
 
 ```{r}
-dados<- read.delim("dados.txt", header=T)
+library(DiagrammeR)
+
+mapa <- create_graph()
+
+mapa <- add_node(mapa, label = "Problema",
+                  type = "problema",
+                  node_aes = node_aes(shape = "rectangle",
+                                      height = 0.9,
+                                      width = 0.9,
+                                      fontsize = 8,
+                                      fillcolor = c("white"),
+                                      color = c("red")))
+mapa <- add_node(mapa, label = "Pergunta", 
+                  type = "pergunta",
+                  node_aes = node_aes(shape = "triangle",
+                                      height = 0.7,
+                                      width = 0.7,
+                                      fontsize = 5,
+                                      fillcolor = c("white"),
+                                      color = c("blue")))
+mapa <- add_node(mapa, label = "Premissa 1", 
+                  type = "premissa",
+                  node_aes = node_aes(shape = "plaintext",
+                                      fontsize = 5,
+                                      color = c("white"),
+                                      fillcolor = c("white")))
+mapa <- add_node(mapa, label = "Premissa 2", 
+                  type = "premissa",
+                  node_aes = node_aes(shape = "plaintext",
+                                      fontsize = 5,
+                                      color = c("white"),
+                                      fillcolor = c("white")))
+mapa <- add_node(mapa, label = "Hipótese 1",
+                  type = "hipotese",
+                  node_aes = node_aes(shape = "ellipse",
+                                      fontsize = 5,
+                                      fillcolor = c("white"),
+                                      color = c("darkgreen")))
+
+mapa <- add_node(mapa, label = "Previsão 1",
+                  type = "previsao",
+                  node_aes = node_aes(shape = "polygon",
+                                      sides = 5,
+                                      fontsize = 5,
+                                      color = c("yellow4"),
+                                      fillcolor = c("white")))
+
+
+mapa <- add_edge(mapa, "Problema", "Pergunta", edge_aes = NULL, edge_data = NULL)
+mapa <- add_edge(mapa, "Pergunta", "Hipótese 1", edge_aes = NULL, edge_data = NULL)
+mapa <- add_edge(mapa, "Premissa 1", "Hipótese 1", edge_aes = NULL, edge_data = NULL)
+mapa <- add_edge(mapa, "Premissa 2", "Hipótese 1", edge_aes = NULL, edge_data = NULL)
+mapa <- add_edge(mapa, "Hipótese 1", "Previsão 1", edge_aes = NULL, edge_data = NULL)
+```
+
+Visualize o mapa:
+
+```{r}
+render_graph(mapa)
+```
+
+Exporte o mapa como uma figura, quando ele estiver pronto:
+
+```{r}
+export_graph(mapa, file_name = "figuras/mapa_mental.png",
+             file_type = "png",
+             width = 3000,
+             height = 3000)
+
+```
+
+## Analisando visualmente
+
+Importe os dados e dê uma boa olhada na estrutura deles. Quais são as
+variáveis e quais são as observações?
+
+```{r}
+dados<- read.delim("dados.txt", header=T) #importando um arquivo TXT
 dim(dados)
 head(dados)
 tail(dados)
 ```
 
-Transforme a variável "status" em numérica e binária, salvando-a como
-uma nova variável:
+No primeiro resultado, vemos as dimensões do quadro de dados (*data*
+*frame*) em linhas x colunas.
+
+No segundo resultado, vemos as seis primeiras linhas do quadro de dados.
+
+No terceiro resultado, vemos as seis últimas linhas do quadro de dados.
+
+Agora, transforme a variável `status` em numérica e binária, salvando-a
+como uma nova variável:
 
 ```{r}
-dados$status2 <- ifelse(dados$status == "perdedor", 0, 1)
+dados$status2 <- ifelse(dados$status == "perdedor", 0, 1) #teste lógico
 head(dados)
 ```
 
-Examine de forma preliminar as relações entre as variáveis disponíveis
-para análise.
+Examine de forma preliminar as relações entre as variáveis disponíveis:
 
 ```{r}
 plot(dados$cc~dados$ap)
@@ -184,86 +341,102 @@ plot(dados$status2~dados$ap)
 
 Você conhece esses tipos de gráficos?
 
-O primeiro é um diagrama de dispersão de pontos, também conhecido como
-gráfico de regressão ou gráfico de correlação. Ele mostra a relação
-entre duas variáveis numéricas e contínuas. Através desse tipo de
-gráfico, você pode analisar visualmente se, quando uma variável aumenta,
-a outra também aumenta ou diminui, ou ainda se elas não apresentam
-relação entre si. Pode também avaliar visualmente a força de uma
-eventual relação positiva ou negativa entre as variáveis.
+O primeiro gráfico é um **diagrama de dispersão de pontos**, também
+conhecido como gráfico de regressão ou gráfico de correlação. Ele mostra
+a relação entre duas variáveis numéricas e contínuas.
 
-O segundo e o terceiro são gráficos logísticos. Eles mostram a relação
-entre uma variável numérica e contínua, o fator, e uma variável numérica
-e binária (do tipo "sim ou não"), a resposta. Através desse tipo de
-gráfico, você pode analisar visualmente a probabilidade de a resposta
-ser 0 ou 1, conforme aumenta o fator. O ponto 0.5 no eixo Y representa o
-limiar da transição de uma resposta para a outra. Essa relação entre
-fator e resposta também pode ser positiva ou negativa.
+Através desse tipo de gráfico, você pode analisar visualmente se, quando
+uma variável aumenta, a outra aumenta ou diminui (i.e., relação positiva
+ou negativa), ou ainda se elas não apresentam relação alguma entre si.
 
-### Teste 1 {#teste1}
+### Pergunta 1
 
-Que tal produzir um gráfico mais bonito e elegante?
+No caso dos dados do **primeiro gráfico**, você nota alguma relação
+entre o comprimento cefalotorácico (`cc`) e a altura do própodo (`ap`)?
+Por que?
 
-Como exemplo, plote a relação entre o `status` e o
-`comprimento cefalotorácico`. Depois você pode trocar por outro fator no
-eixo X, se quiser:
-
-```{r}
-
-p1 = ggplot(dados, aes(x=cc, y=status2)) + 
-  geom_point(colour = "#1855FA", size=4, alpha = 0.5) + 
-  stat_smooth(method="glm", method.args=list(family="binomial"), se=FALSE) +
-  labs(x="Comprimento cefalotorácico", y = "Status") +
-  theme(text = element_text(size=20),
-        plot.title = element_text(size=40, hjust=0.5),
-        axis.text.x = element_text(size = 20, angle=0, hjust=1),
-        axis.text.y = element_text(size = 20, angle=0, vjust=1),
-        axis.title.x = element_text(size = 30, angle=0),
-        axis.title.y = element_text(size = 30, angle=90))
-p1
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
 ```
+::: answer-box
+Escreva sua resposta aqui.
+:::
 
-Exporte o gráfico como um arquivo PNG
+### Pergunta 2
 
-```{r}
-png(filename= "figuras/p1.png", res= 300, height= 2000, width= 3000)
-p1
-dev.off()
+Você pode também analisar visualmente a força de uma eventual relação
+positiva ou negativa entre as variáveis e o tamanho do efeito. Basta
+checar o quanto os pontos estão dispersos ou concentrados ao redor de
+uma reta de tendência hipotética. Caso haja alguma relação, você acha
+que ela é forte ou fraca e por que?
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
 ```
+::: answer-box
+Escreva sua resposta aqui.
+:::
 
-Isso não é obrigatório para a prática, mas gostaria de ir além da
-análise visual, fazendo também uma análise estatística? Se sim, rode um
-GLM, ou seja, um modelo geral linearizado:
+O segundo e o terceiro são **gráficos logísticos**. Eles mostram a
+relação entre uma variável numérica e contínua, o **fator**, e uma
+variável numérica e binária (do tipo "sim ou não"), a **resposta**.
+
+Através desse tipo de gráfico, você pode analisar visualmente a
+probabilidade de a resposta ser 0 ou 1, conforme aumenta o fator. O
+ponto 0.5 no eixo Y representa o limiar da transição de uma resposta
+para a outra. Essa relação entre fator e resposta também pode ser
+positiva ou negativa.
+
+### Pergunta 3
+
+Você lembra o que representam 0 e 1 na variável que transformamos lá
+atrás (`status2`)?
+
+Considerando o **segundo gráfico**, você acha que a chance de um
+caranguejo vencer uma luta depende ou não da variável escolhida como
+fator? Se depende, a chance aumenta ou diminui? Por que?
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+## Melhorando um dos gráficos
+
+Que tal produzir um gráfico mais completo?
+
+Vamos calcular uma linha de tendência, rodando um GLM com distribuição
+binomial:
 
 ```{r}
 fit1 = glm(dados$status2~dados$cc, family=binomial)
-
-```
-
-Examine os valores estatísticos:
-
-```{r}
 summary(fit1)
-
 ```
 
-Calcule o valor de P também por ANOVA:
-
-```{r}
-res1 = anova(fit1, test="Chisq")
-res1
-```
-
-Exporte o resultado dessa análise como um arquivo de texto:
-
-```{r}
-capture.output(res1, file = "resultados/resultados-cc.txt")
-
-```
-
-Você tambem pode plotar o gráfico usando apenas o pacote `base`, que
-oferece a maior compatibildade, com base nos resultados do teste que
-acabou de fazer.
+E agora vamos adicionar essa linha de tendência ao gráfico:
 
 ```{r}
 plot(dados$status2~dados$cc,
@@ -274,155 +447,57 @@ curve (exp(fit1$coefficients[[1]]+fit1$coefficients[[2]]*x)/
        add=T)
 ```
 
-### Teste 2 {#teste2}
-
-Plote a relação entre o status e a altura do própodo, depois exporte o
-gráfico como um arquivo PNG.
+Podemos expotar o gráfico como uma figura:
 
 ```{r}
-png(filename= "figuras/p2.png", res= 300, height= 2000, width= 3000)
-p2 = ggplot(dados, aes(x=ap, y=status2)) + 
-  geom_point(colour = "#1855FA", size=4, alpha = 0.5) + 
-  stat_smooth(method="glm", method.args=list(family="binomial"), se=FALSE) +
-  labs(x="Altura da garra", y = "Status") +
-  theme(text = element_text(size=20),
-        plot.title = element_text(size=40, hjust=0.5),
-        axis.text.x = element_text(size = 20, angle=0, hjust=1),
-        axis.text.y = element_text(size = 20, angle=0, vjust=1),
-        axis.title.x = element_text(size = 30, angle=0),
-        axis.title.y = element_text(size = 30, angle=90))
-p2
-dev.off()
-```
-
-Teste se a relação é significativa e examine os valores estatísticos,
-depois exporte os resultados como um arquivo TXT.
-
-```{r}
-fit2 = glm(dados$status2~dados$ap, family=binomial)
-summary(fit2)
-res2 = anova(fit2, test="Chisq")
-res2
-capture.output(res2, file = "resultados/resultados-ap.txt")
-
-```
-
-Você tambem pode plotar o gráfico usando apenas o pacote base, com base
-nos resultados do teste que acabou de fazer.
-
-```{r}
-plot(dados$status2~dados$ap,
+png("figuras/p1b.png", width = 1000, height = 700)
+plot(dados$status2~dados$cc,
      xlab = "Comprimento do corpo",
      ylab = "Status")
-curve (exp(fit2$coefficients[[1]]+fit2$coefficients[[2]]*x)/
-         (1+exp(fit2$coefficients[[1]]+fit2$coefficients[[2]]*x)),
+curve (exp(fit1$coefficients[[1]]+fit1$coefficients[[2]]*x)/
+         (1+exp(fit1$coefficients[[1]]+fit1$coefficients[[2]]*x)),
        add=T)
+dev.off()  
+
 ```
 
-### Teste 3 {#teste3}
+## O seu gráfico {#teste2}
 
-Teste como tanto o comprimento cefalotorácico quanto a altura do própodo
-determinam o status, depois exporte os resultados como um arquivo TXT.
+OK, agora que você já viu o básico sobre como fazer os tipos de gráficos
+de que precisamos, que tal fazer o gráfico que você realmente tinha
+planejado desde o começo, com as variáveis que você acha que importam?
+
+Pode copiar, colar e adaptar na caixinha abaixo os códigos de que
+precisa:
 
 ```{r}
-fit3 = glm(dados$status2~dados$ap+dados$cc, family=binomial)
-summary(fit3)
-res3 = anova(fit3, test="Chisq")
-res3
-capture.output(res3, file = "resultados/resultados-ap-cc.txt")
+
 ```
 
-### Teste 4 {#teste4}
-
-Teste como tanto o comprimento cefalotorácico quanto a altura do própodo
-determinam o status, mas considerando a identidade da dupla como um
-fator aleatório, depois exporte os resultados como um arquivo TXT.
+Exporte o seu gráfico como uma figura:
 
 ```{r}
-fit4 = glmer(status2 ~ ap + cc + (1|dupla), family=binomial, data=dados)
-summary(fit4)
-res4 = anova(fit4, test="Chisq")
-res4
-capture.output(res4, file = "resultados/resultados-ap-cc-dupla.txt")
-isSingular(fit4, tol = 1e-05)
-```
 
-### Teste 5 {#teste5}
-
-Teste a relação entre os fatores usados nas análises anteriores,
-salvando os resíduos dessa relação para fazer uma nova análise.
-
-```{r}
-fit5 = lm(cc ~ ap, data=dados) 
-summary(fit5)
-fit5.res = resid(fit5)
-```
-
-Plote a relação entre os fatores, depois exporte o gráfico como um
-arquivo PNG.
-
-```{r}
-png(filename= "figuras/p5.png", res= 300, height= 3000, width= 3000)
-p5 = ggplot(dados, aes(x=cc, y=ap), CI = F) +
-  geom_smooth(method=lm, colour = "#1855FA") +
-  geom_point(colour = "#1855FA", size=4, alpha = 0.5) +
-  geom_ribbon(stat='smooth', method = "lm", se=TRUE, alpha=0.1, 
-              fill = "#1855FA") +
-  ggtitle("") +
-  labs(x="Comprimento do corpo", y = "Altura da garra") +
-  theme(text = element_text(size=20),
-        plot.title = element_text(size=40, hjust=0.5),
-        axis.text.x = element_text(size = 20, angle=0, hjust=1),
-        axis.text.y = element_text(size = 20, angle=0, vjust=1),
-        axis.title.x = element_text(size = 30, angle=0),
-        axis.title.y = element_text(size = 30, angle=90))
-p5
-dev.off()
-```
-
-Plote a relaçãoo entre status e os resíduos da relacao entre comprimento
-cefalotorácico e altura do própodo, depois exporte o gráfico como um
-arquivo PNG.
-
-```{r}
-p6 = png(filename= "figuras/p6.png", res= 300, height= 2000, width= 3000)
-ggplot(dados, aes(x=fit5.res, y=status2)) + 
-  geom_point(colour = "#1855FA", size=4, alpha = 0.5) + 
-  stat_smooth(method="glm", method.args=list(family="binomial"), se=FALSE) +
-  labs(x="Residuos corpo-garra", y = "Status") +
-  theme(text = element_text(size=20),
-        plot.title = element_text(size=40, hjust=0.5),
-        axis.text.x = element_text(size = 20, angle=0, hjust=1),
-        axis.text.y = element_text(size = 20, angle=0, vjust=1),
-        axis.title.x = element_text(size = 30, angle=0),
-        axis.title.y = element_text(size = 30, angle=90))
-p6
-dev.off()
-```
-
-Teste se a relação é significativa e examine os valores estatísticos,
-depois exporte os resultados como um arquivo TXT.
-
-```{r}
-fit6 = glmer(status2 ~ fit5.res + (1|dupla), family=binomial, data=dados)
-summary(fit6)
-res6 = anova(fit6, test="Chisq")
-res6
-capture.output(res6, file = "resultados/resultados-res-dupla.txt")
-isSingular(fit6, tol = 1e-05)
 ```
 
 ## Passos finais
 
-1.  Complete o seu mapa mental, indicando se as previsões se confirmaram
-    ou não, apenas com base nos gráficos que plotou;
+1.  Pegue o seu mapa mental exportado e cole-o em um novo arquivo de um
+    programa de slides ou gráfico;
 
-2.  Inclua uma conclusão geral sucinta no seu mapa;
+2.  Complete o seu mapa mental, colando perto da previsão o gráfico que
+    representa seu respectivo teste. Se tiver trabalhado com mais de uma
+    previsão, terá feito mais de um gráfico;
 
-3.  Exporte o seu mapa mental em formato PDF e carregue-o no link do
+3.  Diga se a sua previsão se confirmou ou não, apenas com base no
+    gráfico;
+
+4.  Inclua uma conclusão geral sucinta no seu mapa;
+
+5.  Exporte o seu mapa mental em formato PDF e carregue-o no link do
     moodle para entregar o relatório.
 
-## Para saber mais {#mais}
+## Para saber mais
 
 [Qual gráfico devo
 fazer?](https://marcoarmello.wordpress.com/2020/05/29/qualgrafico/)

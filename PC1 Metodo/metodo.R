@@ -98,7 +98,7 @@ mapa %>% get_edge_df()
 
 render_graph(mapa)
 
-export_graph(mapa, file_name = "mapa_mental.png",
+export_graph(mapa, file_name = "figuras/mapa_mental.png",
              file_type = "png",
              width = 3000,
              height = 3000)

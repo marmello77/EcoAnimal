@@ -61,16 +61,114 @@ programação.
 2.  Identifique no texto os seguintes *elementos do método científico*:
     **problema**, **pergunta**, **hipótese**, **premissas**,
     **previsões** e **conclusão**. Descreva-os no contexto do artigo de
-    base sucintamente, usando frases curtas. Anote essas descrições em
-    um arquivo de texto à parte;
+    base sucintamente, usando frases curtas. Anote essas descrições nas
+    caixinhas abaixo:
 
-3.  Pense sobre como esses elementos se relacionam entre si, com base no
+### Problema
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+### Pergunta
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+### Hipótese
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+### Premissas
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+### Previsões
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+### Conclusão
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+## Passos intermediários
+
+1.  Pense sobre como esses elementos se relacionam entre si, com base no
     que foi ensinado na aula teórica;
 
-4.  Organize essas descrições curtas na forma de um esboço de mapa
+2.  Organize essas descrições curtas na forma de um esboço de mapa
     mental, feito à mão ou no computador;
 
-5.  Siga o passo a passo para desenhar a versão final do seu mapa mental
+3.  Siga o passo a passo para desenhar a versão final do seu mapa mental
     por programação, em linguagem R.
 
 ## Desenhando o mapa mental
@@ -115,14 +213,14 @@ Crie os dois primeiros elementos do seu mapa mental. Um deles representa
 o problema e o outro, a pergunta do artigo de base:
 
 ```{r}
-mapa <- add_node(mapa, label = "Problema",
-                  type = "problema",
-                  node_aes = node_aes(shape = "rectangle",
-                                      height = 0.9,
-                                      width = 0.9,
-                                      fontsize = 8,
-                                      fillcolor = c("white"),#cor do enchimento
-                                      color = c("red")))#cor da borda
+mapa <- add_node(mapa, label = "Problema", #nomeie o elemento
+                  type = "problema", #crie categorias de elementos
+                  node_aes = node_aes(shape = "rectangle", #defina a forma
+                                      height = 0.9, #altura do elemento
+                                      width = 0.9, #largura do elemento
+                                      fontsize = 8, #tamanho da fonte
+                                      fillcolor = c("white"), #cor do preenchimento
+                                      color = c("red"))) #cor da borda
 mapa <- add_node(mapa, label = "Pergunta", 
                   type = "pergunta",
                   node_aes = node_aes(shape = "triangle",
@@ -163,14 +261,14 @@ Por exemplo, se você quiser incluir uma hipótese no mapa mental, basta
 adicionar a ele mais um elemento e uma conexão:
 
 ```{r}
-mapa <- add_node(mapa, label = "Hipótese 1",
-                  type = "hipotese",
-                  node_aes = node_aes(shape = "ellipse",
-                                      fontsize = 5,
-                                      fillcolor = c("white"),
-                                      color = c("darkgreen")))
+mapa <- add_node(mapa, label = "Hipótese 1", 
+                  type = "hipotese", 
+                  node_aes = node_aes(shape = "ellipse", 
+                                      fontsize = 5, 
+                                      fillcolor = c("white"), 
+                                      color = c("darkgreen"))) 
 
-mapa <- add_edge(mapa, "Pergunta", "Hipótese 1",
+mapa <- add_edge(mapa, "Pergunta", "Hipótese 1", #de onde sai e para onde vai
                  edge_aes = NULL,
                  edge_data = NULL)
 
@@ -235,13 +333,12 @@ export_graph(mapa, file_name = "mapa_mental.png",
 2.  Cole o seu mapa mental em um arquivo de PowerPoint ou de outro
     programa de slides ou programa gráfico da sua preferência;
 
-3.  Pegue aquele arquivo de texto com suas anotações, feitas lá no
-    começo. Adicione ao mapa mental caixas de texto explicando em frases
-    curtas os elementos do método científico extraídos a partir do
-    artigo de base;
+3.  Pegue as suas anotações, feitas lá nos Passos Iniciais. Adicione-as
+    ao mapa mental como caixas de texto, explicando e os elementos do
+    método científico;
 
-4.  Exporte o seu mapa mental em formato PDF e carregue-o no link do
-    moodle para entregar o relatório.
+4.  Exporte o seu mapa mental comentado em formato PDF e carregue-o no
+    link do moodle para entregar o relatório.
 
 ## Para saber mais
 
