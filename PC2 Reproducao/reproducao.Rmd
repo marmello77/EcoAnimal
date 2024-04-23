@@ -105,7 +105,7 @@ gentilmente nos cedeu a planilha.
 
 ### Figura 1
 
-![](images/Figura 1.png){width="564"}
+![](images/Figura%201.png){width="564"}
 
 Legenda: (a) Representação de um macho da espécie de caranguejo Aegla
 longirostri adaptado de (Bond-Buckup 2003, apud Palaoro et al. 2014). A
