@@ -1,12 +1,6 @@
-################################################################################
-# Universidade de São Paulo
-# Instituto de Biociências
-# Departamento de Ecologia
-# Topicos Avançados em Ecologia de Animais (BIE0315)
-# Profs. José Carlos Motta Jr. & Marco A. R. Mello
-# Prática de Computador II: Reprodução
-# README: https://github.com/marmello77/EcoAnimal#readme
-################################################################################
+# Check README for understanding the context and authors of this script: 
+# https://github.com/marmello77/EcoAnimal/blob/main/README.md
+
 
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 

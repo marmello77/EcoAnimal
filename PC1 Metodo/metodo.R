@@ -1,3 +1,7 @@
+# Check README for understanding the context and authors of this script: 
+# https://github.com/marmello77/EcoAnimal/blob/main/README.md
+
+
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 rm(list= ls())

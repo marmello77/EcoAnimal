@@ -84,12 +84,18 @@ código desejada, no alto à direita
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 ```
 
-Limpe os objetos criados anteriormente e também o console:
+Limpe os objetos criados anteriormente:
 
 ```{r}
 rm(list= ls())
 
+```
+
+Limpe o console:
+
+```{r}
 cat("\014")  
+
 ```
 
 Carregue os pacotes necessários:
