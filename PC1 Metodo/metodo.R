@@ -8,7 +8,10 @@ rm(list= ls())
 
 cat("\014")  
 
-library(DiagrammeR)
+if(!require(DiagrammeR)){
+  install.packages("DiagrammeR")
+  library(DiagrammeR)
+  }
 
 mapa <- create_graph()
 
@@ -46,24 +49,13 @@ mapa <- add_node(mapa, label = "Premissa 3",
                                       fontsize = 5,
                                       color = c("white"),
                                       fillcolor = c("white")))
-mapa <- add_node(mapa, label = "Premissa 4", 
-                  type = "premissa",
-                  node_aes = node_aes(shape = "plaintext",
-                                      fontsize = 5,
-                                      color = c("white"),
-                                      fillcolor = c("white")))
 mapa <- add_node(mapa, label = "Hipótese 1",
                   type = "hipotese",
                   node_aes = node_aes(shape = "ellipse",
                                       fontsize = 5,
                                       fillcolor = c("white"),
                                       color = c("darkgreen")))
-mapa <- add_node(mapa, label = "Hipótese 2", 
-                  type = "hipotese",
-                  node_aes = node_aes(shape = "ellipse",
-                                      fontsize = 5,
-                                      fillcolor = c("white"),
-                                      color = c("darkgreen")))
+
 mapa <- add_node(mapa, label = "Previsão 1",
                   type = "previsao",
                   node_aes = node_aes(shape = "polygon",
@@ -82,13 +74,11 @@ mapa <- add_node(mapa, label = "Previsão 2",
 
 mapa <- add_edge(mapa, "Problema", "Pergunta", edge_aes = NULL, edge_data = NULL)
 mapa <- add_edge(mapa, "Pergunta", "Hipótese 1", edge_aes = NULL, edge_data = NULL)
-mapa <- add_edge(mapa, "Pergunta", "Hipótese 2", edge_aes = NULL, edge_data = NULL)
 mapa <- add_edge(mapa, "Premissa 1", "Hipótese 1", edge_aes = NULL, edge_data = NULL)
 mapa <- add_edge(mapa, "Premissa 2", "Hipótese 1", edge_aes = NULL, edge_data = NULL)
-mapa <- add_edge(mapa, "Premissa 3", "Hipótese 2", edge_aes = NULL, edge_data = NULL)
-mapa <- add_edge(mapa, "Premissa 4", "Hipótese 2", edge_aes = NULL, edge_data = NULL)
+mapa <- add_edge(mapa, "Premissa 3", "Hipótese 1", edge_aes = NULL, edge_data = NULL)
 mapa <- add_edge(mapa, "Hipótese 1", "Previsão 1", edge_aes = NULL, edge_data = NULL)
-mapa <- add_edge(mapa, "Hipótese 2", "Previsão 2", edge_aes = NULL, edge_data = NULL)
+mapa <- add_edge(mapa, "Hipótese 1", "Previsão 2", edge_aes = NULL, edge_data = NULL)
 
 
 mapa %>% get_node_df()
@@ -97,6 +87,11 @@ mapa %>% get_edge_df()
 
 
 render_graph(mapa)
+
+
+if (!file.exists("figuras/")) {
+  dir.create("figuras/", recursive = TRUE)
+}
 
 export_graph(mapa, file_name = "figuras/mapa_mental.png",
              file_type = "png",

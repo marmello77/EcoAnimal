@@ -88,7 +88,7 @@ gentilmente nos cedeu a planilha.
 
 ### Figura 1
 
-Representação de um macho da espécie de caranguejo Aegla longirostri
+Representação de um macho da espécie de caranguejo *Aegla longirostri*
 adaptado de (Bond-Buckup 2003, apud Palaoro et al. 2014). A linha preta
 representa o comprimento do cefalotórax. (b) Representação esquemática
 da garra esquerda. LE: comprimento da garra; CH: altura da garra; (1):
@@ -106,6 +106,7 @@ código desejada, no alto à direita
 
 ```{r}
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+
 ```
 
 Limpe os objetos criados anteriormente e também o console:
@@ -125,17 +126,29 @@ cat("\014")
 Carregue os pacotes necessários:
 
 ```{r}
-library(ggplot2)
-library(lme4)
+if(!require(ggplot2)){
+  install.packages("ggplot2")
+  library(ggplot2)
+  }
+
+if(!require(lme4)){
+  install.packages("lme4")
+  library(lme4)
+  }
+
+if(!require(DiagrammeR)){
+  install.packages("DiagrammeR")
+  library(DiagrammeR)
+  }
 ```
 
 ## Passos intermediários
 
 1.  Examine os dados e metadados da planilha XLSX fornecida;
 
-2.  Qual dessas medidas fornecidas na planilha você acha que deve ser
-    mais importante para prever quem ganhará uma luta entre dois
-    caranguejos machos dessa espécie?
+2.  Com base no artigo e na planilha, qual dessas medidas fornecidas
+    você acha que deve ser mais importante para prever quem ganhará uma
+    luta entre dois caranguejos machos da espécie modelo?
 
 3.  Descreva de maneira sucinta os elementos do método científico que
     sustentam a sua expectativa: **problema**, **pergunta**,
@@ -226,11 +239,12 @@ Escreva sua resposta aqui.
 ## Mapa mental
 
 Agora é hora de organizar os elementos do método científico na forma de
-um mapa mental. Faça um esboço desse mapa à mão ou num programa de
-slides. Depois faça a versão final por programação.
+um **mapa mental**. Faça um esboço desse mapa à mão ou num programa de
+slides. Depois faça a versão final por programação, como aprendido nas
+aulas.
 
-Aqui vai um mapa mental básico para você começar a programar.
-Modifique-o da forma que achar melhor
+Aqui vai um código básico para você começar a programar o seu mapa
+mental. Modifique-o da forma que achar melhor:
 
 ```{r}
 library(DiagrammeR)
@@ -271,7 +285,6 @@ mapa <- add_node(mapa, label = "Hipótese 1",
                                       fontsize = 5,
                                       fillcolor = c("white"),
                                       color = c("darkgreen")))
-
 mapa <- add_node(mapa, label = "Previsão 1",
                   type = "previsao",
                   node_aes = node_aes(shape = "polygon",
@@ -297,6 +310,10 @@ render_graph(mapa)
 Exporte o mapa como uma figura, quando ele estiver pronto:
 
 ```{r}
+if (!file.exists("figuras/")) {
+  dir.create("figuras/", recursive = TRUE)
+}
+
 export_graph(mapa, file_name = "figuras/mapa_mental.png",
              file_type = "png",
              width = 3000,
@@ -306,54 +323,110 @@ export_graph(mapa, file_name = "figuras/mapa_mental.png",
 
 ## Analisando visualmente
 
-Importe os dados e dê uma boa olhada na estrutura deles. Quais são as
-variáveis e quais são as observações?
+Importe os dados:
 
 ```{r}
 dados<- read.delim("dados.txt", header=T) #importando um arquivo TXT
+
+```
+
+Agora faça uma inspeção geral dos dados importados. Para começar, quais
+são as dimensões do quadro de dados (*data* *frame*), em números de
+linhas e colunas, respectivamente?
+
+```{r}
 dim(dados)
+
+```
+
+Dê uma olhada nas seis primeiras linhas do quadro de dados. Quem são as
+variáveis (colunas) e quem são as observações (linhas)?
+
+```{r}
 head(dados)
+
+```
+
+Agora confira as seis últimas linhas do quadro de dados, para ver se
+pelo menos as pontas estão batendo com o que você tinha visto na
+planilha original XLSX:
+
+```{r}
 tail(dados)
 ```
 
-No primeiro resultado, vemos as dimensões do quadro de dados (*data*
-*frame*) em linhas x colunas.
-
-No segundo resultado, vemos as seis primeiras linhas do quadro de dados.
-
-No terceiro resultado, vemos as seis últimas linhas do quadro de dados.
-
-Agora, transforme a variável `status` em numérica e binária, salvando-a
-como uma nova variável:
+Agora, para poder rodar as próximas análises, transforme a variável
+`status` de *categórica* para *numérica e binária*, salvando-a como uma
+nova variável:
 
 ```{r}
 dados$status2 <- ifelse(dados$status == "perdedor", 0, 1) #teste lógico
 head(dados)
 ```
 
-Examine de forma preliminar as relações entre as variáveis disponíveis:
+Examine de forma preliminar as relações entre as variáveis disponíveis.
+
+Vamos começar olhando como as medidas (`cc` e `ap`) se relacionam entre
+si:
 
 ```{r}
-plot(dados$cc~dados$ap)
-plot(dados$status2~dados$cc)
-plot(dados$status2~dados$ap)
+plot(dados$cc~dados$ap,
+     xlab = "Altura do própodo",
+     ylab = "Comprimento do corpo")
+tendencia <- lm(dados$cc~dados$ap)
+intercept <- coef(tendencia)[1]
+slope <- coef(tendencia)[2]
+abline(tendencia, col = "black")
+
 ```
 
-Você conhece esses tipos de gráficos?
+Quem eram mesmo essas variáveis `cc` e `ap`? Escreva os nomes delas na
+caixinha abaixo:
 
-O primeiro gráfico é um **diagrama de dispersão de pontos**, também
-conhecido como gráfico de regressão ou gráfico de correlação. Ele mostra
-a relação entre duas variáveis numéricas e contínuas.
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+cc = .
+:::
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+ap = .
+:::
+
+Esse primeiro gráfico é do tipo **diagrama de dispersão de pontos**,
+também conhecido como gráfico de regressão ou gráfico de correlação. Ele
+mostra a relação entre duas variáveis *numéricas e contínuas*. Pode-se
+incluir uma **curva de tendência**, aqui representada pela linha preta,
+que mostra a tendência geral da relação.
 
 Através desse tipo de gráfico, você pode analisar visualmente se, quando
-uma variável aumenta, a outra aumenta ou diminui (i.e., relação positiva
-ou negativa), ou ainda se elas não apresentam relação alguma entre si.
+uma variável aumenta, a outra aumenta ou diminui (i.e., **relação
+positiva ou negativa**), ou ainda se elas não apresentam relação alguma
+entre si.
 
 ### Pergunta 1
 
 No caso dos dados do **primeiro gráfico**, você nota alguma relação
 entre o comprimento cefalotorácico (`cc`) e a altura do própodo (`ap`)?
-Por que?
+De que tipo? Por que?
 
 ```{=html}
 <style>
@@ -372,10 +445,10 @@ Escreva sua resposta aqui.
 ### Pergunta 2
 
 Você pode também analisar visualmente a força de uma eventual relação
-positiva ou negativa entre as variáveis e o tamanho do efeito. Basta
-checar o quanto os pontos estão dispersos ou concentrados ao redor de
-uma reta de tendência hipotética. Caso haja alguma relação, você acha
-que ela é forte ou fraca e por que?
+positiva ou negativa entre as variáveis (**ajuste do modelo**). Basta
+checar o quanto os pontos estão dispersos ou concentrados ao redor da
+curva de tendência. Caso haja alguma relação, você acha que ela é forte
+ou fraca e por que?
 
 ```{=html}
 <style>
@@ -391,9 +464,60 @@ que ela é forte ou fraca e por que?
 Escreva sua resposta aqui.
 :::
 
+### Pergunta 3
+
+Você pode também analisar visualmente a o quanto X faz Y variar
+(**tamanho do efeito**). Basta checar a inclinação da nuvem de pontos ou
+da curva de tendência, se houver. Você acha que o efeito de X sobre Y é
+pequeno ou grande? Por que?
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+Tudo bem, essas duas primeiras variáveis eram os fatores analisados no
+estudo. Ou seja, os "X" da questão. Mas a resposta, ou seja, o "Y" da
+questão era o `status2`: vencer ou perder a luta.
+
+Como será que `cc` se relaciona com `status2`? Vamos ver!
+
+```{r}
+fit1 = glm(dados$status2~dados$cc, family=binomial)
+plot(dados$status2~dados$cc,
+     xlab = "Comprimento do corpo",
+     ylab = "Status")
+curve (exp(fit1$coefficients[[1]]+fit1$coefficients[[2]]*x)/
+         (1+exp(fit1$coefficients[[1]]+fit1$coefficients[[2]]*x)),
+       add=T)
+
+```
+
+Como será que `ap` se relaciona com `status2`? Vamos ver!
+
+```{r}
+fit1 = glm(dados$status2~dados$ap, family=binomial)
+plot(dados$status2~dados$ap,
+     xlab = "Altura do própodo",
+     ylab = "Status")
+curve (exp(fit1$coefficients[[1]]+fit1$coefficients[[2]]*x)/
+         (1+exp(fit1$coefficients[[1]]+fit1$coefficients[[2]]*x)),
+       add=T)
+
+```
+
 O segundo e o terceiro são **gráficos logísticos**. Eles mostram a
-relação entre uma variável numérica e contínua, o **fator**, e uma
-variável numérica e binária (do tipo "sim ou não"), a **resposta**.
+relação entre uma variável *numérica e contínua*, o **fator**, e uma
+variável *numérica e binária* (do tipo "sim ou não"), a **resposta**.
 
 Através desse tipo de gráfico, você pode analisar visualmente a
 probabilidade de a resposta ser 0 ou 1, conforme aumenta o fator. O
@@ -401,14 +525,30 @@ ponto 0.5 no eixo Y representa o limiar da transição de uma resposta
 para a outra. Essa relação entre fator e resposta também pode ser
 positiva ou negativa.
 
-### Pergunta 3
+### Pergunta 4
 
 Você lembra o que representam 0 e 1 na variável que transformamos lá
 atrás (`status2`)?
 
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+0 =
+
+1 =
+:::
+
 Considerando o **segundo gráfico**, você acha que a chance de um
-caranguejo vencer uma luta depende ou não da variável escolhida como
-fator? Se depende, a chance aumenta ou diminui? Por que?
+caranguejo vencer uma luta depende ou não do comprimeiro do corpo? Se
+depende, a chance aumenta ou diminui com esse fator? Por que?
 
 ```{=html}
 <style>
@@ -424,39 +564,19 @@ fator? Se depende, a chance aumenta ou diminui? Por que?
 Escreva sua resposta aqui.
 :::
 
-## Melhorando um dos gráficos
+## Exportando um dos gráficos
 
-Que tal produzir um gráfico mais completo?
-
-Vamos calcular uma linha de tendência, rodando um GLM com distribuição
-binomial:
+Podemos expotar o primeiro gráfico como uma figura:
 
 ```{r}
-fit1 = glm(dados$status2~dados$cc, family=binomial)
-summary(fit1)
-```
-
-E agora vamos adicionar essa linha de tendência ao gráfico:
-
-```{r}
-plot(dados$status2~dados$cc,
-     xlab = "Comprimento do corpo",
-     ylab = "Status")
-curve (exp(fit1$coefficients[[1]]+fit1$coefficients[[2]]*x)/
-         (1+exp(fit1$coefficients[[1]]+fit1$coefficients[[2]]*x)),
-       add=T)
-```
-
-Podemos expotar o gráfico como uma figura:
-
-```{r}
-png("figuras/p1b.png", width = 1000, height = 700)
-plot(dados$status2~dados$cc,
-     xlab = "Comprimento do corpo",
-     ylab = "Status")
-curve (exp(fit1$coefficients[[1]]+fit1$coefficients[[2]]*x)/
-         (1+exp(fit1$coefficients[[1]]+fit1$coefficients[[2]]*x)),
-       add=T)
+png("figuras/grafico1.png", width = 1000, height = 700)
+plot(dados$cc~dados$ap,
+     xlab = "Altura do própodo",
+     ylab = "Comprimento do corpo")
+tendencia <- lm(dados$cc~dados$ap)
+intercept <- coef(tendencia)[1]
+slope <- coef(tendencia)[2]
+abline(tendencia, col = "black")
 dev.off()  
 
 ```
@@ -494,15 +614,22 @@ Exporte o seu gráfico como uma figura:
 
 4.  Inclua uma conclusão geral sucinta no seu mapa;
 
-5.  Exporte o seu mapa mental em formato PDF e carregue-o no link do
-    moodle para entregar o relatório.
+5.  Exporte o seu mapa mental comentado em formato PDF;
+
+6.  Exporte este notebook com suas respostas em formato HTML (também
+    pode ser DOC ou PDF, se o seu computador permitir). Na barra de
+    ferramentas da aba deste notebook, clique em "Knit\>Knit to HTML";
+
+7.  Carregue juntos o seu mapa mental e este notebook respondido no link
+    do moodle para entrega do relatório.
 
 ## Para saber mais
 
 [Qual gráfico devo
 fazer?](https://marcoarmello.wordpress.com/2020/05/29/qualgrafico/)
 
-[Tidy Data Manifesto](https://vita.had.co.nz/papers/tidy-data.html)
+[Por que as planilhas foram organizadas desta
+forma?](https://vita.had.co.nz/papers/tidy-data.html)
 
 [Regressão logística na
 Wikipedia](https://en.wikipedia.org/wiki/Logistic_regression)

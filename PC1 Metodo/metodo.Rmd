@@ -1,9 +1,13 @@
 ---
-title: "EcoAnimal USP, Prática de Computador I: Método Científico"
-output: pdf_document
+title: 'EcoAnimal USP, Prática de Computador I: Método Científico'
 author: "Marco A. R. Mello"
-editor_options: 
-  markdown: 
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+  word_document: default
+editor_options:
+  markdown:
     wrap: 72
 ---
 
@@ -168,8 +172,8 @@ Escreva sua resposta aqui.
 2.  Organize essas descrições curtas na forma de um esboço de mapa
     mental, feito à mão ou no computador;
 
-3.  Siga o passo a passo para desenhar a versão final do seu mapa mental
-    por programação, em linguagem R.
+3.  Siga os próximos passos para aprender como desenhar a versão final
+    do seu mapa mental por programação, em linguagem R.
 
 ## Desenhando o mapa mental
 
@@ -199,7 +203,10 @@ cat("\014")
 Carregue os pacotes necessários:
 
 ```{r}
-library(DiagrammeR)
+if(!require(DiagrammeR)){
+  install.packages("DiagrammeR")
+  library(DiagrammeR)
+  }
 ```
 
 Crie um mapa mental (*aka*, diagrama ou grafo) vazio. Depois você
@@ -209,8 +216,8 @@ adicionará os elementos (*nodes*) e as conexões (*edges*):
 mapa <- create_graph()
 ```
 
-Crie os dois primeiros elementos do seu mapa mental. Um deles representa
-o problema e o outro, a pergunta do artigo de base:
+Crie os dois primeiros elementos (*nodes*) do seu mapa mental. Um deles
+representa o problema e o outro, a pergunta do artigo de base:
 
 ```{r}
 mapa <- add_node(mapa, label = "Problema", #nomeie o elemento
@@ -231,17 +238,23 @@ mapa <- add_node(mapa, label = "Pergunta",
                                       color = c("blue")))
 ```
 
-Crie a conexão entre esses dois primeiros elementos:
+Crie a conexão (*edge*) entre esses dois primeiros elementos:
 
 ```{r}
 mapa <- add_edge(mapa, "Problema", "Pergunta", edge_aes = NULL, edge_data = NULL)
 
 ```
 
-Cheque a estrutura dos elementos e das conexões do seu mapa mental:
+Cheque a estrutura dos elementos do seu mapa mental:
 
 ```{r}
 mapa %>% get_node_df()
+
+```
+
+Cheque a estrutura das conexões do seu mapa mental:
+
+```{r}
 mapa %>% get_edge_df()
 
 ```
@@ -286,10 +299,10 @@ Como faria essa modificação? Pense...
 
 ...
 
-Pensou? Então copie, cole e adapte na caixinha abaixo apenas as linhas
-de código adicionais de que você precisa para fazer a modificação
-desejada. Depois clique no triângulo verde da caixinha, no alto à
-direita:
+Pensou? Agora então copie, cole e adapte na caixinha abaixo apenas as
+linhas de código adicionais de que você precisa para adicionar mais duas
+premissas e suas respectivas conexões. Depois clique no triângulo verde
+da caixinha, no alto à direita:
 
 ```{r}
 
@@ -303,13 +316,14 @@ render_graph(mapa)
 ```
 
 Agora adicione ao seu mapa mental os elementos e conexões que faltam,
-usando a caixinha de código abaixo:
+com base no rascunho que fez lá atrás, usando a caixinha de código
+abaixo:
 
 ```{r}
 
 ```
 
-Plote a nova versão do seu mapa mental:
+Plote a versão final do seu mapa mental:
 
 ```{r}
 render_graph(mapa)
@@ -319,7 +333,11 @@ render_graph(mapa)
 Para salvar o seu mapa como uma figura, você precisa exportá-lo:
 
 ```{r}
-export_graph(mapa, file_name = "mapa_mental.png",
+if (!file.exists("figuras/")) {
+  dir.create("figuras/", recursive = TRUE)
+}
+
+export_graph(mapa, file_name = "figuras/mapa_mental.png",
              file_type = "png",
              width = 3000,
              height = 3000)
@@ -330,19 +348,25 @@ export_graph(mapa, file_name = "mapa_mental.png",
 1.  Dê uma olhada no diretório de trabalho para encontrar o seu mapa
     mental exportado como uma figura;
 
-2.  Cole o seu mapa mental em um arquivo de PowerPoint ou de outro
-    programa de slides ou programa gráfico da sua preferência;
+2.  Insira o seu mapa mental em um arquivo de PowerPoint, outro programa
+    de slides ou programa gráfico da sua preferência;
 
 3.  Pegue as suas anotações, feitas lá nos Passos Iniciais. Adicione-as
-    ao mapa mental como caixas de texto, explicando cada um dos
-    elementos do método científico;
+    ao mapa mental como caixas de texto, adjacentes ao respectivo
+    elemento do método científico, explicando-o;
 
-4.  Não se esqueça de adicionar um cabeçalho ao mapa mental, contendo os
-    nomes completos dos integrantes do grupo, seus números USP e a data
-    da prática;
+4.  Não se esqueça de adicionar um cabeçalho ao seu mapa mental,
+    contendo os nomes completos dos integrantes do grupo, seus números
+    USP e a data da prática;
 
-5.  Exporte o seu mapa mental comentado em formato PDF e carregue-o no
-    link do moodle para entregar o relatório.
+5.  Exporte o seu mapa mental comentado em formato PDF;
+
+6.  Exporte este notebook com suas respostas em formato HTML (também
+    pode ser DOC ou PDF, se o seu computador permitir). Na barra de
+    ferramentas da aba deste notebook, clique em "Knit\>Knit to HTML";
+
+7.  Carregue juntos o seu mapa mental e este notebook respondido no link
+    do moodle para entrega do relatório.
 
 ## Para saber mais
 
