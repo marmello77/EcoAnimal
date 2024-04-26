@@ -42,9 +42,9 @@ Para entender o contexto deste tutorial e creditar seus autores, leia o
 
 ## **Objetivo**
 
-Para aprender como se faz ciência ou para entender de verdade artigos
-científicos, é fundamental saber como funciona o método científico.
-Assim, esta aula prática visa complementar a aula teórica,
+Para aprender como se faz ciência ou mesmo para entender mais a fundo
+artigos científicos, é fundamental saber como funciona o método
+científico. Assim, esta aula prática visa complementar a aula teórica,
 proporcionando uma oportunidade de consolidar os conhecimentos
 aprendidos além de adquirir novas habilidades. Aqui, faremos a dissecção
 do artigo de base e ainda aprenderemos como desenhar um mapa mental por
@@ -302,8 +302,8 @@ render_graph(mapa)
 
 ```
 
-Agora adicione ao seu mapa mental os elementos e conexões que faltam, na
-caixinha abaixo:
+Agora adicione ao seu mapa mental os elementos e conexões que faltam,
+usando a caixinha de código abaixo:
 
 ```{r}
 
@@ -334,10 +334,14 @@ export_graph(mapa, file_name = "mapa_mental.png",
     programa de slides ou programa gráfico da sua preferência;
 
 3.  Pegue as suas anotações, feitas lá nos Passos Iniciais. Adicione-as
-    ao mapa mental como caixas de texto, explicando e os elementos do
-    método científico;
+    ao mapa mental como caixas de texto, explicando cada um dos
+    elementos do método científico;
 
-4.  Exporte o seu mapa mental comentado em formato PDF e carregue-o no
+4.  Não se esqueça de adicionar um cabeçalho ao mapa mental, contendo os
+    nomes completos dos integrantes do grupo, seus números USP e a data
+    da prática;
+
+5.  Exporte o seu mapa mental comentado em formato PDF e carregue-o no
     link do moodle para entregar o relatório.
 
 ## Para saber mais

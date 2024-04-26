@@ -78,4 +78,4 @@ Se você quiser fazer perguntas, sugestões ou correções, por favor, abra um [
 
 ## Agradecimentos
 
-Agradeço ao Prof. Motta Jr., coordenador da disciplina, ao Dr. Francisco Dénes, docente assistente, a todos os tutores e monitores que ao longo dos anos foram me ajudando a melhorar estas práticas e seus respectivos códigos, e aos colegas que nos ajudam a tirar dúvidas e desatar nós. Um salve especial vai para a comunidade do [StackOverflow](https://stackoverflow.com), onde resolvemos a maioria dos nossos dilemas de programação.
+Agradeço ao Prof. Motta Jr., coordenador da disciplina, ao Dr. Francisco Dénes, docente pós-doutoral assistente, a todos os tutores e monitores que ao longo dos anos foram nos ajudando a melhorar estas práticas e seus respectivos códigos, e aos diversos colegas que nos ajudaram a tirar dúvidas e desatar nós. Um salve especial vai para a comunidade do [StackOverflow](https://stackoverflow.com), onde resolvemos a maioria dos nossos dilemas de programação.
