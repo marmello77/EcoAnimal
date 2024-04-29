@@ -1,5 +1,5 @@
 ---
-title: "Prática de Computador III: Socialidade"
+title: "EcoAnimal USP, Prática de Computador III: Socialidade"
 output: pdf_document
 author: "Marco A. R. Mello"
 editor_options: 
@@ -14,72 +14,127 @@ prettyNum(x, big.mark=",")
 })
 ```
 
-Universidade de São Paulo
+Para entender o contexto deste tutorial e creditar seus autores, leia o
+[README](https://github.com/marmello77/EcoAnimal/blob/main/README.md).
 
-Instituto de Biociências
+## Instruções gerais
 
-Departamento de Ecologia
+1.  Mude o modo de vizualização aqui no RStudio para `Visual`, clicando
+    no botão que fica no canto esquerdo da barra de formatação;
 
-[Tópicos Avançados em Ecologia de Animais
-(BIE0315)](https://uspdigital.usp.br/jupiterweb/obterDisciplina?sgldis=BIE0315&verdis=4)
+2.  Clique no triângulo verde da primeira caixinha de código (dentro
+    dela, no alto à direita), logo acima desta seção;
 
-Profs. José Carlos Motta Jr. & Marco A. R. Mello
+3.  Leia atentamente este roteiro e faça a prática junto com o seu
+    grupo;
 
-Artigo de referência: [Guimarães Jr. et al. (2007, Physical Review E)](https://doi.org/10.1103/PhysRevE.76.042901)
+4.  Tente fazer a prática sem a ajuda dos docentes. Caso não consiga,
+    peça-nos ajuda;
 
-Agradecimentos: O primeiro autor do artigo de referência, Prof. Paulo Guimarães Jr., tirou nossas dúvidas sobre o seu trabalho.
+5.  No relatório a ser entregue, adicione um cabeçalho com os nomes
+    completos dos integrantes do grupo, incluindo seus números USP e a
+    data da prática;
 
-[README](https://github.com/marmello77/EcoAnimal#readme)
+6.  O relatório deve ser entregue através da tarefa criada no moodle da
+    disciplina, no formato pedido;
 
+7.  Não serão aceitos relatórios entregues fora do prazo determinado.
 
-## Sumário
+## Artigo de base
 
-[Preparativos](#preparativos)
+[Guimarães Jr. et al. (2007,
+PhysRev)](https://doi.org/10.1103/PhysRevE.76.042901)
 
-[Modelo SIR básico](#basico)
+## Objetivo
 
-[Modelo SIR com estrutura de rede](#rede)
+Animais variam muito entre si no que diz respeito à estrutura dos grupos
+sociais que formam. Hoje em dia, há formas sofisticadas de analisar essa
+estrutura e obter insights importantes sobre vários fenômenos, como por
+exemplo a transmissão de doenças. Dessa forma, o objetivo desta prática
+é aprender como fazer uma análise básica da relação entre a estrutura de
+uma rede social e a susceptibilidade da população em questão a uma
+doença contagiosa.
 
-[Para saber mais](#mais)
+## Contexto
 
+Nosso objeto de estudo são interações sociais. Vamos usar como ponto de
+partida um estudo sobre uma população de orcas (*Orcinus* *orca*) do
+Canadá, publicado por Guimarães Jr. et al. (2007, Physical Review E).
+Contudo, trabalharemos com dados hipotéticos, gerados por simulação
+matemática, mas seguindo a mesma lógica.
 
-## Preparativos{#preparativos}
+## Passos iniciais
 
-Primeiro, leia o tutorial desta prática, disponível aqui em formato PDF e também
-no moodle da disciplina.
-
-Aqui faremos simulações de modelos SIR usando não o NetLogo, mas o R. Começaremos com uma simulação básica e depois partiremos para um modelo aplicado sobre uma estrutura de rede.
-
-Defina o diretório de trabalho como sendo a origem deste script.
+Diga ao `RStudio` que o diretório de trabalho é o mesmo onde está este
+arquivo de tutorial. Para executar as linhas de código desta e das
+demais caixinhas do tutorial, clique no triângulo verde da caixinha de
+código desejada, no alto à direita
 
 ```{r}
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+
 ```
 
-Remova todos os objetos prévios.
+Limpe os objetos criados anteriormente e também o console:
 
 ```{r}
 rm(list= ls())
+
 ```
 
-Limpe o console.
+Limpe o console:
 
 ```{r}
 cat("\014")  
+
 ```
 
-Carregue os pacotes necessários.
+Carregue os pacotes necessários:
 
 ```{r}
-library(igraph)
-library(deSolve)
-library(rJava)
+if(!require(igraph)){
+  install.packages("igraph")
+  library(igraph)
+  }
+
+if(!require(deSolve)){
+  install.packages("deSolve")
+  library(deSolve)
+  }
+
+if(!require(rJava)){
+  install.packages("rJava")
+  library(rJava)
+  }
 ```
 
+## Passos intermediários
 
-## Modelo SIR básico{#basico}
+No **artigo de base**, extraia as seguintes informações:
 
-Crie uma função com as equações diferenciais de um modelo SIR.
+`Tamanho da população` (**n**), considerando apenas os indivíduos
+efetivamente usados nas análises do estudo em questão. Substitua o
+`valor` abaixo (em azul) pelo valor encontrado no artigo de base:
+
+```{r}
+tamanho <- 100
+```
+
+Número médio de conexões por indivíduo, *a.k.a.* `grau médio` (<k>).
+Substitua o valor abaixo (em azul) pelo valor encontrado no artigo de
+base:
+
+```{r}
+grau_medio <- 3
+```
+
+## Criando um modelo SIR básico {#basico}
+
+Para podermos simular uma epidemia em uma rede, primeiro precisamos de
+um modelo SIR.
+
+Crie uma função definida pelo usuário (*UDF*), contendo as equações
+diferenciais que definem um modelo SIR.
 
 ```{r}
 sir <- function(time, state, parameters) {
@@ -95,52 +150,53 @@ sir <- function(time, state, parameters) {
 }
 ```
 
+Agora defina os parâmetros da função.
 
-Defina os parâmetros da função. 
-
-Comece pela proporção em cada compartimento: Suscetíveis = S, Infectados = I, Recuperados = R.
+Comece pela proporção em cada compartimento (Suscetíveis = `S`,
+Infectados = `I`, Recuperados = `R`):
 
 ```{r}
 init <- c(S = 0.999, I = 0.001, R = 0.000)
 ```
 
-Defina as taxas: beta: taxa de infeção; gamma: taxa de recuperação.
+Defina as taxas: *beta*: taxa de infeção; *gamma*: taxa de recuperação:
 
 ```{r}
 parameters <- c(beta = 1.025, gamma = 0.2)
 ```
 
-Defina a escala de tempo da simulação.
+Defina a escala de tempo da simulação, em iterações do modelo:
 
 ```{r}
 times <- seq(0, 100, by = 1)
 ```
 
-Resolva as equações diferenciais usando a função ode (General Solver for Ordinary Differential Equations).
+Resolva as equações diferenciais usando a função ode (General Solver for
+Ordinary Differential Equations):
 
 ```{r}
 out <- ode(y = init, times = times, func = sir, parms = parameters)
 ```
 
-Converta o resultado em um data frame.
+Converta o resultado em um quadro de dados:
 
 ```{r}
 out <- as.data.frame(out)
 ```
 
-Delete a variável de tempo.
+Delete a variável de tempo:
 
 ```{r}
 out$time <- NULL
 ```
 
-Inspecione o resultado.
+Inspecione o resultado:
 
 ```{r}
 head(out)
 ```
 
-Plote as curvas SIR.
+Plote as curvas SIR:
 
 ```{r}
 matplot(x = times, y = out, type = "l",
@@ -156,67 +212,215 @@ legend(70, 0.9, c("Suscetíveis", "Infectados", "Recuperados"),
        bty = "n")
 ```
 
+E se você mudasse algumas coisas nos parâmetros?
 
-## Modelo SIR com estrutura de rede{#rede}
+Por exempo, as proporção de indivíduos em cada compartimento
+(Suscetíveis = `S`, Infectados = `I`, Recuperados = `R`), diminuindo os
+suscetíveis?
 
-Primeiro, remova os objetivos criados anteriormente.
+Troque os valores em azul pelos valores que quiser, mantendo a soma dos
+três igual a `1.000`:
 
 ```{r}
-rm(list= ls())
+init <- c(S = 0.699, I = 0.001, R = 0.299)
 ```
 
-Crie uma rede com estrutura de mundo pequeno (aka "small world" ou Watts-Strogatz), tipicamente observada em redes sociais. Voce pode escolher outro modelo teórico para estruturar a rede que vai usar, pois o pacote igraph tem dezenas de opções de modelos determinísticos e probabilísticos. Note que ajustamos os parâmetros da função de acordo com a estrutura da rede social de orcas estudada no artigo de referência.
+Vamos rodar o modelo novamente, com esses novos valores, mantendo os
+demais iguais:
 
 ```{r}
-g <- sample_smallworld(dim = 1,      #tamanho inicial da rede
-                       size = 43,    #tamanho final da rede
-                       nei = 12,     #grau médio
-                       p = 0.05,     #probabilidade de reconexão
-                       loops = F,    #a rede pode ter loops ou não?
-                       multiple = F) #pode haver elos múltiplos ou não?
+parameters <- c(beta = 1.025, gamma = 0.2)
+times <- seq(0, 100, by = 1)
+out <- ode(y = init, times = times, func = sir, parms = parameters)
+out <- as.data.frame(out)
+out$time <- NULL
+```
+
+Agora plote as novas curvas SIR:
+
+```{r}
+matplot(x = times, y = out, type = "l",
+        xlab = "Tempo", 
+        ylab = "Suscetíveis, Infectados e Recuperados",
+        main = "Modelo SIR",
+        lwd = 1, lty = 1, bty = "l",
+        col = c("blue", "red", "grey"))
+
+legend(70, 0.9, c("Suscetíveis", "Infectados", "Recuperados"),
+       pch = 1, 
+       col = c("blue", "red", "grey"), 
+       bty = "n")
+```
+
+### Pergunta 1
+
+O que mudou nas curvas S, R e I?
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+Vamos resetar os valores do modelo, antes de prosseguir:
+
+```{r}
+init <- c(S = 0.99, I = 0.01, R = 0.0)
+parameters <- c(beta = 1.025, gamma = 0.2)
+times <- seq(0, 100, by = 1)
+out <- ode(y = init, times = times, func = sir, parms = parameters)
+out <- as.data.frame(out)
+out$time <- NULL
+
+```
+
+## Simulando uma rede
+
+Agora que já temos um modelo SIR básico, precisamos de uma rede.
+
+Crie uma **rede com estrutura de mundo pequeno** (aka "[small
+world](https://en.wikipedia.org/wiki/Small-world_network)" ou
+Watts-Strogatz), tipicamente observada em redes sociais. Uma rede assim
+é feita de subgrupos (que podemos chamar de "panelinhas"), que são
+conectados entre si por indivíduos muito influentes, que servem como
+pontes.
+
+Depois, por curiosidade, em casa, você pode escolher outro modelo
+teórico para estruturar sua rede, pois o pacote `igraph` tem dezenas de
+opções de modelos determinísticos e probabilísticos.
+
+Aqui, ajustaremos os parâmetros da função de acordo com a estrutura da
+rede social de orcas estudada no **artigo de base**.
+
+Defina o tamanho inicial da rede a ser simulada como sendo igual a 1
+orca individual:
+
+```{r}
+inicial <- 1
+
+```
+
+Qual era mesmo o **tamanho** da rede estudada?
+
+```{r}
+tamanho
+
+```
+
+Qual era mesmo o **grau médio** na rede estudada?
+
+```{r}
+grau_medio
+
+```
+
+```{r}
+grafo1 <- sample_smallworld(dim = inicial,   #tamanho inicial da rede
+                       size = tamanho,   #tamanho final da rede
+                       nei = grau_medio,   #grau médio
+                       p = 0.05,   #probabilidade de reconexão
+                       loops = F,   #a rede pode ter alças ou não?
+                       multiple = F)   #pode haver elos múltiplos ou não?
 ```
 
 Plote o grafo para visualizar a rede criada.
 
 ```{r}
-plot(g)
+plot(grafo1)
 ```
 
-Rode um modelo SIR sobre a estrutura da rede criada.
+Agora exporte como uma figura o **grafo da rede parametrizada igual ao
+artigo de base**:
 
 ```{r}
-sm <- sir(g,            #a rede que você criou
+if (!file.exists("figuras/")) {
+  dir.create("figuras/", recursive = TRUE)
+}
+
+png(filename= "figuras/grafo1.png", res= 300, height= 2000, width= 3000)
+
+plot(grafo1)
+
+dev.off()
+```
+
+## Infectando uma rede
+
+Aplique o modelo SIR criado sobre a estrutura da rede simulada a partir
+dos dados do **artigo de base**:
+
+```{r}
+sm1 <- sir(grafo1,      #a rede que você criou
           beta = 0.02,  #probabilibidade de infecção
           gamma = 0.02, #probabilidade de recuperação
-          no.sim = 1)   #número de rodadas de simulação
+          no.sim = 100) #número de rodadas de simulação
 
 ```
 
-Plote as curvas SIR.
+Plote as curvas SIR:
 
 ```{r}
-plot(sm[[1]]$NS~sm[[1]]$times,
+plot(sm1[[1]]$NS~sm1[[1]]$times,
      col = "blue",
      type = "l",
      xlab = "Tempo",
      ylab = "Suscetíveis, Infectados e Recuperados")
-lines(sm[[1]]$NI~sm[[1]]$times,col="red")
-lines(sm[[1]]$NR~sm[[1]]$times,col="grey")
+lines(sm1[[1]]$NI~sm1[[1]]$times,col="red")
+lines(sm1[[1]]$NR~sm1[[1]]$times,col="grey")
 legend(120, 30, c("Suscetíveis", "Infectados", "Recuperados"),
        pch = 1, 
        col = c("blue", "red", "grey"), 
        bty = "n")
 ```
 
+Agora exporte como uma figura as curvas SIR simuladas com base nos dados
+do artigo de base:
 
-## Para saber mais{#mais}
+```{r}
+if (!file.exists("figuras/")) {
+  dir.create("figuras/", recursive = TRUE)
+}
 
-1. [O modelo SIR e o achatamento da curva](https://biologiadeprogramas.wordpress.com/2020/03/22/o-modelo-sir-e-o-achatamento-da-curva/)
+png(filename= "figuras/sir1.png", res= 300, height= 2000, width= 3000)
 
-2. http://rstudio-pubs-static.s3.amazonaws.com/6852_c59c5a2e8ea3456abbeb017185de603e.html
+p2 <- plot(sm1[[1]]$NS~sm1[[1]]$times,
+     col = "blue",
+     type = "l",
+     xlab = "Tempo",
+     ylab = "Suscetíveis, Infectados e Recuperados")
+lines(sm1[[1]]$NI~sm1[[1]]$times,col="red")
+lines(sm1[[1]]$NR~sm1[[1]]$times,col="grey")
+legend(100, 30, c("Suscetíveis", "Infectados", "Recuperados"),
+       pch = 1, 
+       col = c("blue", "red", "grey"), 
+       bty = "n")
 
-3. https://archives.aidanfindlater.com/blog/2010/04/20/the-basic-sir-model-in-r/ 
+p2
 
-4. https://igraph.org/c/doc/igraph-Generators.html#igraph_watts_strogatz_game
+dev.off()
+```
 
-5. https://igraph.org/r/html/latest/sir.html
+## Para saber mais {#mais}
+
+1.  [O modelo SIR e o achatamento da
+    curva](https://biologiadeprogramas.wordpress.com/2020/03/22/o-modelo-sir-e-o-achatamento-da-curva/)
+
+2.  [SIR models in
+    R](http://rstudio-pubs-static.s3.amazonaws.com/6852_c59c5a2e8ea3456abbeb017185de603e.html)
+
+3.  [The basic SIR model in
+    R](https://archives.aidanfindlater.com/blog/2010/04/20/the-basic-sir-model-in-r/)
+
+4.  [igraph: The Watts-Strogatz sm1all-world
+    model](https://igraph.org/c/doc/igraph-Generators.html#igraph_watts_strogatz_game)
+
+5.  [igraph: SIR model on
+    graphs](https://igraph.org/r/html/latest/sir.html)

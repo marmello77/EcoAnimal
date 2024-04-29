@@ -1,12 +1,6 @@
-################################################################################
-# Universidade de São Paulo
-# Instituto de Biociências
-# Departamento de Ecologia
-# Topicos Avançados em Ecologia de Animais (BIE0315)
-# Profs. José Carlos Motta Jr. & Marco A. R. Mello
-# Prática de Computador III: Socialidade
-# README: https://github.com/marmello77/EcoAnimal#readme
-################################################################################
+# Leia o README para entender o contexto e conhecer os autores deste script: 
+# https://github.com/marmello77/EcoAnimal/blob/main/README.md
+
 
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
@@ -14,9 +8,20 @@ rm(list= ls())
 
 cat("\014")  
 
-library(igraph)
-library(deSolve)
-library(rJava)
+if(!require(igraph)){
+  install.packages("igraph")
+  library(igraph)
+  }
+
+  if(!require(deSolve)){
+    install.packages("deSolve")
+    library(deSolve)
+    }
+
+if(!require(rJava)){
+  install.packages("rJava")
+  library(rJava)
+  }
 
 
 ########################## MODELO SIR BÁSICO ###################################
@@ -44,23 +49,20 @@ out <- as.data.frame(out)
 out$time <- NULL
 head(out)
 
-png(filename= "figuras/p1.png", res= 300, height= 2000, width= 3000)
 
 p1 <- matplot(x = times, y = out, type = "l",
-        xlab = "Tempo", 
-        ylab = "Suscetíveis, Infectados e Recuperados",
-        main = "Modelo SIR",
-        lwd = 1, lty = 1, bty = "l",
-        col = c("blue", "red", "grey"))
+              xlab = "Tempo", 
+              ylab = "Suscetíveis, Infectados e Recuperados",
+              main = "Modelo SIR",
+              lwd = 1, lty = 1, bty = "l",
+              col = c("blue", "red", "grey"))
 
 legend(80, 0.9, c("Suscetíveis", "Infectados", "Recuperados"),
        pch = 1, 
        col = c("blue", "red", "grey"), 
        bty = "n")
 
-p1
 
-dev.off()
 
 
 #################### MODELO SIR COM ESTRUTURA DE REDE ##########################
@@ -83,13 +85,11 @@ sm <- sir(g,
           no.sim = 1)   
 
 
-png(filename= "figuras/p2.png", res= 300, height= 2000, width= 3000)
-
 p2 <- plot(sm[[1]]$NS~sm[[1]]$times,
-     col = "blue",
-     type = "l",
-     xlab = "Tempo",
-     ylab = "Suscetíveis, Infectados e Recuperados")
+           col = "blue",
+           type = "l",
+           xlab = "Tempo",
+           ylab = "Suscetíveis, Infectados e Recuperados")
 lines(sm[[1]]$NI~sm[[1]]$times,col="red")
 lines(sm[[1]]$NR~sm[[1]]$times,col="grey")
 legend(100, 30, c("Suscetíveis", "Infectados", "Recuperados"),
@@ -97,6 +97,3 @@ legend(100, 30, c("Suscetíveis", "Infectados", "Recuperados"),
        col = c("blue", "red", "grey"), 
        bty = "n")
 
-p2
-
-dev.off()
