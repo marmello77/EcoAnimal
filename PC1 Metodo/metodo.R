@@ -1,4 +1,4 @@
-# Check README for understanding the context and authors of this script: 
+# Leia o README para entender o contexto e conhecer os autores deste script: 
 # https://github.com/marmello77/EcoAnimal/blob/main/README.md
 
 

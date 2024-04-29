@@ -372,3 +372,9 @@ export_graph(mapa, file_name = "figuras/mapa_mental.png",
 
 [Mapa mental: organizando as suas
 ideias](https://marcoarmello.wordpress.com/2015/04/15/mapasmentais/)
+
+[O que é uma
+teoria?](https://marcoarmello.wordpress.com/2012/03/13/teoria/)
+
+[Operacionalizando uma
+hipótese](https://marcoarmello.wordpress.com/2012/03/13/operacionalizando/)

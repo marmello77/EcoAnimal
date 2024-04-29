@@ -1,0 +1,15 @@
+Analysis of Deviance Table
+
+Model: binomial, link: logit
+
+Response: dados$status2
+
+Terms added sequentially (first to last)
+
+
+         Df Deviance Resid. Df Resid. Dev Pr(>Chi)  
+NULL                        59     83.178           
+dados$ap  1   3.9217        58     79.256  0.04767 *
+dados$cc  1   0.4518        57     78.804  0.50148  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1

@@ -366,16 +366,14 @@ head(dados)
 
 Examine de forma preliminar as relações entre as variáveis disponíveis.
 
-Vamos começar olhando como as medidas (`cc` e `ap`) se relacionam entre
-si:
+Vamos começar olhando como as medidas biométricas (`cc` e `ap`) se
+relacionam entre si:
 
 ```{r}
 plot(dados$cc~dados$ap,
      xlab = "Altura do própodo",
      ylab = "Comprimento do corpo")
 tendencia <- lm(dados$cc~dados$ap)
-intercept <- coef(tendencia)[1]
-slope <- coef(tendencia)[2]
 abline(tendencia, col = "black")
 
 ```
@@ -425,8 +423,8 @@ entre si.
 ### Pergunta 1
 
 No caso dos dados do **primeiro gráfico**, você nota alguma relação
-entre o comprimento cefalotorácico (`cc`) e a altura do própodo (`ap`)?
-De que tipo? Por que?
+entre a altura do própodo (`ap`) e o comprimento cefalotorácico (`cc`) ?
+Positiva ou negativa? Por quê?
 
 ```{=html}
 <style>
@@ -448,7 +446,7 @@ Você pode também analisar visualmente a força de uma eventual relação
 positiva ou negativa entre as variáveis (**ajuste do modelo**). Basta
 checar o quanto os pontos estão dispersos ou concentrados ao redor da
 curva de tendência. Caso haja alguma relação, você acha que ela é forte
-ou fraca e por que?
+ou fraca? Por quê?
 
 ```{=html}
 <style>
@@ -466,10 +464,10 @@ Escreva sua resposta aqui.
 
 ### Pergunta 3
 
-Você pode também analisar visualmente a o quanto X faz Y variar
-(**tamanho do efeito**). Basta checar a inclinação da nuvem de pontos ou
-da curva de tendência, se houver. Você acha que o efeito de X sobre Y é
-pequeno ou grande? Por que?
+Você pode também analisar visualmente a o quanto X (fator) faz Y
+(resposta) variar (**tamanho do efeito**). Basta checar a inclinação da
+nuvem de pontos ou da curva de tendência. Você acha que o efeito de X
+sobre Y é forte ou fraco? Por quê?
 
 ```{=html}
 <style>
@@ -485,19 +483,19 @@ pequeno ou grande? Por que?
 Escreva sua resposta aqui.
 :::
 
-Tudo bem, essas duas primeiras variáveis eram os fatores analisados no
-estudo. Ou seja, os "X" da questão. Mas a resposta, ou seja, o "Y" da
+Tudo bem, essas duas primeiras variáveis eram os *fatores* analisados no
+estudo. Ou seja, os "X" da questão. Mas a *resposta*, ou seja, o "Y" da
 questão era o `status2`: vencer ou perder a luta.
 
 Como será que `cc` se relaciona com `status2`? Vamos ver!
 
 ```{r}
-fit1 = glm(dados$status2~dados$cc, family=binomial)
+fit01 = glm(dados$status2~dados$cc, family=binomial)
 plot(dados$status2~dados$cc,
      xlab = "Comprimento do corpo",
      ylab = "Status")
-curve (exp(fit1$coefficients[[1]]+fit1$coefficients[[2]]*x)/
-         (1+exp(fit1$coefficients[[1]]+fit1$coefficients[[2]]*x)),
+curve (exp(fit01$coefficients[[1]]+fit01$coefficients[[2]]*x)/
+         (1+exp(fit01$coefficients[[1]]+fit01$coefficients[[2]]*x)),
        add=T)
 
 ```
@@ -505,25 +503,25 @@ curve (exp(fit1$coefficients[[1]]+fit1$coefficients[[2]]*x)/
 Como será que `ap` se relaciona com `status2`? Vamos ver!
 
 ```{r}
-fit1 = glm(dados$status2~dados$ap, family=binomial)
+fit02 = glm(dados$status2~dados$ap, family=binomial)
 plot(dados$status2~dados$ap,
      xlab = "Altura do própodo",
      ylab = "Status")
-curve (exp(fit1$coefficients[[1]]+fit1$coefficients[[2]]*x)/
-         (1+exp(fit1$coefficients[[1]]+fit1$coefficients[[2]]*x)),
+curve (exp(fit02$coefficients[[1]]+fit02$coefficients[[2]]*x)/
+         (1+exp(fit02$coefficients[[1]]+fit02$coefficients[[2]]*x)),
        add=T)
 
 ```
 
-O segundo e o terceiro são **gráficos logísticos**. Eles mostram a
+Este segundo e terceiro são **gráficos logísticos**. Eles mostram a
 relação entre uma variável *numérica e contínua*, o **fator**, e uma
 variável *numérica e binária* (do tipo "sim ou não"), a **resposta**.
 
 Através desse tipo de gráfico, você pode analisar visualmente a
-probabilidade de a resposta ser 0 ou 1, conforme aumenta o fator. O
-ponto 0.5 no eixo Y representa o limiar da transição de uma resposta
+*probabilidade* de a resposta ser 0 ou 1, conforme aumenta o fator. O
+ponto 0.5 no eixo Y representa o *limiar* da transição de uma resposta
 para a outra. Essa relação entre fator e resposta também pode ser
-positiva ou negativa.
+positiva ou negativa, como num diagrama de dispersão.
 
 ### Pergunta 4
 
@@ -548,7 +546,7 @@ atrás (`status2`)?
 
 Considerando o **segundo gráfico**, você acha que a chance de um
 caranguejo vencer uma luta depende ou não do comprimeiro do corpo? Se
-depende, a chance aumenta ou diminui com esse fator? Por que?
+depende, a chance de vencer aumenta ou diminui com esse fator? Por quê?
 
 ```{=html}
 <style>
@@ -585,7 +583,7 @@ dev.off()
 
 OK, agora que você já viu o básico sobre como fazer os tipos de gráficos
 de que precisamos, que tal fazer o gráfico que você realmente tinha
-planejado desde o começo, com as variáveis que você acha que importam?
+planejado desde o começo, com as variáveis que você aposta que importam?
 
 Pode copiar, colar e adaptar na caixinha abaixo os códigos de que
 precisa:
@@ -607,7 +605,8 @@ Exporte o seu gráfico como uma figura:
 
 2.  Complete o seu mapa mental, colando perto da previsão o gráfico que
     representa seu respectivo teste. Se tiver trabalhado com mais de uma
-    previsão, terá feito mais de um gráfico;
+    previsão, terá feito mais de um gráfico e precisará incluir cada um
+    deles;
 
 3.  Diga se a sua previsão se confirmou ou não, apenas com base no
     gráfico;
@@ -625,14 +624,8 @@ Exporte o seu gráfico como uma figura:
 
 ## Para saber mais
 
-[Qual gráfico devo
-fazer?](https://marcoarmello.wordpress.com/2020/05/29/qualgrafico/)
-
 [Por que as planilhas foram organizadas desta
 forma?](https://vita.had.co.nz/papers/tidy-data.html)
 
-[Regressão logística na
-Wikipedia](https://en.wikipedia.org/wiki/Logistic_regression)
-
-[GLM na
-Wikipedia](https://en.wikipedia.org/wiki/Generalized_linear_model)
+[Qual gráfico devo
+fazer?](https://marcoarmello.wordpress.com/2020/05/29/qualgrafico/)

@@ -1,4 +1,4 @@
-# Check README for understanding the context and authors of this script: 
+# Leia o README para entender o contexto e conhecer os autores deste script: 
 # https://github.com/marmello77/EcoAnimal/blob/main/README.md
 
 
@@ -8,8 +8,20 @@ rm(list= ls())
 
 cat("\014")  
 
-library(ggplot2)
-library(lme4)
+if(!require(ggplot2)){
+  install.packages("ggplot2")
+  library(ggplot2)
+}
+
+if(!require(lme4)){
+  install.packages("lme4")
+  library(lme4)
+}
+
+if(!require(DiagrammeR)){
+  install.packages("DiagrammeR")
+  library(DiagrammeR)
+}
 
 dados<- read.delim("dados.txt", header=T)
 dim(dados)
@@ -24,7 +36,37 @@ plot(dados$status2~dados$cc)
 plot(dados$status2~dados$ap)
 
 
-############################## TESTE 1 #########################################
+############################## RELAÇÕES GERAIS #################################
+
+
+plot(dados$cc~dados$ap,
+     xlab = "Altura do própodo",
+     ylab = "Comprimento do corpo")
+tendencia <- lm(dados$cc~dados$ap)
+intercepto <- coef(tendencia)[1]
+coeficiente <- coef(tendencia)[2]
+abline(tendencia, col = "black")
+
+
+fit01 = glm(dados$status2~dados$cc, family=binomial)
+plot(dados$status2~dados$cc,
+     xlab = "Comprimento do corpo",
+     ylab = "Status")
+curve (exp(fit01$coefficients[[1]]+fit01$coefficients[[2]]*x)/
+         (1+exp(fit01$coefficients[[1]]+fit01$coefficients[[2]]*x)),
+       add=T)
+
+
+fit02 = glm(dados$status2~dados$ap, family=binomial)
+plot(dados$status2~dados$ap,
+     xlab = "Altura do própodo",
+     ylab = "Status")
+curve (exp(fit02$coefficients[[1]]+fit02$coefficients[[2]]*x)/
+         (1+exp(fit02$coefficients[[1]]+fit02$coefficients[[2]]*x)),
+       add=T)
+
+
+############################## TESTE 1: status2 x cc ###########################
 
 
 png(filename= "figuras/p1.png", res= 300, height= 2000, width= 3000)
@@ -57,8 +99,7 @@ curve (exp(fit1$coefficients[[1]]+fit1$coefficients[[2]]*x)/
 dev.off()  
 
 
-
-############################## TESTE 2 #########################################
+############################## TESTE 2: status2 x ap ###########################
 
 
 png(filename= "figuras/p2.png", res= 300, height= 2000, width= 3000)
@@ -89,7 +130,7 @@ curve (exp(fit2$coefficients[[1]]+fit2$coefficients[[2]]*x)/
        add=T)
 
 
-############################## TESTE 3 #########################################
+############################## TESTE 3: status2 x ap + cc ######################
 
 
 fit3 = glm(dados$status2~dados$ap+dados$cc, family=binomial)
@@ -99,7 +140,7 @@ res3
 capture.output(res3, file = "resultados/resultados-ap-cc.txt")
 
 
-############################## TESTE 4 #########################################
+############################## TESTE 4: status2 x ap + cc / dupla ##############
 
 
 fit4 = glmer(status2 ~ ap + cc + (1|dupla), family=binomial, data=dados)
@@ -110,7 +151,7 @@ capture.output(res4, file = "resultados/resultados-ap-cc-dupla.txt")
 isSingular(fit4, tol = 1e-05)
 
 
-############################## TESTE 5 #########################################
+############################## TESTE 5: status2 x cc - ap / dupla ##############
 
 
 fit5 = lm(cc ~ ap, data=dados) 
@@ -134,8 +175,8 @@ p5 = ggplot(dados, aes(x=cc, y=ap), CI = F) +
 p5
 dev.off()
 
-p6 = png(filename= "figuras/p6.png", res= 300, height= 2000, width= 3000)
-ggplot(dados, aes(x=fit5.res, y=status2)) + 
+png(filename= "figuras/p6.png", res= 300, height= 2000, width= 3000)
+p6 = ggplot(dados, aes(x=fit5.res, y=status2)) + 
   geom_point(colour = "#1855FA", size=4, alpha = 0.5) + 
   stat_smooth(method="glm", method.args=list(family="binomial"), se=FALSE) +
   labs(x="Residuos corpo-garra", y = "Status") +
