@@ -307,24 +307,6 @@ Escreva sua resposta aqui.
 
 ### Pergunta 4
 
-O que aconteceu com os Suscetíveis ao longo do tempo?
-
-```{=html}
-<style>
-.answer-box {
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-</style>
-```
-::: answer-box
-Escreva sua resposta aqui.
-:::
-
-### Pergunta 5
-
 Em quanto tempo (medido em iterações) o surto epidêmico parou?
 
 ```{=html}
@@ -401,7 +383,7 @@ legend(70, 0.9, c("Suscetíveis", "Infectados", "Recuperados"),
 dev.off()
 ```
 
-### Pergunta 6
+### Pergunta 5
 
 O que mudou nas curvas SIR?
 
@@ -559,7 +541,7 @@ p2
 dev.off()
 ```
 
-### Pergunta 7
+### Pergunta 6
 
 Como contágio se dá na rede simulada, considerando as curvas SIR que
 modelamos?
@@ -609,7 +591,7 @@ plot(rede2,
      layout = layout_nicely(rede2))
 ```
 
-### Pergunta 8
+### Pergunta 7
 
 O que mudou na estrutura da rede simulada?
 
@@ -654,7 +636,7 @@ legend(120, 30, c("Suscetíveis", "Infectados", "Recuperados"),
 
 ```
 
-### Pergunta 9
+### Pergunta 8
 
 O que mudou nas curvas SIR em relação à simulação anterior?
 
@@ -672,7 +654,7 @@ O que mudou nas curvas SIR em relação à simulação anterior?
 Escreva sua resposta aqui.
 :::
 
-### Pergunta 10
+### Pergunta 9
 
 Inclua uma breve discussão sobre como a estrutura de uma rede social,
 especialmente em termos do `grau médio` (<k>), afeta a dinâmica de
