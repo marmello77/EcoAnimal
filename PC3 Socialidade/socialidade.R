@@ -27,7 +27,7 @@ if(!require(rJava)){
 ########################## MODELO SIR BÁSICO ###################################
 
 
-sir <- function(time, state, parameters) {
+sir_per <- function(time, state, parameters) {
   
   with(as.list(c(state, parameters)), {
     
@@ -44,7 +44,10 @@ init <- c(S = 0.99, I = 0.01, R = 0.0)
 parameters <- c(beta = 1.025, gamma = 0.2)
 times <- seq(0, 100, by = 1)
 
-out <- ode(y = init, times = times, func = sir, parms = parameters)
+out <- ode(y = init, 
+           times = times, 
+           func = sir_per, 
+           parms = parameters)
 out <- as.data.frame(out)
 out$time <- NULL
 head(out)
@@ -64,22 +67,20 @@ legend(80, 0.9, c("Suscetíveis", "Infectados", "Recuperados"),
 
 
 
-
 #################### MODELO SIR COM ESTRUTURA DE REDE ##########################
 
 
-rm(list= ls())
-
-g <- sample_smallworld(dim = 1,      
+rede1 <- sample_smallworld(dim = 1,      
                        size = 43,    
                        nei = 12,     
                        p = 0.05,     
                        loops = F,    
                        multiple = F) 
 
-plot(g)
+plot(rede1,
+     layout = layout_nicely(rede1))
 
-sm <- sir(g,            
+sm <- sir(rede1,            
           beta = 0.02,  
           gamma = 0.02, 
           no.sim = 1)   

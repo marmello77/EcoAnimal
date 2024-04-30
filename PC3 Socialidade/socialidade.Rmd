@@ -47,21 +47,21 @@ PhysRev)](https://doi.org/10.1103/PhysRevE.76.042901)
 
 ## Objetivo
 
-Animais variam muito entre si no que diz respeito à estrutura dos grupos
-sociais que formam. Hoje em dia, há formas sofisticadas de analisar essa
-estrutura e obter insights importantes sobre vários fenômenos, como por
-exemplo a transmissão de doenças. Dessa forma, o objetivo desta prática
-é aprender como fazer uma análise básica da relação entre a estrutura de
-uma rede social e a susceptibilidade da população em questão a uma
-doença contagiosa.
+Espécies de animais variam muito entre si quanto à estrutura dos grupos
+sociais que formam. Hoje em dia, há maneiras sofisticadas de analisar
+essa estrutura e obter *insights* importantes sobre vários fenômenos,
+como por exemplo a transmissão de doenças. Dessa forma, o objetivo desta
+prática é aprender como fazer uma análise básica da relação entre a
+estrutura de uma rede social e a susceptibilidade da respectiva
+população a uma doença contagiosa.
 
 ## Contexto
 
 Nosso objeto de estudo são interações sociais. Vamos usar como ponto de
 partida um estudo sobre uma população de orcas (*Orcinus* *orca*) do
-Canadá, publicado por Guimarães Jr. et al. (2007, Physical Review E).
-Contudo, trabalharemos com dados hipotéticos, gerados por simulação
-matemática, mas seguindo a mesma lógica.
+Canadá, o nosso **artigo de base**. Contudo, trabalharemos com dados
+hipotéticos, gerados por simulação matemática, mas usando alguns
+parâmetros empíricos medidos no estudo.
 
 ## Passos iniciais
 
@@ -117,7 +117,7 @@ efetivamente usados nas análises do estudo em questão. Substitua o
 `valor` abaixo (em azul) pelo valor encontrado no artigo de base:
 
 ```{r}
-tamanho <- 100
+tamanho1 <- 1
 ```
 
 Número médio de conexões por indivíduo, *a.k.a.* `grau médio` (<k>).
@@ -125,7 +125,7 @@ Substitua o valor abaixo (em azul) pelo valor encontrado no artigo de
 base:
 
 ```{r}
-grau_medio <- 3
+grau_medio1 <- 1
 ```
 
 ## Criando um modelo SIR básico {#basico}
@@ -133,11 +133,11 @@ grau_medio <- 3
 Para podermos simular uma epidemia em uma rede, primeiro precisamos de
 um modelo SIR.
 
-Crie uma função definida pelo usuário (*UDF*), contendo as equações
-diferenciais que definem um modelo SIR.
+Crie uma função personalizada (*UDF*), contendo as equações diferenciais
+que definem um modelo SIR:
 
 ```{r}
-sir <- function(time, state, parameters) {
+sir_per <- function(time, state, parameters) {
   
   with(as.list(c(state, parameters)), {
     
@@ -150,56 +150,77 @@ sir <- function(time, state, parameters) {
 }
 ```
 
-Agora defina os parâmetros da função.
+Viu que legal? Ao fazer análises por programação, você não precisa se
+limitar ao que já bem pronto em um programa fechado. Você pode criar
+novas funções à vontade, de acordo com a sua necessidade. Por isso [vale
+a pena investir em aprender
+R](https://marcoarmello.wordpress.com/2019/06/03/rstats/) ou qualquer
+outra linguagem de programação.
 
-Comece pela proporção em cada compartimento (Suscetíveis = `S`,
-Infectados = `I`, Recuperados = `R`):
+Agora defina os parâmetros da função personalizada que acabou de criar.
+
+Comece pela proporção em cada compartimento, ou seja, as categorias que
+definem o contágio modelado (Suscetíveis = `S`, Infectados = `I`,
+Recuperados = `R`). Note que a soma dos compartimentos deve ser igual a
+1:
 
 ```{r}
-init <- c(S = 0.999, I = 0.001, R = 0.000)
+init1 <- c(S = 0.999, I = 0.001, R = 0.000)
 ```
 
 Defina as taxas: *beta*: taxa de infeção; *gamma*: taxa de recuperação:
 
 ```{r}
-parameters <- c(beta = 1.025, gamma = 0.2)
+parameters1 <- c(beta = 1.025, gamma = 0.2)
 ```
 
 Defina a escala de tempo da simulação, em iterações do modelo:
 
 ```{r}
-times <- seq(0, 100, by = 1)
+times1 <- seq(0, 100, by = 1)
 ```
 
-Resolva as equações diferenciais usando a função ode (General Solver for
-Ordinary Differential Equations):
+Resolva as equações diferenciais usando a função `ode` (General Solver
+for Ordinary Differential Equations):
 
 ```{r}
-out <- ode(y = init, times = times, func = sir, parms = parameters)
+out1 <- ode(y = init1,
+           times = times1,
+           func = sir_per,
+           parms = parameters1)
 ```
 
 Converta o resultado em um quadro de dados:
 
 ```{r}
-out <- as.data.frame(out)
+out1 <- as.data.frame(out1)
 ```
 
 Delete a variável de tempo:
 
 ```{r}
-out$time <- NULL
+out1$time <- NULL
 ```
 
 Inspecione o resultado:
 
 ```{r}
-head(out)
+head(out1)
 ```
 
-Plote as curvas SIR:
+Observe bem a **estrutura** desse quadro de dados. Nas **linhas**, temos
+as iterações do modelo, que podem ser interpretadas como uma medida de
+tempo. Na **primeira coluna**, temos a evolução na proporção de
+indivíduos suscetíveis à doença. Na **segunda coluna**, temos a evolução
+na proporção de indivíduos infectados pela doença. Na **terceira
+coluna**, temos a evolução na proporção de indivíduos recuperados após
+terem sido infectados pela doença.
+
+Agora plote as curvas SIR para fazer uma análise gráfica da evolução do
+contágio:
 
 ```{r}
-matplot(x = times, y = out, type = "l",
+matplot(x = times1, y = out1, type = "l",
         xlab = "Tempo", 
         ylab = "Suscetíveis, Infectados e Recuperados",
         main = "Modelo SIR",
@@ -212,34 +233,11 @@ legend(70, 0.9, c("Suscetíveis", "Infectados", "Recuperados"),
        bty = "n")
 ```
 
-E se você mudasse algumas coisas nos parâmetros?
-
-Por exempo, as proporção de indivíduos em cada compartimento
-(Suscetíveis = `S`, Infectados = `I`, Recuperados = `R`), diminuindo os
-suscetíveis?
-
-Troque os valores em azul pelos valores que quiser, mantendo a soma dos
-três igual a `1.000`:
+Exporte as curvas SIR como um arquivo de imagem:
 
 ```{r}
-init <- c(S = 0.699, I = 0.001, R = 0.299)
-```
-
-Vamos rodar o modelo novamente, com esses novos valores, mantendo os
-demais iguais:
-
-```{r}
-parameters <- c(beta = 1.025, gamma = 0.2)
-times <- seq(0, 100, by = 1)
-out <- ode(y = init, times = times, func = sir, parms = parameters)
-out <- as.data.frame(out)
-out$time <- NULL
-```
-
-Agora plote as novas curvas SIR:
-
-```{r}
-matplot(x = times, y = out, type = "l",
+png(filename= "figuras/sir1.png", res= 300, height= 2000, width= 3000)
+matplot(x = times1, y = out1, type = "l",
         xlab = "Tempo", 
         ylab = "Suscetíveis, Infectados e Recuperados",
         main = "Modelo SIR",
@@ -250,11 +248,12 @@ legend(70, 0.9, c("Suscetíveis", "Infectados", "Recuperados"),
        pch = 1, 
        col = c("blue", "red", "grey"), 
        bty = "n")
+dev.off()
 ```
 
 ### Pergunta 1
 
-O que mudou nas curvas S, R e I?
+O que aconteceu com os **Suscetíveis** ao longo do tempo?
 
 ```{=html}
 <style>
@@ -270,74 +269,221 @@ O que mudou nas curvas S, R e I?
 Escreva sua resposta aqui.
 :::
 
-Vamos resetar os valores do modelo, antes de prosseguir:
+### Pergunta 2
+
+O que aconteceu com os **Infectados** ao longo do tempo?
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+### Pergunta 3
+
+O que aconteceu com os **Recuperados** ao longo do tempo?
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+### Pergunta 4
+
+O que aconteceu com os Suscetíveis ao longo do tempo?
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+### Pergunta 5
+
+Em quanto tempo (medido em iterações) o surto epidêmico parou?
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+E se você mudasse algumas coisas nos parâmetros?
+
+Por exempo, as proporção de indivíduos em cada compartimento
+(Suscetíveis = `S`, Infectados = `I`, Recuperados = `R`), diminuindo os
+suscetíveis?
+
+Troque os valores em azul pelos valores que quiser, mantendo a soma dos
+três igual a `1.000`:
 
 ```{r}
-init <- c(S = 0.99, I = 0.01, R = 0.0)
-parameters <- c(beta = 1.025, gamma = 0.2)
-times <- seq(0, 100, by = 1)
-out <- ode(y = init, times = times, func = sir, parms = parameters)
-out <- as.data.frame(out)
-out$time <- NULL
-
+init2 <- c(S = 0.699, I = 0.001, R = 0.299)
 ```
+
+Vamos rodar o modelo novamente, com esses novos valores, mantendo os
+demais iguais:
+
+```{r}
+parameters2 <- c(beta = 1.025, gamma = 0.2)
+times2 <- seq(0, 100, by = 1)
+out2 <- ode(y = init2,
+           times = times2,
+           func = sir_per,
+           parms = parameters2)
+out2 <- as.data.frame(out)
+out2$time <- NULL
+```
+
+Agora plote as novas curvas SIR:
+
+```{r}
+matplot(x = times2, y = out2, type = "l",
+        xlab = "Tempo", 
+        ylab = "Suscetíveis, Infectados e Recuperados",
+        main = "Modelo SIR",
+        lwd = 1, lty = 1, bty = "l",
+        col = c("blue", "red", "grey"))
+
+legend(70, 0.9, c("Suscetíveis", "Infectados", "Recuperados"),
+       pch = 1, 
+       col = c("blue", "red", "grey"), 
+       bty = "n")
+```
+
+Exporte as novas curvas SIR como um arquivo de imagem:
+
+```{r}
+png(filename= "figuras/sir2.png", res= 300, height= 2000, width= 3000)
+matplot(x = times2, y = out2, type = "l",
+        xlab = "Tempo", 
+        ylab = "Suscetíveis, Infectados e Recuperados",
+        main = "Modelo SIR",
+        lwd = 1, lty = 1, bty = "l",
+        col = c("blue", "red", "grey"))
+legend(70, 0.9, c("Suscetíveis", "Infectados", "Recuperados"),
+       pch = 1, 
+       col = c("blue", "red", "grey"), 
+       bty = "n")
+dev.off()
+```
+
+### Pergunta 6
+
+O que mudou nas curvas SIR?
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
 
 ## Simulando uma rede
 
-Agora que já temos um modelo SIR básico, precisamos de uma rede.
+Agora você já sabe como construir um modelo SIR básico. Dá para aumentar
+a complexidade do modelo de acordo com o grau de realismo ou precisão
+necessário em cada estudo. É só criar uma função personalizada de acordo
+com o que você precisa.
 
-Crie uma **rede com estrutura de mundo pequeno** (aka "[small
-world](https://en.wikipedia.org/wiki/Small-world_network)" ou
+Bom, para simular o contágio em uma rede social, igual no artigo de
+base, você precisa de uma rede.
+
+Vamos então simular uma **rede com estrutura de mundo pequeno** (aka
+"[small world](https://en.wikipedia.org/wiki/Small-world_network)" ou
 Watts-Strogatz), tipicamente observada em redes sociais. Uma rede assim
-é feita de subgrupos (que podemos chamar de "panelinhas"), que são
-conectados entre si por indivíduos muito influentes, que servem como
-pontes.
+é feita de subgrupos (popularmente conhecidos como "panelinhas"), que
+são conectados entre si por indivíduos muito influentes, com contatos em
+diferentes subgrupos. Para isso, usaremos o pacote `igraph` para R, o
+mais popular entre cientistas de redes.
 
 Depois, por curiosidade, em casa, você pode escolher outro modelo
-teórico para estruturar sua rede, pois o pacote `igraph` tem dezenas de
-opções de modelos determinísticos e probabilísticos.
+teórico para estruturar a rede, já que o `igraph` tem dezenas de opções
+de modelos determinísticos e probabilísticos.
 
-Aqui, ajustaremos os parâmetros da função de acordo com a estrutura da
-rede social de orcas estudada no **artigo de base**.
+O próximo passo é **parametrizar** a nossa função SIR personalizada, de
+acordo com a estrutura da rede social de orcas estudada no **artigo de
+base**.
 
 Defina o tamanho inicial da rede a ser simulada como sendo igual a 1
 orca individual:
 
 ```{r}
-inicial <- 1
+inicial1 <- 1
 
 ```
 
 Qual era mesmo o **tamanho** da rede estudada?
 
 ```{r}
-tamanho
+tamanho1
 
 ```
 
 Qual era mesmo o **grau médio** na rede estudada?
 
 ```{r}
-grau_medio
+grau_medio1
 
 ```
 
 ```{r}
-grafo1 <- sample_smallworld(dim = inicial,   #tamanho inicial da rede
-                       size = tamanho,   #tamanho final da rede
-                       nei = grau_medio,   #grau médio
-                       p = 0.05,   #probabilidade de reconexão
-                       loops = F,   #a rede pode ter alças ou não?
-                       multiple = F)   #pode haver elos múltiplos ou não?
+rede1 <- sample_smallworld(dim = inicial1, #tamanho inicial da rede
+                       size = tamanho1,     #tamanho final da rede
+                       nei = grau_medio1,   #grau médio
+                       p = 0.05,           #probabilidade de reconexão
+                       loops = F,          #a rede pode ter alças?
+                       multiple = F)       #pode haver elos múltiplos?
 ```
 
 Plote o grafo para visualizar a rede criada.
 
 ```{r}
-plot(grafo1)
+plot(rede1,
+     layout = layout_nicely(rede1))
 ```
 
-Agora exporte como uma figura o **grafo da rede parametrizada igual ao
+Agora exporte como uma figura o **grafo da rede parametrizada seguindo o
 artigo de base**:
 
 ```{r}
@@ -345,23 +491,28 @@ if (!file.exists("figuras/")) {
   dir.create("figuras/", recursive = TRUE)
 }
 
-png(filename= "figuras/grafo1.png", res= 300, height= 2000, width= 3000)
+png(filename= "figuras/rede1.png", res= 300, height= 2000, width= 3000)
 
-plot(grafo1)
+plot(rede1)
 
 dev.off()
 ```
 
 ## Infectando uma rede
 
-Aplique o modelo SIR criado sobre a estrutura da rede simulada a partir
-dos dados do **artigo de base**:
+Deste ponto em diante, ao invés de usar o modelo SIR básico que criamos,
+usaremos o modelo SIR que já embutido no pacote `igraph`, o mais usado
+por cientistas para analisar redes complexas. Esse modelo pronto
+conversa melhor com dados de redes.
+
+Aplique a função `sir` do `igraph` sobre a estrutura da rede simulada a
+partir dos dados do **artigo de base**:
 
 ```{r}
-sm1 <- sir(grafo1,      #a rede que você criou
+sm1 <- sir(rede1,      #a rede que você criou
           beta = 0.02,  #probabilibidade de infecção
           gamma = 0.02, #probabilidade de recuperação
-          no.sim = 100) #número de rodadas de simulação
+          no.sim = 1) #número de rodadas de simulação
 
 ```
 
@@ -389,7 +540,7 @@ if (!file.exists("figuras/")) {
   dir.create("figuras/", recursive = TRUE)
 }
 
-png(filename= "figuras/sir1.png", res= 300, height= 2000, width= 3000)
+png(filename= "figuras/sir_rede1.png", res= 300, height= 2000, width= 3000)
 
 p2 <- plot(sm1[[1]]$NS~sm1[[1]]$times,
      col = "blue",
@@ -408,6 +559,141 @@ p2
 dev.off()
 ```
 
+### Pergunta 7
+
+Como contágio se dá na rede simulada, considerando as curvas SIR que
+modelamos?
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+## Pensando em cenários hipotéticos
+
+O que será que acontece com a estrutura da rede e com as curvas SIR, se
+você diminuir o valor do parâmetro **grau médio** para a metade do
+medido no artigo de base? Vamos testar!
+
+Defina o novo **grau médio**. Troque o valor em azul pela metade do
+valor encontrado no artigo de base:
+
+```{r}
+grau_medio2 <- 1
+```
+
+Simule novamente uma rede com a mesma estrutura teórica:
+
+```{r}
+rede2 <- sample_smallworld(dim = inicial1, #mesmo tamanho inicial
+                       size = tamanho1,    #mesmo tamanho final
+                       nei = grau_medio2,  #novo grau médio
+                       p = 0.05,           #probabilidade de reconexão
+                       loops = F,          #a rede pode ter alças?
+                       multiple = F)       #pode haver elos múltiplos?
+```
+
+Plote a rede e confira sua estrutura:
+
+```{r}
+plot(rede2,
+     layout = layout_nicely(rede2))
+```
+
+### Pergunta 8
+
+O que mudou na estrutura da rede simulada?
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+Infecte a nova rede:
+
+```{r}
+sm2 <- sir(rede2,      #a rede que você criou
+          beta = 0.02,  #probabilibidade de infecção
+          gamma = 0.02, #probabilidade de recuperação
+          no.sim = 1) #número de rodadas de simulação
+
+```
+
+Plote as curvas SIR:
+
+```{r}
+plot(sm1[[1]]$NS~sm1[[1]]$times,
+     col = "blue",
+     type = "l",
+     xlab = "Tempo",
+     ylab = "Suscetíveis, Infectados e Recuperados")
+lines(sm1[[1]]$NI~sm1[[1]]$times,col="red")
+lines(sm1[[1]]$NR~sm1[[1]]$times,col="grey")
+legend(120, 30, c("Suscetíveis", "Infectados", "Recuperados"),
+       pch = 1, 
+       col = c("blue", "red", "grey"), 
+       bty = "n")
+
+```
+
+### Pergunta 9
+
+O que mudou nas curvas SIR em relação à simulação anterior?
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+### Pergunta 10
+
+Inclua uma breve discussão sobre como a estrutura de uma rede social,
+especialmente em termos do `grau médio` (<k>), afeta a dinâmica de
+transmissão de uma doença contagiosa. Escreva também uma breve reflexão
+sobre a relação entre esse parâmetro e a efetividade do distanciamento
+social proposto durante a pandemia de Covid-19.
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
 ## Para saber mais {#mais}
 
 1.  [O modelo SIR e o achatamento da
@@ -419,7 +705,7 @@ dev.off()
 3.  [The basic SIR model in
     R](https://archives.aidanfindlater.com/blog/2010/04/20/the-basic-sir-model-in-r/)
 
-4.  [igraph: The Watts-Strogatz sm1all-world
+4.  [igraph: The Watts-Strogatz small-world
     model](https://igraph.org/c/doc/igraph-Generators.html#igraph_watts_strogatz_game)
 
 5.  [igraph: SIR model on
