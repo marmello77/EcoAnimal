@@ -601,7 +601,8 @@ Exporte o seu gráfico como uma figura:
 ## Passos finais
 
 1.  Pegue o seu mapa mental exportado e cole-o em um novo arquivo de um
-    programa de slides ou gráfico;
+    programa de slides ou gráfico. Nesta prática, não precisa incluir as
+    caixinhas de texto com a descrição dos elementos do mapa mental;
 
 2.  Complete o seu mapa mental, colando perto da previsão o gráfico que
     representa seu respectivo teste. Se tiver trabalhado com mais de uma
@@ -611,7 +612,8 @@ Exporte o seu gráfico como uma figura:
 3.  Diga se a sua previsão se confirmou ou não, apenas com base no
     gráfico;
 
-4.  Inclua uma conclusão geral sucinta no seu mapa;
+4.  Inclua uma conclusão geral sucinta em uma caixa de texto no seu
+    mapa;
 
 5.  Exporte o seu mapa mental comentado em formato PDF;
 
