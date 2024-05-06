@@ -1,3 +1,0 @@
-     dAICc df
-fit1 0.0   2 
-nulo 3.4   1 
