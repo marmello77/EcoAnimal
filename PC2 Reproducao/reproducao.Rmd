@@ -4,6 +4,8 @@ author: "Marco A. R. Mello"
 output:
   html_document:
     df_print: paged
+  pdf_document: default
+  word_document: default
 editor_options:
   markdown:
     wrap: 72
@@ -18,6 +20,35 @@ prettyNum(x, big.mark=",")
 
 Para entender o contexto deste tutorial e creditar seus autores, leia o
 [README](https://github.com/marmello77/EcoAnimal/blob/main/README.md).
+
+## Atenção!
+
+Siga à risca as instruções dadas a seguir. Qualquer desvio delas pode
+acarretar em problemas técnicos que nos farão perder tempo em sala
+desnecessariamente. Leia tudo com muita atenção e faça a prática sem
+pressa.
+
+## Cabeçalho
+
+Escreva na caixinha abaixo os nomes completos dos integrantes do seu
+grupo, junto com os respectivos números USP. Inclua também a data da
+prática.
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Nomes + NUSP:
+
+Data:
+:::
 
 ## Instruções gerais
 
@@ -220,7 +251,7 @@ Escreva sua resposta aqui.
 Escreva sua resposta aqui.
 :::
 
-### Previsões
+### Previsão
 
 ```{=html}
 <style>
@@ -598,36 +629,60 @@ Exporte o seu gráfico como uma figura:
 
 ```
 
+## Conclusão
+
+### Pergunta 5
+
+E aí? A previsão que você deduziu a partir da hipótese, lá no começo, se
+confirmou ou não? Como exatamente?
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+### Pergunta 6
+
+Qual conclusão você tira a partir do contraste entre expectativa
+(previsão) e realidade (gráfico), considerando o contexto criado por
+problema, pergunta e hipótese?
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
 ## Passos finais
 
-1.  Pegue o seu mapa mental exportado e cole-o em um novo arquivo de um
-    programa de slides ou gráfico. Nesta prática, não precisa incluir as
-    caixinhas de texto com a descrição dos elementos do mapa mental;
-
-2.  Complete o seu mapa mental, colando perto da previsão o gráfico que
-    representa seu respectivo teste. Se tiver trabalhado com mais de uma
-    previsão, terá feito mais de um gráfico e precisará incluir cada um
-    deles;
-
-3.  Diga se a sua previsão se confirmou ou não, apenas com base no
-    gráfico;
-
-4.  Inclua uma conclusão geral sucinta em uma caixa de texto no seu
-    mapa;
-
-5.  Exporte o seu mapa mental comentado em formato PDF;
-
-6.  Exporte este notebook com suas respostas em formato HTML (também
+1.  Exporte este notebook com suas respostas em formato HTML (também
     pode ser DOC ou PDF, se o seu computador permitir). Na barra de
     ferramentas da aba deste notebook, clique em "Knit\>Knit to HTML";
 
-7.  Carregue juntos o seu mapa mental e este notebook respondido no link
-    do moodle para entrega do relatório.
+2.  Carregue este notebook respondido no link do moodle para entrega do
+    relatório.
 
 ## Para saber mais
 
-[Por que as planilhas foram organizadas desta
-forma?](https://vita.had.co.nz/papers/tidy-data.html)
+1.  [Por que as planilhas foram organizadas desta
+    forma?](https://vita.had.co.nz/papers/tidy-data.html)
 
-[Qual gráfico devo
-fazer?](https://marcoarmello.wordpress.com/2020/05/29/qualgrafico/)
+2.  [Qual gráfico devo
+    fazer?](https://marcoarmello.wordpress.com/2020/05/29/qualgrafico/)

@@ -1,9 +1,13 @@
 ---
-title: "EcoAnimal USP, Prática de Computador III: Socialidade"
-output: pdf_document
+title: 'EcoAnimal USP, Prática de Computador III: Socialidade'
 author: "Marco A. R. Mello"
-editor_options: 
-  markdown: 
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+  word_document: default
+editor_options:
+  markdown:
     wrap: 72
 ---
 
@@ -16,6 +20,35 @@ prettyNum(x, big.mark=",")
 
 Para entender o contexto deste tutorial e creditar seus autores, leia o
 [README](https://github.com/marmello77/EcoAnimal/blob/main/README.md).
+
+## Atenção!
+
+Siga à risca as instruções dadas a seguir. Qualquer desvio delas pode
+acarretar em problemas técnicos que nos farão perder tempo em sala
+desnecessariamente. Leia tudo com muita atenção e faça a prática sem
+pressa.
+
+## Cabeçalho
+
+Escreva na caixinha abaixo os nomes completos dos integrantes do seu
+grupo, junto com os respectivos números USP. Inclua também a data da
+prática.
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Nomes + NUSP:
+
+Data:
+:::
 
 ## Instruções gerais
 
@@ -236,6 +269,10 @@ legend(70, 0.9, c("Suscetíveis", "Infectados", "Recuperados"),
 Exporte as curvas SIR como um arquivo de imagem:
 
 ```{r}
+if (!file.exists("figuras/")) {
+  dir.create("figuras/", recursive = TRUE)
+}
+
 png(filename= "figuras/sir1.png", res= 300, height= 2000, width= 3000)
 matplot(x = times1, y = out1, type = "l",
         xlab = "Tempo", 
@@ -333,7 +370,7 @@ Troque os valores em azul pelos valores que quiser, mantendo a soma dos
 três igual a `1.000`:
 
 ```{r}
-init2 <- c(S = 0.699, I = 0.001, R = 0.299)
+init2 <- c(S = 0.999, I = 0.001, R = 0.000)
 ```
 
 Vamos rodar o modelo novamente, com esses novos valores, mantendo os
@@ -369,6 +406,10 @@ legend(70, 0.9, c("Suscetíveis", "Infectados", "Recuperados"),
 Exporte as novas curvas SIR como um arquivo de imagem:
 
 ```{r}
+if (!file.exists("figuras/")) {
+  dir.create("figuras/", recursive = TRUE)
+}
+
 png(filename= "figuras/sir2.png", res= 300, height= 2000, width= 3000)
 matplot(x = times2, y = out2, type = "l",
         xlab = "Tempo", 
@@ -660,7 +701,7 @@ Inclua uma breve discussão sobre como a estrutura de uma rede social,
 especialmente em termos do `grau médio` (<k>), afeta a dinâmica de
 transmissão de uma doença contagiosa. Escreva também uma breve reflexão
 sobre a relação entre esse parâmetro e a efetividade do distanciamento
-social proposto durante a pandemia de Covid-19.
+social proposto durante pandemias, como por exemplo a Covid-19.
 
 ```{=html}
 <style>
@@ -682,8 +723,8 @@ Escreva sua resposta aqui.
     pode ser DOC ou PDF, se o seu computador permitir). Na barra de
     ferramentas da aba deste notebook, clique em "Knit\>Knit to HTML";
 
-2.  Carregue juntos o seu mapa mental e este notebook respondido no link
-    do moodle para entrega do relatório.
+2.  Carregue este notebook respondido no link do moodle para entrega do
+    relatório.
 
 ## Para saber mais {#mais}
 

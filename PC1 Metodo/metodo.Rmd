@@ -21,6 +21,35 @@ prettyNum(x, big.mark=",")
 Para entender o contexto deste tutorial e creditar seus autores, leia o
 [README](https://github.com/marmello77/EcoAnimal/blob/main/README.md).
 
+## Atenção!
+
+Siga à risca as instruções dadas a seguir. Qualquer desvio delas pode
+acarretar em problemas técnicos que nos farão perder tempo em sala
+desnecessariamente. Leia tudo com muita atenção e faça a prática sem
+pressa.
+
+## Cabeçalho
+
+Escreva na caixinha abaixo os nomes completos dos integrantes do seu
+grupo, junto com os respectivos números USP. Inclua também a data da
+prática.
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+::: answer-box
+Nomes + NUSP:
+
+Data:
+:::
+
 ## Instruções gerais
 
 1.  Mude o modo de vizualização aqui no RStudio para `Visual`, clicando
@@ -345,36 +374,20 @@ export_graph(mapa, file_name = "figuras/mapa_mental.png",
 
 ## Passos finais
 
-1.  Dê uma olhada no diretório de trabalho para encontrar o seu mapa
-    mental exportado como uma figura;
-
-2.  Insira o seu mapa mental em um arquivo de PowerPoint, outro programa
-    de slides ou programa gráfico da sua preferência;
-
-3.  Pegue as suas anotações, feitas lá nos Passos Iniciais. Adicione-as
-    ao mapa mental como caixas de texto, adjacentes ao respectivo
-    elemento do método científico, explicando-o;
-
-4.  Não se esqueça de adicionar um cabeçalho ao seu mapa mental,
-    contendo os nomes completos dos integrantes do grupo, seus números
-    USP e a data da prática;
-
-5.  Exporte o seu mapa mental comentado em formato PDF;
-
-6.  Exporte este notebook com suas respostas em formato HTML (também
+1.  Exporte este notebook com suas respostas em formato HTML (também
     pode ser DOC ou PDF, se o seu computador permitir). Na barra de
     ferramentas da aba deste notebook, clique em "Knit\>Knit to HTML";
 
-7.  Carregue juntos o seu mapa mental e este notebook respondido no link
-    do moodle para entrega do relatório.
+2.  Carregue este notebook respondido no link do moodle para entrega do
+    relatório.
 
 ## Para saber mais
 
-[Mapa mental: organizando as suas
-ideias](https://marcoarmello.wordpress.com/2015/04/15/mapasmentais/)
+1.  [Mapa mental: organizando as suas
+    ideias](https://marcoarmello.wordpress.com/2015/04/15/mapasmentais/)
 
-[O que é uma
-teoria?](https://marcoarmello.wordpress.com/2012/03/13/teoria/)
+2.  [O que é uma
+    teoria?](https://marcoarmello.wordpress.com/2012/03/13/teoria/)
 
-[Operacionalizando uma
-hipótese](https://marcoarmello.wordpress.com/2012/03/13/operacionalizando/)
+3.  [Operacionalizando uma
+    hipótese](https://marcoarmello.wordpress.com/2012/03/13/operacionalizando/)
