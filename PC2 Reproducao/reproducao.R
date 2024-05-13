@@ -66,6 +66,32 @@ curve (exp(fit02$coefficients[[1]]+fit02$coefficients[[2]]*x)/
        add=T)
 
 
+ggplot(dados, aes(x = status, y = cc)) +
+  geom_line(aes(group = dupla)) +
+  geom_point() +
+  xlab("Status") + ylab("Comprimento cefalotorácico") +
+  theme(panel.background = element_rect(fill = NA),
+        axis.line = element_line(size = 0.5, colour = "black"),
+        plot.title = element_text(color="black", size=22, face="bold", hjust = 0.5),
+        axis.title.x = element_text(color="black", size=18, face="plain"),
+        axis.title.y = element_text(color="black", size=18, face="plain"),
+        axis.text = element_text(size = 16)) +
+  scale_x_discrete(labels = c('perdedor','vencedor'))
+
+
+ggplot(dados, aes(x = status, y = ap)) +
+  geom_line(aes(group = dupla)) +
+  geom_point() +
+  xlab("Status") + ylab("Altura do própodo") +
+  theme(panel.background = element_rect(fill = NA),
+        axis.line = element_line(size = 0.5, colour = "black"),
+        plot.title = element_text(color="black", size=22, face="bold", hjust = 0.5),
+        axis.title.x = element_text(color="black", size=18, face="plain"),
+        axis.title.y = element_text(color="black", size=18, face="plain"),
+        axis.text = element_text(size = 16)) +
+  scale_x_discrete(labels = c('perdedor','vencedor'))
+
+
 ############################## TESTE 1: status2 x cc ###########################
 
 
