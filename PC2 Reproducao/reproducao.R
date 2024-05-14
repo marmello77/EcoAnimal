@@ -23,6 +23,11 @@ if(!require(DiagrammeR)){
   library(DiagrammeR)
 }
 
+if(!require(bbmle)){
+  install.packages("bbmle")
+  library(bbmle)
+}
+
 dados<- read.delim("dados.txt", header=T)
 dim(dados)
 head(dados)
@@ -30,10 +35,6 @@ tail(dados)
 
 dados$status2 <- ifelse(dados$status == "perdedor", 0, 1)
 head(dados)
-
-plot(dados$cc~dados$ap)
-plot(dados$status2~dados$cc)
-plot(dados$status2~dados$ap)
 
 
 ############################## RELAÇÕES GERAIS #################################
@@ -50,7 +51,7 @@ abline(tendencia, col = "black")
 
 fit01 = glm(dados$status2~dados$cc, family=binomial)
 plot(dados$status2~dados$cc,
-     xlab = "Comprimento do corpo",
+     xlab = "Comprimento cefalotorácico",
      ylab = "Status")
 curve (exp(fit01$coefficients[[1]]+fit01$coefficients[[2]]*x)/
          (1+exp(fit01$coefficients[[1]]+fit01$coefficients[[2]]*x)),
@@ -111,18 +112,20 @@ dev.off()
 
 fit1 = glm(dados$status2~dados$cc, family=binomial)
 summary(fit1)
+
 res1 = anova(fit1, test="Chisq")
 res1
-capture.output(res1, file = "resultados/resultados-cc.txt")
+exp(coef(fit1))
+exp(cbind(coef(fit1), confint(fit1)))
 
-png("figuras/p1b.png", width = 1000, height = 700)
-plot(dados$status2~dados$cc,
-     xlab = "Comprimento do corpo",
-     ylab = "Status")
-curve (exp(fit1$coefficients[[1]]+fit1$coefficients[[2]]*x)/
-         (1+exp(fit1$coefficients[[1]]+fit1$coefficients[[2]]*x)),
-       add=T)
-dev.off()  
+nulo = glm(dados$status2~1, family=binomial(link="logit")) 
+res1b = anova(nulo, fit1, test="Chisq") 
+res1b
+
+res1c = AICctab(fit1,nulo)
+res1c
+
+capture.output(res1, file = "resultados/resultados-cc.txt")
 
 
 ############################## TESTE 2: status2 x ap ###########################
@@ -132,7 +135,7 @@ png(filename= "figuras/p2.png", res= 300, height= 2000, width= 3000)
 p2 = ggplot(dados, aes(x=ap, y=status2)) + 
   geom_point(colour = "#1855FA", size=4, alpha = 0.5) + 
   stat_smooth(method="glm", method.args=list(family="binomial"), se=FALSE) +
-  labs(x="Altura da garra", y = "Status") +
+  labs(x="Altura do própodo", y = "Status") +
   theme(text = element_text(size=20),
         plot.title = element_text(size=40, hjust=0.5),
         axis.text.x = element_text(size = 20, angle=0, hjust=1),
@@ -146,14 +149,9 @@ fit2 = glm(dados$status2~dados$ap, family=binomial)
 summary(fit2)
 res2 = anova(fit2, test="Chisq")
 res2
+exp(coef(fit2))
+exp(cbind(coef(fit2), confint(fit2)))  
 capture.output(res2, file = "resultados/resultados-ap.txt")
-
-plot(dados$status2~dados$ap,
-     xlab = "Comprimento do corpo",
-     ylab = "Status")
-curve (exp(fit2$coefficients[[1]]+fit2$coefficients[[2]]*x)/
-         (1+exp(fit2$coefficients[[1]]+fit2$coefficients[[2]]*x)),
-       add=T)
 
 
 ############################## TESTE 3: status2 x ap + cc ######################
@@ -163,6 +161,8 @@ fit3 = glm(dados$status2~dados$ap+dados$cc, family=binomial)
 summary(fit3)
 res3 = anova(fit3, test="Chisq")
 res3
+exp(coef(fit3))
+exp(cbind(coef(fit3), confint(fit3)))  
 capture.output(res3, file = "resultados/resultados-ap-cc.txt")
 
 
@@ -173,6 +173,7 @@ fit4 = glmer(status2 ~ ap + cc + (1|dupla), family=binomial, data=dados)
 summary(fit4)
 res4 = anova(fit4, test="Chisq")
 res4
+exp(fit4@beta)
 capture.output(res4, file = "resultados/resultados-ap-cc-dupla.txt")
 isSingular(fit4, tol = 1e-05)
 
@@ -217,6 +218,7 @@ dev.off()
 
 fit6 = glmer(status2 ~ fit5.res + (1|dupla), family=binomial, data=dados)
 summary(fit6)
+exp(fit6@beta)
 res6 = anova(fit6, test="Chisq")
 res6
 capture.output(res6, file = "resultados/resultados-res-dupla.txt")
