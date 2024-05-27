@@ -641,7 +641,7 @@ if (!file.exists("figuras/")) {
 
 png(filename= "figuras/rede2.png", res= 300, height= 2000, width= 3000)
 
-plot(rede1)
+plot(rede2)
 
 dev.off()
 ```
