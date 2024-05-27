@@ -28,7 +28,7 @@ Atualize o [R](https://www.r-project.org) e o [RStudio](https://posit.co) instal
 
 ## Instruções
 
-1.  Faça *download* deste repositório para o seu computador. Ou então dê um *fork*, caso queira contribuir para melhorar as práticas;
+1.  Faça *download* deste repositório para o seu computador, descompactando-o para o local onde deseja trabalhar;
 
 2.  Para fazer as atividades da prática escolhida, primeiro abra a respectiva pasta e familiarize-se com os arquivos contidos nela;
 
