@@ -10,7 +10,7 @@ E-mail: [marmello\@usp.br](mailto:marmello@usp.br){.email}.
 
 Publicado originalmente em 02/mai/2022 e atualizado constantemente.
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11190964.svg)](https://doi.org/10.5281/zenodo.11190964)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11353309.svg)](https://doi.org/10.5281/zenodo.11353309)
 
 Feito em R version 4.3.3 (2024-02-29) -- "Angel Food Cake"
 
