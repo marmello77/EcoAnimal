@@ -150,7 +150,7 @@ efetivamente usados nas análises do estudo em questão. Substitua o
 `valor` abaixo (em azul) pelo valor encontrado no artigo de base:
 
 ```{r}
-tamanho1 <- 1
+tamanho1 <- 43
 ```
 
 Número médio de conexões por indivíduo, *a.k.a.* `grau médio` (<k>).
@@ -158,7 +158,7 @@ Substitua o valor abaixo (em azul) pelo valor encontrado no artigo de
 base:
 
 ```{r}
-grau_medio1 <- 1
+grau_medio1 <- 12
 ```
 
 ## Criando um modelo SIR básico {#basico}
@@ -184,7 +184,7 @@ sir_per <- function(time, state, parameters) {
 ```
 
 Viu que legal? Ao fazer análises por programação, você não precisa se
-limitar ao que já bem pronto em um programa fechado. Você pode criar
+limitar ao que já vem pronto em um programa fechado. Você pode criar
 novas funções à vontade, de acordo com a sua necessidade. Por isso [vale
 a pena investir em aprender
 R](https://marcoarmello.wordpress.com/2019/06/03/rstats/) ou qualquer
@@ -370,7 +370,7 @@ Troque os valores em azul pelos valores que quiser, mantendo a soma dos
 três igual a `1.000`:
 
 ```{r}
-init2 <- c(S = 0.999, I = 0.001, R = 0.000)
+init2 <- c(S = 0.799, I = 0.001, R = 0.000)
 ```
 
 Vamos rodar o modelo novamente, com esses novos valores, mantendo os
@@ -604,14 +604,14 @@ Escreva sua resposta aqui.
 ## Pensando em cenários hipotéticos
 
 O que será que acontece com a estrutura da rede e com as curvas SIR, se
-você diminuir o valor do parâmetro **grau médio** para a metade do
-medido no artigo de base? Vamos testar!
+você alterar o valor do parâmetro **grau médio** medido no artigo de
+base? Vamos testar!
 
 Defina o novo **grau médio**. Troque o valor em azul pela metade do
 valor encontrado no artigo de base:
 
 ```{r}
-grau_medio2 <- 1
+grau_medio2 <- 6
 ```
 
 Simule novamente uma rede com a mesma estrutura teórica:
@@ -631,6 +631,22 @@ Plote a rede e confira sua estrutura:
 plot(rede2,
      layout = layout_nicely(rede2))
 ```
+
+Agora exporte como uma figura o **grafo da rede alterada**:
+
+```{r}
+if (!file.exists("figuras/")) {
+  dir.create("figuras/", recursive = TRUE)
+}
+
+png(filename= "figuras/rede2.png", res= 300, height= 2000, width= 3000)
+
+plot(rede1)
+
+dev.off()
+```
+
+## 
 
 ### Pergunta 7
 
@@ -663,19 +679,48 @@ sm2 <- sir(rede2,      #a rede que você criou
 Plote as curvas SIR:
 
 ```{r}
-plot(sm1[[1]]$NS~sm1[[1]]$times,
+plot(sm2[[1]]$NS~sm2[[1]]$times,
      col = "blue",
      type = "l",
      xlab = "Tempo",
      ylab = "Suscetíveis, Infectados e Recuperados")
-lines(sm1[[1]]$NI~sm1[[1]]$times,col="red")
-lines(sm1[[1]]$NR~sm1[[1]]$times,col="grey")
+lines(sm2[[1]]$NI~sm2[[1]]$times,col="red")
+lines(sm2[[1]]$NR~sm2[[1]]$times,col="grey")
 legend(120, 30, c("Suscetíveis", "Infectados", "Recuperados"),
        pch = 1, 
        col = c("blue", "red", "grey"), 
        bty = "n")
 
 ```
+
+Agora exporte como uma figura as curvas SIR simuladas com base nos dados
+alterados:
+
+```{r}
+if (!file.exists("figuras/")) {
+  dir.create("figuras/", recursive = TRUE)
+}
+
+png(filename= "figuras/sir_rede2.png", res= 300, height= 2000, width= 3000)
+
+p2 <- plot(sm2[[1]]$NS~sm2[[1]]$times,
+     col = "blue",
+     type = "l",
+     xlab = "Tempo",
+     ylab = "Suscetíveis, Infectados e Recuperados")
+lines(sm2[[1]]$NI~sm2[[1]]$times,col="red")
+lines(sm2[[1]]$NR~sm2[[1]]$times,col="grey")
+legend(100, 30, c("Suscetíveis", "Infectados", "Recuperados"),
+       pch = 1, 
+       col = c("blue", "red", "grey"), 
+       bty = "n")
+
+p2
+
+dev.off()
+```
+
+### 
 
 ### Pergunta 8
 
