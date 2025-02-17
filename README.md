@@ -1,6 +1,6 @@
 # EcoAnimal
 
-Códigos, dados e tutoriais usados nas práticas da disciplina "Tópicos Avançados em Ecologia de Animais" ([BIE0315](https://uspdigital.usp.br/jupiterweb/obterDisciplina?nomdis=&sgldis=bie0315)), oferecida pelo Departamento de Ecologia, Instituto de Biociências, Universidade de São Paulo. A disciplina é ministrada pelos professores [José Carlos Motta Jr.](https://bv.fapesp.br/pt/pesquisador/6205/jose-carlos-motta-junior/), [Marco A. R. Mello](https://marcomellolab.wordpress.com) & [Francisco V. Dénes](https://bv.fapesp.br/pt/pesquisador/61270/francisco-voeroes-denes/).
+Códigos, dados e tutoriais usados nas práticas da disciplina "**Tópicos Avançados em Ecologia Animal**" ([BIE0315](https://uspdigital.usp.br/jupiterweb/obterDisciplina?nomdis=&sgldis=bie0315)), oferecida pelo Departamento de Ecologia, Instituto de Biociências, Universidade de São Paulo. A disciplina é ministrada pelo Prof. [Marco A. R. Mello](https://marcomellolab.wordpress.com) e o Dr. [Francisco V. Dénes](https://bv.fapesp.br/pt/pesquisador/61270/francisco-voeroes-denes/).
 
 Laboratório de Síntese Ecológica ([SintECO](https://marcomellolab.wordpress.com)).
 
@@ -12,7 +12,7 @@ Publicado originalmente em 02/mai/2022 e atualizado constantemente.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11357553.svg)](https://doi.org/10.5281/zenodo.11357553)
 
-Feito em R version 4.3.3 (2024-02-29) -- "Angel Food Cake"
+Feito em R version 4.4.2 (2024-10-31) -- "Pile of Leaves"
 
 ## Aviso
 
@@ -20,7 +20,7 @@ Você pode usar este software livremente para quaisquer fins por sua conta e ris
 
 ## Escopo
 
-Este repositório contém os códigos, dados e tutoriais usados para guiar as práticas de computador (PCs) da disciplina. Como esses tutoriais foram produzidos no formato de *notebooks* didáticos, não é necessário ter familiaridade com a linguagem de programação R para fazer as práticas. Basta seguir atentamente as instruções.
+Este repositório contém os códigos, dados e tutoriais usados para guiar as práticas da disciplina. Como esses tutoriais foram produzidos no formato de *notebooks* didáticos, não é necessário ter familiaridade com a linguagem de programação R para fazer as práticas. Basta seguir atentamente as instruções.
 
 ## Aviso
 
@@ -78,4 +78,4 @@ Se você quiser fazer perguntas, sugestões ou correções, por favor, abra um [
 
 ## Agradecimentos
 
-Agradeço ao Prof. Motta Jr., coordenador da disciplina, ao Dr. Francisco Dénes, docente pós-doutoral assistente, a todos os tutores e monitores que ao longo dos anos foram nos ajudando a melhorar estas práticas e seus respectivos códigos, e aos diversos colegas que nos ajudaram a tirar dúvidas e desatar nós. Um salve especial vai para a comunidade do [StackOverflow](https://stackoverflow.com), onde resolvemos a maioria dos nossos dilemas de programação.
+Agradecemos ao Prof. [José Carlos Motta Jr.](https://bv.fapesp.br/pt/pesquisador/6205/jose-carlos-motta-junior/), antigo coordenador da disciplina, a todos os tutores e monitores que ao longo dos anos foram nos ajudando a melhorar estas práticas, e aos diversos colegas que nos ajudaram a desatar nós computacionais. Um salve especial vai para a comunidade do [StackOverflow](https://stackoverflow.com), onde resolvemos a maioria dos nossos dilemas de programação.
