@@ -1,11 +1,8 @@
 ---
 title: 'EcoAnimal USP, Prática de Computador I: Método Científico'
 author: "Marco A. R. Mello"
-output:
-  html_document:
-    df_print: paged
-  pdf_document: default
-  word_document: default
+output: html_notebook
+runtime: shiny
 editor_options:
   markdown:
     wrap: 72
@@ -44,6 +41,7 @@ prática.
 }
 </style>
 ```
+
 ::: answer-box
 Nomes + NUSP:
 
@@ -109,6 +107,7 @@ programação.
 }
 </style>
 ```
+
 ::: answer-box
 Escreva sua resposta aqui.
 :::
@@ -125,6 +124,7 @@ Escreva sua resposta aqui.
 }
 </style>
 ```
+
 ::: answer-box
 Escreva sua resposta aqui.
 :::
@@ -141,6 +141,7 @@ Escreva sua resposta aqui.
 }
 </style>
 ```
+
 ::: answer-box
 Escreva sua resposta aqui.
 :::
@@ -157,6 +158,7 @@ Escreva sua resposta aqui.
 }
 </style>
 ```
+
 ::: answer-box
 Escreva sua resposta aqui.
 :::
@@ -173,6 +175,7 @@ Escreva sua resposta aqui.
 }
 </style>
 ```
+
 ::: answer-box
 Escreva sua resposta aqui.
 :::
@@ -189,6 +192,7 @@ Escreva sua resposta aqui.
 }
 </style>
 ```
+
 ::: answer-box
 Escreva sua resposta aqui.
 :::
@@ -229,147 +233,161 @@ cat("\014")
 
 ```
 
-Carregue os pacotes necessários:
+Agora desenhe o mapa mental usando uma interface gráfica:
 
 ```{r}
-if(!require(DiagrammeR)){
-  install.packages("DiagrammeR")
-  library(DiagrammeR)
-  }
-```
+library(shiny)
+library(igraph)
+library(visNetwork)
+library(ggplot2)
+library(ggraph)
 
-Crie um mapa mental (*aka*, diagrama ou grafo) vazio. Depois você
-adicionará os elementos (*nodes*) e as conexões (*edges*):
+ui <- fluidPage(
+  titlePanel("Mapa Mental Interativo"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      actionButton("add_node", "Adicionar Novo Nó"),
+      
+      uiOutput("nodes_ui"),  # Interface dinâmica para rótulos dos nós
+      
+      actionButton("add_edge", "Adicionar Conexão"),
+      
+      uiOutput("edges_ui"),  # Interface dinâmica para conexões
+      
+      actionButton("gerar", "Gerar Mapa Mental"),
+      
+      downloadButton("save_map", "Salvar como PNG (300 DPI)")  # Botão para salvar o mapa
+    ),
+    
+    mainPanel(
+      visNetworkOutput("mapa", height = "600px"),  # Mapa mental interativo
+      
+      h3("Detalhes do Nó Selecionado:"),
+      textOutput("node_details")  # Exibe detalhes do nó clicado
+    )
+  )
+)
 
-```{r}
-mapa <- create_graph()
-```
-
-Crie os dois primeiros elementos (*nodes*) do seu mapa mental. Um deles
-representa o problema e o outro, a pergunta do artigo de base:
-
-```{r}
-mapa <- add_node(mapa, label = "Problema", #nomeie o elemento
-                  type = "problema", #crie categorias de elementos
-                  node_aes = node_aes(shape = "rectangle", #defina a forma
-                                      height = 0.9, #altura do elemento
-                                      width = 0.9, #largura do elemento
-                                      fontsize = 8, #tamanho da fonte
-                                      fillcolor = c("white"), #cor do preenchimento
-                                      color = c("red"))) #cor da borda
-mapa <- add_node(mapa, label = "Pergunta", 
-                  type = "pergunta",
-                  node_aes = node_aes(shape = "triangle",
-                                      height = 0.7,
-                                      width = 0.7,
-                                      fontsize = 5,
-                                      fillcolor = c("white"),
-                                      color = c("blue")))
-```
-
-Crie a conexão (*edge*) entre esses dois primeiros elementos:
-
-```{r}
-mapa <- add_edge(mapa, "Problema", "Pergunta", edge_aes = NULL, edge_data = NULL)
-
-```
-
-Cheque a estrutura dos elementos do seu mapa mental:
-
-```{r}
-mapa %>% get_node_df()
-
-```
-
-Cheque a estrutura das conexões do seu mapa mental:
-
-```{r}
-mapa %>% get_edge_df()
-
-```
-
-Plote o mapa mental para ver como ele está ficando:
-
-```{r}
-render_graph(mapa)
-
-```
-
-Ótimo! Você já tem um embrião do seu mapa mental feito por programação.
-Agora você pode ir adicionando a ele mais elementos e conexões, até
-chegar à mesma estrutura do seu esboço original.
-
-Por exemplo, se você quiser incluir uma hipótese no mapa mental, basta
-adicionar a ele mais um elemento e uma conexão:
-
-```{r}
-mapa <- add_node(mapa, label = "Hipótese 1", 
-                  type = "hipotese", 
-                  node_aes = node_aes(shape = "ellipse", 
-                                      fontsize = 5, 
-                                      fillcolor = c("white"), 
-                                      color = c("darkgreen"))) 
-
-mapa <- add_edge(mapa, "Pergunta", "Hipótese 1", #de onde sai e para onde vai
-                 edge_aes = NULL,
-                 edge_data = NULL)
-
-```
-
-Veja como ficou a nova versão:
-
-```{r}
-render_graph(mapa)
-
-```
-
-E se você quiser adicionar duas premissas que sustentam essa hipótese?
-Como faria essa modificação? Pense...
-
-...
-
-Pensou? Agora então copie, cole e adapte na caixinha abaixo apenas as
-linhas de código adicionais de que você precisa para adicionar mais duas
-premissas e suas respectivas conexões. Depois clique no triângulo verde
-da caixinha, no alto à direita:
-
-```{r}
-
-```
-
-Deu certo? Então plote a nova versão do seu mapa mental:
-
-```{r}
-render_graph(mapa)
-
-```
-
-Agora adicione ao seu mapa mental os elementos e conexões que faltam,
-com base no rascunho que fez lá atrás, usando a caixinha de código
-abaixo:
-
-```{r}
-
-```
-
-Plote a versão final do seu mapa mental:
-
-```{r}
-render_graph(mapa)
-
-```
-
-Para salvar o seu mapa como uma figura, você precisa exportá-lo:
-
-```{r}
-if (!file.exists("figuras/")) {
-  dir.create("figuras/", recursive = TRUE)
+server <- function(input, output, session) {
+  # Inicializa com os rótulos padrão
+  initial_labels <- c("Problema", "Pergunta", "Hipótese", "Premissa 1", "Premissa 2")
+  nodes_list <- reactiveVal(data.frame(id = 1:5, label = initial_labels, stringsAsFactors = FALSE))
+  edges_list <- reactiveVal(data.frame(from = numeric(), to = numeric(), stringsAsFactors = FALSE))
+  
+  # Adiciona novo nó
+  observeEvent(input$add_node, {
+    current_nodes <- nodes_list()
+    new_id <- nrow(current_nodes) + 1
+    new_node <- data.frame(id = new_id, label = paste("Nó", new_id), stringsAsFactors = FALSE)
+    nodes_list(rbind(current_nodes, new_node))
+  })
+  
+  # Atualiza a interface dinâmica para entrada dos rótulos dos nós
+  output$nodes_ui <- renderUI({
+    nodes <- nodes_list()
+    tagList(
+      lapply(1:nrow(nodes), function(i) {
+        textInput(paste0("node_", nodes$id[i]), label = paste("Rótulo do Nó", nodes$id[i]), value = nodes$label[i])
+      })
+    )
+  })
+  
+  # Atualiza interface dinâmica de conexões
+  observeEvent(input$add_edge, {
+    num_edges <- nrow(edges_list()) + 1
+    insertUI(
+      selector = "#add_edge",
+      where = "beforeBegin",
+      ui = tagList(
+        selectInput(paste0("from_", num_edges), "De:", choices = nodes_list()$id),
+        selectInput(paste0("to_", num_edges), "Para:", choices = nodes_list()$id)
+      )
+    )
+  })
+  
+  # Gera o mapa mental com rótulos recuperados das caixas de input
+  observeEvent(input$gerar, {
+    # Atualiza os rótulos dos nós a partir dos inputs antes de construir o mapa
+    nodes <- nodes_list()
+    for (i in 1:nrow(nodes)) {
+      input_label <- input[[paste0("node_", nodes$id[i])]]
+      if (!is.null(input_label) && input_label != "") {
+        nodes$label[i] <- input_label
+      }
+    }
+    nodes_list(nodes)  # Salva a atualização dos rótulos
+    
+    # Atualiza conexões sem duplicação
+    new_edges_data <- data.frame(from = numeric(), to = numeric(), stringsAsFactors = FALSE)
+    num_edges <- length(grep("^from_", names(input)))  # Conta quantas conexões foram criadas
+    for (i in 1:num_edges) {
+      from_input <- input[[paste0("from_", i)]]
+      to_input <- input[[paste0("to_", i)]]
+      
+      if (!is.null(from_input) && !is.null(to_input) && from_input != to_input) {
+        new_edge <- data.frame(from = as.numeric(from_input), to = as.numeric(to_input), stringsAsFactors = FALSE)
+        
+        # Evita duplicatas
+        existing_edges <- edges_list()
+        if (!any(existing_edges$from == new_edge$from & existing_edges$to == new_edge$to)) {
+          edges_list(rbind(existing_edges, new_edge))
+        }
+      }
+    }
+    
+    # Gera o mapa mental
+    output$mapa <- renderVisNetwork({
+      visNetwork(nodes_list(), edges_list()) %>%
+        visNodes(shape = "box") %>%
+        visEdges(arrows = "to") %>%
+        visPhysics(enabled = TRUE) %>%
+        visInteraction(dragNodes = TRUE, dragView = TRUE, zoomView = TRUE) %>%
+        visEvents(selectNode = "function(nodes) { 
+          Shiny.setInputValue('selected_node', nodes.nodes[0], {priority: 'event'});
+        }")
+    })
+  })
+  
+  # Exibir detalhes do nó selecionado
+  output$node_details <- renderText({
+    selected_id <- input$selected_node
+    nodes <- nodes_list()
+    
+    if (!is.null(selected_id)) {
+      selected_node <- nodes[nodes$id == selected_id, ]
+      paste("ID:", selected_node$id, "- Rótulo:", selected_node$label)
+    } else {
+      "Clique em um nó para ver os detalhes."
+    }
+  })
+  
+  # Salvar o mapa mental como PNG com 300 DPI
+  output$save_map <- downloadHandler(
+    filename = function() { "mapa_mental.png" },
+    content = function(file) {
+      nodes <- nodes_list()
+      edges <- edges_list()
+      
+      if (nrow(nodes) > 0) {
+        graph <- graph_from_data_frame(edges, vertices = nodes, directed = TRUE)
+        
+        # Criando um plot com ggplot2 e ggraph
+        p <- ggraph(graph, layout = "stress") +
+          geom_edge_link(arrow = arrow(length = unit(4, 'mm')), end_cap = circle(3, 'mm'), color = "gray50") +
+          geom_node_point(size = 5, color = "blue") +
+          geom_node_text(aes(label = label), repel = TRUE, size = 6) +
+          theme_void()
+        
+        # Salvando a imagem com 300 DPI
+        ggsave(file, plot = p, width = 10, height = 7, dpi = 300)
+      }
+    }
+  )
 }
 
-export_graph(mapa, file_name = "figuras/mapa_mental.png",
-             file_type = "png",
-             width = 3000,
-             height = 3000)
+shinyApp(ui, server)
+
 ```
 
 ## Passos finais
