@@ -1,0 +1,453 @@
+---
+title: 'EcoAnimal USP, Prática: Interações'
+author: "Marco A. R. Mello"
+output: html_document
+runtime: shiny
+editor_options:
+  markdown:
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::knit_hooks$set(inline = function(x) {
+prettyNum(x, big.mark=",")
+})
+```
+
+Para entender o contexto deste tutorial e creditar seus autores, leia o
+[README](https://github.com/marmello77/EcoAnimal/blob/main/README.md).
+
+## Atenção!
+
+Siga à risca as instruções dadas a seguir. Qualquer desvio delas pode
+acarretar em problemas técnicos que nos farão perder tempo em sala
+desnecessariamente. Faça a prática sem pressa.
+
+1.  Mude o modo de visualização aqui no RStudio para `Visual`, clicando
+    no botão que fica no canto esquerdo da barra de formatação da aba
+    deste arquivo;
+
+2.  Clique no triângulo colorido da primeira caixinha de código (no alto
+    à direita), logo acima desta seção;
+
+3.  Leia atentamente este roteiro e faça a prática seguindo as
+    orientações da equipe docente;
+
+4.  Toda vez que for responder perguntas usando as caixas de texto deste
+    tutorial, salve cópias de seguraça em um editor de texto externo,
+    por via das dúvidas;
+
+5.  O relatório deve ser entregue através da tarefa criada no moodle da
+    disciplina. Não serão aceitos relatórios entregues fora do prazo.
+
+## Cabeçalho
+
+Escreva na caixa de texto abaixo os nomes completos dos integrantes do
+seu grupo, junto com seus respectivos NUSP. Inclua também a data da
+prática.
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Nomes + NUSP:
+
+Data:
+:::
+
+## **Objetivo**
+
+Nesta prática, aprofundaremos a nossa compreensão sobre o artigo de
+base, treinando também habilidades em ciência de dados.
+
+## Artigo de base
+
+Kamaru *et al*. ([2024,
+Science](https://doi.org/10.1126/science.adg1464)).
+
+## **Passos iniciais**
+
+1.  Discuta os pontos principais do artigo de base com a turma e os
+    docentes em sala;
+
+2.  Responda as questões apresentadas neste tutorial.
+
+3.  Verifique os pacotes necessários:
+
+```{r}
+if(!require(rstudioapi)){
+  install.packages("rstudioapi")
+  library(rstudioapi)
+}
+
+if(!require(shiny)){
+  install.packages("shiny")
+  library(shiny)
+}
+
+if(!require(igraph)){
+  install.packages("igraph")
+  library(igraph)
+}
+
+if(!require(visNetwork)){
+  install.packages("visNetwork")
+  library(visNetwork)
+}
+
+if(!require(ggplot2)){
+  install.packages("ggplot2")
+  library(ggplot2)
+}
+
+if(!require(ggraph)){
+  install.packages("ggraph")
+  library(ggraph)
+}
+```
+
+## Elementos argumentativos
+
+1.  Identifique no texto os seguintes *elementos argumentativos*
+    baseados no método científico. Descreva-os no contexto do artigo de
+    base sucintamente, usando frases bem curtas. Anote essas descrições
+    nas caixinhas abaixo:
+
+### Problema
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+### Pergunta
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+### Hipótese
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+### Premissas
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+### Previsões
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+## Estrutura argumentativa
+
+1.  Pense sobre como esses elementos se relacionam entre si, com base no
+    que foi ensinado na aula teórica;
+
+2.  Faça um esboço simples de um mapa mental com esses elementos e suas
+    relações. Pode ser à mão, no seu caderno mesmo;
+
+3.  Siga os próximos passos para aprender como desenhar a versão final
+    do seu mapa mental.
+
+### Desenhando o mapa mental
+
+Diga ao `RStudio` que o diretório de trabalho é o mesmo onde está este
+arquivo de tutorial. Para executar as linhas de código desta e das
+demais caixinhas do tutorial, clique no triângulo verde da caixinha de
+código desejada, no alto à direita
+
+```{r}
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+```
+
+Limpe os objetos criados anteriormente:
+
+```{r}
+rm(list= ls())
+```
+
+Agora desenhe o mapa mental usando uma interface gráfica:
+
+```{r}
+ui <- fluidPage(
+  titlePanel("Mapa Mental"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      actionButton("add_node", "Adicionar Novo Nó"),
+      
+      uiOutput("nodes_ui"),  # Interface dinâmica para rótulos dos nós
+      
+      actionButton("add_edge", "Adicionar Conexão"),
+      
+      uiOutput("edges_ui"),  # Interface dinâmica para conexões
+      
+      actionButton("gerar", "Gerar Mapa Mental"),
+      
+      downloadButton("save_map", "Salvar como PNG (300 DPI)")  # Botão para salvar o mapa
+    ),
+    
+    mainPanel(
+      visNetworkOutput("mapa", height = "600px"),  # Mapa mental interativo
+      
+      h3("Detalhes do Nó Selecionado:"),
+      textOutput("node_details")  # Exibe detalhes do nó clicado
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  # Inicializa com os rótulos padrão
+  initial_labels <- c("Problema", "Pergunta", "Hipótese", "Previsão", "Premissa 1", "Premissa 2")
+  nodes_list <- reactiveVal(data.frame(id = 1:6, label = initial_labels, stringsAsFactors = FALSE))
+  edges_list <- reactiveVal(data.frame(from = numeric(), to = numeric(), stringsAsFactors = FALSE))
+  edge_counter <- reactiveVal(0)  # Contador de conexões adicionadas
+  
+  # Adiciona novo nó
+  observeEvent(input$add_node, {
+    current_nodes <- nodes_list()
+    new_id <- nrow(current_nodes) + 1
+    new_node <- data.frame(id = new_id, label = paste("Nó", new_id), stringsAsFactors = FALSE)
+    nodes_list(rbind(current_nodes, new_node))
+    
+    # Atualiza os menus de seleção de conexões
+    updateSelectInput(session, "from", choices = nodes_list()$id)
+    updateSelectInput(session, "to", choices = nodes_list()$id)
+  })
+  
+  # Atualiza a interface dinâmica para entrada dos rótulos dos nós
+  output$nodes_ui <- renderUI({
+    nodes <- nodes_list()
+    tagList(
+      lapply(1:nrow(nodes), function(i) {
+        textInput(paste0("node_", nodes$id[i]), label = paste("Rótulo do Nó", nodes$id[i]), value = nodes$label[i])
+      })
+    )
+  })
+  
+  # Interface dinâmica para adicionar conexões
+  output$edges_ui <- renderUI({
+    tagList(
+      selectInput("from", "De:", choices = nodes_list()$id),
+      selectInput("to", "Para:", choices = nodes_list()$id),
+      actionButton("confirm_edge", "Confirmar Conexão")
+    )
+  })
+  
+  # Adiciona uma nova conexão à lista de arestas
+  observeEvent(input$confirm_edge, {
+    from_node <- input$from
+    to_node <- input$to
+    
+    if (!is.null(from_node) && !is.null(to_node) && from_node != to_node) {
+      current_edges <- edges_list()
+      new_edge <- data.frame(from = as.numeric(from_node), to = as.numeric(to_node), stringsAsFactors = FALSE)
+      
+      # Evita conexões duplicadas
+      if (!any(current_edges$from == new_edge$from & current_edges$to == new_edge$to)) {
+        edges_list(rbind(current_edges, new_edge))
+      }
+    }
+  })
+  
+  # Gera o mapa mental com os rótulos atualizados
+  observeEvent(input$gerar, {
+    # Atualiza os rótulos dos nós a partir dos inputs antes de construir o mapa
+    nodes <- nodes_list()
+    for (i in 1:nrow(nodes)) {
+      input_label <- input[[paste0("node_", nodes$id[i])]]
+      if (!is.null(input_label) && input_label != "") {
+        nodes$label[i] <- input_label
+      }
+    }
+    nodes_list(nodes)  # Salva a atualização dos rótulos
+    
+    # Gera o mapa mental
+    output$mapa <- renderVisNetwork({
+      visNetwork(nodes_list(), edges_list()) %>%
+        visNodes(shape = "box") %>%
+        visEdges(arrows = "to") %>%
+        visPhysics(enabled = TRUE) %>%
+        visInteraction(dragNodes = TRUE, dragView = TRUE, zoomView = TRUE) %>%
+        visEvents(selectNode = "function(nodes) { 
+          Shiny.setInputValue('selected_node', nodes.nodes[0], {priority: 'event'});
+        }")
+    })
+  })
+  
+  # Exibir detalhes do nó selecionado
+  output$node_details <- renderText({
+    selected_id <- input$selected_node
+    nodes <- nodes_list()
+    
+    if (!is.null(selected_id)) {
+      selected_node <- nodes[nodes$id == selected_id, ]
+      paste("ID:", selected_node$id, "- Rótulo:", selected_node$label)
+    } else {
+      "Clique em um nó para ver os detalhes."
+    }
+  })
+  
+  # Salvar o mapa mental como PNG com 300 DPI
+  output$save_map <- downloadHandler(
+    filename = function() { "mapa_mental.png" },
+    content = function(file) {
+      nodes <- nodes_list()
+      edges <- edges_list()
+      
+      if (nrow(nodes) > 0) {
+        graph <- graph_from_data_frame(edges, vertices = nodes, directed = TRUE)
+        
+        # Criando um plot com ggplot2 e ggraph
+        p <- ggraph(graph, layout = "stress") +
+          geom_edge_link(arrow = arrow(length = unit(4, 'mm')), end_cap = circle(3, 'mm'), color = "gray50") +
+          geom_node_point(size = 5, color = "blue") +
+          geom_node_text(aes(label = label), repel = TRUE, size = 6) +
+          theme_void()
+        
+        # Salvando a imagem com 300 DPI
+        ggsave(file, plot = p, width = 10, height = 7, dpi = 300)
+      }
+    }
+  )
+}
+
+shinyApp(ui, server)
+
+
+```
+
+### Exportando o mapa mental
+
+Exporte o seu mapa mental como uma figura, usando o botão disponível na
+janela interativa.
+
+### Pensando sobre a operacionalização
+
+1.  Como a Figura 3 do artigo de base se relaciona com o seu mapamental?
+    Pense na operacionalização que foi feita no estudo em questão,
+    transformando variáveis teóricas em variáveis operacionais, de modo
+    que as ideias abstratas pudessem ser testadas empiricamente.
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+## Conclusão
+
+Você acha que as previsões do artibo de base foram confirmadas ou não?
+Por que?
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+## Passos finais
+
+1.  Exporte este notebook com as suas respostas em formato HTML;
+
+2.  Carregue este notebook respondido no link do moodle para entrega do
+    relatório, junto com a figura do mapa mental exportada
+    anteriormente.
+
+## Para saber mais
+
+1.  [O que é uma
+    teoria?](https://marcoarmello.wordpress.com/2012/03/13/teoria/)
+
+2.  [Operacionalizando uma
+    hipótese](https://marcoarmello.wordpress.com/2012/03/13/operacionalizando/)
+
+3.  [Mapa mental: organizando as suas
+    ideias](https://marcoarmello.wordpress.com/2015/04/15/mapasmentais/)
