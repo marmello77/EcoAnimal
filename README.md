@@ -1,6 +1,6 @@
 # EcoAnimal
 
-Códigos, dados e tutoriais usados nas práticas da disciplina "**Tópicos Avançados em Ecologia Animal**" ([BIE0315](https://uspdigital.usp.br/jupiterweb/obterDisciplina?nomdis=&sgldis=bie0315)), oferecida pelo Departamento de Ecologia, Instituto de Biociências, Universidade de São Paulo. A disciplina é ministrada pelo Prof. [Marco A. R. Mello](https://marcomellolab.wordpress.com) e o Dr. [Francisco V. Dénes](https://bv.fapesp.br/pt/pesquisador/61270/francisco-voeroes-denes/).
+Códigos, dados e tutoriais usados nas práticas da disciplina "**Tópicos Avançados em Ecologia Animal**" ([BIE0315](https://uspdigital.usp.br/jupiterweb/obterDisciplina?nomdis=&sgldis=bie0315)), oferecida para o núcleo avançado do curso de graduação em Ciências Biológicas do Instituto de Biociências, Universidade de São Paulo. A disciplina é ministrada pelos docentes Prof. [Marco A. R. Mello](http://lattes.cnpq.br/7861179238186694) e Dr. [Francisco V. Dénes](http://lattes.cnpq.br/5139370160420533).
 
 Laboratório de Síntese Ecológica ([SintECO](https://marcomellolab.wordpress.com)).
 
@@ -14,19 +14,41 @@ Publicado originalmente em 02/mai/2022 e atualizado constantemente.
 
 Feito em R version 4.4.2 (2024-10-31) -- "Pile of Leaves"
 
-## Aviso
+## Avisos legais
 
-Você pode usar este software livremente para quaisquer fins por sua conta e risco, seguindo a licença mencionada neste repositório. Não assumimos nenhuma responsabilidade pelo uso deste software, não fornecemos nenhuma licença ou título sob qualquer patente, direito autoral ou trabalho de máscara ao produto. Reservamo-nos o direito de fazer alterações no software sem notificação. Também não fazemos nenhuma declaração ou garantia de que este software seja adequado para o uso especificado sem os devidos testes ou modificações. Se este software ajudar você a produzir qualquer trabalho acadêmico (artigo, livro, capítulo, patente, dissertação, tese, monografia, palestra, pôster, defesa, aula, relatório e similares), por favor, credite os autores e cite a fonte, usando o DOI estável deste repositório.
+### Escopo
 
-## Escopo
+Este repositório contém os códigos, dados e tutoriais usados nas práticas da disciplina. Como esses tutoriais foram produzidos no formato de *notebooks* didáticos, não é necessário ter familiaridade com a linguagem de programação R para fazer as práticas. Basta seguir atentamente as instruções.
 
-Este repositório contém os códigos, dados e tutoriais usados para guiar as práticas da disciplina. Como esses tutoriais foram produzidos no formato de *notebooks* didáticos, não é necessário ter familiaridade com a linguagem de programação R para fazer as práticas. Basta seguir atentamente as instruções.
+### Precisão do conteúdo
 
-## Aviso
+Embora todos os esforços tenham sido feitos para garantir que os materiais fornecidos sejam precisos e consistentes, os autores não garantem a integridade ou exatidão do conteúdo do repositório. Os usuários são incentivados a validar os resultados de forma independente.
+
+### Uso e modificações
+
+O conteúdo é compartilhado sob a licença mencionada no repositório. Os usuários são livres para usar, modificar e distribuir o código, os dados e as informações de acordo com esta licença. Os autores não se responsabilizam por resultados decorrentes do uso correto ou indevido desses materiais.
+
+### Suporte e manutenção
+
+Este repositório é fornecido "como está", sem qualquer compromisso com manutenção ou suporte contínuos. Dúvidas ou problemas podem ser resolvidos por meio do GitHub ou de um e-mail de contato designado, mas as respostas não são garantidas.
+
+### Dependências de terceiros
+
+O repositório pode depender de software ou bibliotecas de terceiros. Os usuários são responsáveis ​​por garantir a compatibilidade e a instalação adequada dessas dependências. Os autores não endossam nem fornecem garantias para nenhum software de terceiros.
+
+### Uso ético
+
+Espera-se que os usuários cumpram todos os padrões éticos e legais aplicáveis ​​ao usar este repositório, especialmente em relação ao manuseio de dados confidenciais ou proprietários.
+
+### Citação
+
+Se você usar este repositório em seu trabalho acadêmico (software, artigo, livro, capítulo, trabalho de conclusão de curso, monografia, dissertação, tese, relatório, pôster, palestra, conferência ou similar), cite o DOI para este repositório.
+
+## Antes de começar
 
 Atualize o [R](https://www.r-project.org) e o [RStudio](https://posit.co) instalados no seu computador para as respectivas versões mais novas, antes de rodar os tutoriais e fazer as análises propostas.
 
-## Instruções
+## Instruções gerais
 
 1.  Faça *download* deste repositório para o seu computador, descompactando-o para o local onde deseja trabalhar;
 
