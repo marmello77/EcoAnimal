@@ -66,8 +66,9 @@ Data:
 
 ## **Objetivo**
 
-Nesta prática, aprofundaremos a nossa compreensão sobre o artigo de
-base, treinando também habilidades em ciência de dados.
+Nesta prática, interpretaremos mais a fundo o artigo de base,
+aprenderemos um pouco mais sobre o método científico e treinaremos
+algumas habilidades básicas em ciência de dados.
 
 ## Artigo de base
 
@@ -81,7 +82,7 @@ Science](https://doi.org/10.1126/science.adg1464)).
 
 2.  Responda as questões apresentadas neste tutorial.
 
-3.  Verifique os pacotes necessários:
+3.  Verifique e instale os pacotes necessários:
 
 ```{r}
 if(!require(rstudioapi)){
@@ -118,9 +119,9 @@ if(!require(ggraph)){
 ## Elementos argumentativos
 
 1.  Identifique no texto os seguintes *elementos argumentativos*
-    baseados no método científico. Descreva-os no contexto do artigo de
-    base sucintamente, usando frases bem curtas. Anote essas descrições
-    nas caixinhas abaixo:
+    baseados no método científico. Descreva-os sinteticamente dentro do
+    contexto do artigo de base, usando frases bem curtas. Anote essas
+    descrições nas caixas de texto abaixo:
 
 ### Problema
 
@@ -219,15 +220,6 @@ Escreva sua resposta aqui.
     do seu mapa mental.
 
 ### Desenhando o mapa mental
-
-Diga ao `RStudio` que o diretório de trabalho é o mesmo onde está este
-arquivo de tutorial. Para executar as linhas de código desta e das
-demais caixinhas do tutorial, clique no triângulo verde da caixinha de
-código desejada, no alto à direita
-
-```{r}
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-```
 
 Limpe os objetos criados anteriormente:
 
@@ -393,10 +385,11 @@ janela interativa.
 
 ### Pensando sobre a operacionalização
 
-1.  Como a Figura 3 do artigo de base se relaciona com o seu mapamental?
-    Pense na operacionalização que foi feita no estudo em questão,
-    transformando variáveis teóricas em variáveis operacionais, de modo
-    que as ideias abstratas pudessem ser testadas empiricamente.
+1.  Como a Figura 3 do artigo de base se relaciona com o seu mapa
+    mental? Pense na operacionalização que foi feita no estudo em
+    questão, transformando variáveis teóricas em variáveis operacionais,
+    de modo que as ideias abstratas propostas pelos autores pudessem ser
+    testadas empiricamente.
 
 ```{=html}
 <style>
@@ -435,7 +428,10 @@ Escreva sua resposta aqui.
 
 ## Passos finais
 
-1.  Exporte este notebook com as suas respostas em formato HTML;
+1.  Exporte este notebook com as suas respostas em formato HTML. Basta
+    digitar o seguinte código no `Console`:
+
+    `rmarkdown::render("interacoes.Rmd", output_format = "html_document")`
 
 2.  Carregue este notebook respondido no link do moodle para entrega do
     relatório, junto com a figura do mapa mental exportada
