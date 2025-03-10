@@ -210,8 +210,7 @@ Escreva sua resposta aqui.
 
 ## Estrutura argumentativa
 
-1.  Pense sobre como esses elementos se relacionam entre si, com base no
-    que foi ensinado na aula teórica;
+1.  Pense sobre como esses elementos se relacionam entre si;
 
 2.  Faça um esboço simples de um mapa mental com esses elementos e suas
     relações. Pode ser à mão, no seu caderno mesmo;
@@ -227,7 +226,9 @@ Limpe os objetos criados anteriormente:
 rm(list= ls())
 ```
 
-Agora desenhe o mapa mental usando uma interface gráfica:
+Agora desenhe o mapa mental usando uma interface gráfica. Ao terminar,
+não feche a janela que se abriu, pois ainda precisará dela para o
+próximo passo:
 
 ```{r}
 ui <- fluidPage(
@@ -242,6 +243,10 @@ ui <- fluidPage(
       actionButton("add_edge", "Adicionar Conexão"),
       
       uiOutput("edges_ui"),  # Interface dinâmica para conexões
+      
+      actionButton("remove_edge", "Remover Conexão"),
+      
+      actionButton("clear_map", "Limpar Mapa Mental"),
       
       actionButton("gerar", "Gerar Mapa Mental"),
       
@@ -262,7 +267,6 @@ server <- function(input, output, session) {
   initial_labels <- c("Problema", "Pergunta", "Hipótese", "Previsão", "Premissa 1", "Premissa 2")
   nodes_list <- reactiveVal(data.frame(id = 1:6, label = initial_labels, stringsAsFactors = FALSE))
   edges_list <- reactiveVal(data.frame(from = numeric(), to = numeric(), stringsAsFactors = FALSE))
-  edge_counter <- reactiveVal(0)  # Contador de conexões adicionadas
   
   # Adiciona novo nó
   observeEvent(input$add_node, {
@@ -270,13 +274,9 @@ server <- function(input, output, session) {
     new_id <- nrow(current_nodes) + 1
     new_node <- data.frame(id = new_id, label = paste("Nó", new_id), stringsAsFactors = FALSE)
     nodes_list(rbind(current_nodes, new_node))
-    
-    # Atualiza os menus de seleção de conexões
-    updateSelectInput(session, "from", choices = nodes_list()$id)
-    updateSelectInput(session, "to", choices = nodes_list()$id)
   })
   
-  # Atualiza a interface dinâmica para entrada dos rótulos dos nós
+  # Interface dinâmica para entrada dos rótulos dos nós
   output$nodes_ui <- renderUI({
     nodes <- nodes_list()
     tagList(
@@ -291,7 +291,10 @@ server <- function(input, output, session) {
     tagList(
       selectInput("from", "De:", choices = nodes_list()$id),
       selectInput("to", "Para:", choices = nodes_list()$id),
-      actionButton("confirm_edge", "Confirmar Conexão")
+      actionButton("confirm_edge", "Confirmar Conexão"),
+      
+      selectInput("remove_edge_select", "Remover Conexão:", choices = paste(edges_list()$from, "->", edges_list()$to)),
+      actionButton("confirm_remove_edge", "Remover")
     )
   })
   
@@ -311,69 +314,40 @@ server <- function(input, output, session) {
     }
   })
   
+  # Remove conexão selecionada
+  observeEvent(input$confirm_remove_edge, {
+    current_edges <- edges_list()
+    selected_edge <- strsplit(input$remove_edge_select, " -> ")[[1]]
+    
+    if (length(selected_edge) == 2) {
+      from <- as.numeric(selected_edge[1])
+      to <- as.numeric(selected_edge[2])
+      
+      updated_edges <- current_edges[!(current_edges$from == from & current_edges$to == to), ]
+      edges_list(updated_edges)
+    }
+  })
+  
+  # Limpa o mapa mental
+  observeEvent(input$clear_map, {
+    nodes_list(data.frame(id = numeric(), label = character(), stringsAsFactors = FALSE))
+    edges_list(data.frame(from = numeric(), to = numeric(), stringsAsFactors = FALSE))
+  })
+  
   # Gera o mapa mental com os rótulos atualizados
   observeEvent(input$gerar, {
-    # Atualiza os rótulos dos nós a partir dos inputs antes de construir o mapa
-    nodes <- nodes_list()
-    for (i in 1:nrow(nodes)) {
-      input_label <- input[[paste0("node_", nodes$id[i])]]
-      if (!is.null(input_label) && input_label != "") {
-        nodes$label[i] <- input_label
-      }
-    }
-    nodes_list(nodes)  # Salva a atualização dos rótulos
-    
-    # Gera o mapa mental
     output$mapa <- renderVisNetwork({
       visNetwork(nodes_list(), edges_list()) %>%
         visNodes(shape = "box") %>%
         visEdges(arrows = "to") %>%
         visPhysics(enabled = TRUE) %>%
-        visInteraction(dragNodes = TRUE, dragView = TRUE, zoomView = TRUE) %>%
-        visEvents(selectNode = "function(nodes) { 
-          Shiny.setInputValue('selected_node', nodes.nodes[0], {priority: 'event'});
-        }")
+        visInteraction(dragNodes = TRUE, dragView = TRUE, zoomView = TRUE)
     })
   })
-  
-  # Exibir detalhes do nó selecionado
-  output$node_details <- renderText({
-    selected_id <- input$selected_node
-    nodes <- nodes_list()
-    
-    if (!is.null(selected_id)) {
-      selected_node <- nodes[nodes$id == selected_id, ]
-      paste("ID:", selected_node$id, "- Rótulo:", selected_node$label)
-    } else {
-      "Clique em um nó para ver os detalhes."
-    }
-  })
-  
-  # Salvar o mapa mental como PNG com 300 DPI
-  output$save_map <- downloadHandler(
-    filename = function() { "mapa_mental.png" },
-    content = function(file) {
-      nodes <- nodes_list()
-      edges <- edges_list()
-      
-      if (nrow(nodes) > 0) {
-        graph <- graph_from_data_frame(edges, vertices = nodes, directed = TRUE)
-        
-        # Criando um plot com ggplot2 e ggraph
-        p <- ggraph(graph, layout = "stress") +
-          geom_edge_link(arrow = arrow(length = unit(4, 'mm')), end_cap = circle(3, 'mm'), color = "gray50") +
-          geom_node_point(size = 5, color = "blue") +
-          geom_node_text(aes(label = label), repel = TRUE, size = 6) +
-          theme_void()
-        
-        # Salvando a imagem com 300 DPI
-        ggsave(file, plot = p, width = 10, height = 7, dpi = 300)
-      }
-    }
-  )
 }
 
 shinyApp(ui, server)
+
 
 
 ```
@@ -385,7 +359,7 @@ janela interativa.
 
 ### Pensando sobre a operacionalização
 
-1.  Como a Figura 3 do artigo de base se relaciona com o seu mapa
+1.  Como a **Figura 3** do artigo de base se relaciona com o seu mapa
     mental? Pense na operacionalização que foi feita no estudo em
     questão, transformando variáveis teóricas em variáveis operacionais,
     de modo que as ideias abstratas propostas pelos autores pudessem ser
@@ -406,9 +380,28 @@ janela interativa.
 Escreva sua resposta aqui.
 :::
 
+2.  Abra o arquivo `dados.xlsx`, disponível na pasta `dados`. Você
+    consegue achar nele as varáveis mencionadas na **Figura 3b** do
+    artigo de base? Quais seriam elas?
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
 ## Conclusão
 
-Você acha que as previsões do artibo de base foram confirmadas ou não?
+Você acha que as previsões do artigo de base foram confirmadas ou não?
 Por que?
 
 ```{=html}
