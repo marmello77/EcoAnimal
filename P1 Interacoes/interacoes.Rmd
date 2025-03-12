@@ -8,6 +8,8 @@ editor_options:
     wrap: 72
 ---
 
+Clique no triângulo colorido dentro da caixa de código abaixo:
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::knit_hooks$set(inline = function(x) {
@@ -22,14 +24,14 @@ Para entender o contexto deste tutorial e creditar seus autores, leia o
 
 Siga à risca as instruções dadas a seguir. Qualquer desvio delas pode
 acarretar em problemas técnicos que nos farão perder tempo em sala
-desnecessariamente. Faça a prática sem pressa.
+desnecessariamente. Faça a prática com atenção e sem pressa.
 
 1.  Mude o modo de visualização aqui no RStudio para `Visual`, clicando
     no botão que fica no canto esquerdo da barra de formatação da aba
     deste arquivo;
 
-2.  Clique no triângulo colorido da primeira caixinha de código (no alto
-    à direita), logo acima desta seção;
+2.  Clique no triângulo colorido da primeira caixa de código (no alto à
+    direita), logo acima desta seção;
 
 3.  Leia atentamente este roteiro e faça a prática seguindo as
     orientações da equipe docente;
@@ -85,6 +87,21 @@ Science](https://doi.org/10.1126/science.adg1464)).
 3.  Verifique e instale os pacotes necessários:
 
 ```{r}
+if(!require(ggplot2)){
+  install.packages("ggplot2")
+  library(ggplot2)
+}
+
+if(!require(ggraph)){
+  install.packages("ggraph")
+  library(ggraph)
+}
+
+if(!require(igraph)){
+  install.packages("igraph")
+  library(igraph)
+}
+
 if(!require(rstudioapi)){
   install.packages("rstudioapi")
   library(rstudioapi)
@@ -95,24 +112,9 @@ if(!require(shiny)){
   library(shiny)
 }
 
-if(!require(igraph)){
-  install.packages("igraph")
-  library(igraph)
-}
-
 if(!require(visNetwork)){
   install.packages("visNetwork")
   library(visNetwork)
-}
-
-if(!require(ggplot2)){
-  install.packages("ggplot2")
-  library(ggplot2)
-}
-
-if(!require(ggraph)){
-  install.packages("ggraph")
-  library(ggraph)
 }
 ```
 
@@ -246,7 +248,7 @@ ui <- fluidPage(
       
       actionButton("remove_edge", "Remover Conexão"),
       
-      actionButton("clear_map", "Limpar Mapa Mental"),
+      actionButton("clear_map", "Limpar Conexões"),  # Alterado para limpar apenas conexões
       
       actionButton("gerar", "Gerar Mapa Mental"),
       
@@ -274,6 +276,19 @@ server <- function(input, output, session) {
     new_id <- nrow(current_nodes) + 1
     new_node <- data.frame(id = new_id, label = paste("Nó", new_id), stringsAsFactors = FALSE)
     nodes_list(rbind(current_nodes, new_node))
+  })
+  
+  # Atualiza rótulos dos nós
+  observe({
+    current_nodes <- nodes_list()
+    updated_nodes <- current_nodes
+    for (i in 1:nrow(current_nodes)) {
+      input_id <- paste0("node_", current_nodes$id[i])
+      if (!is.null(input[[input_id]])) {
+        updated_nodes$label[i] <- input[[input_id]]
+      }
+    }
+    nodes_list(updated_nodes)
   })
   
   # Interface dinâmica para entrada dos rótulos dos nós
@@ -328,9 +343,8 @@ server <- function(input, output, session) {
     }
   })
   
-  # Limpa o mapa mental
+  # Limpa apenas as conexões, mantendo os nós
   observeEvent(input$clear_map, {
-    nodes_list(data.frame(id = numeric(), label = character(), stringsAsFactors = FALSE))
     edges_list(data.frame(from = numeric(), to = numeric(), stringsAsFactors = FALSE))
   })
   
@@ -348,8 +362,6 @@ server <- function(input, output, session) {
 
 shinyApp(ui, server)
 
-
-
 ```
 
 ### Exportando o mapa mental
@@ -357,7 +369,7 @@ shinyApp(ui, server)
 Exporte o seu mapa mental como uma figura, usando o botão disponível na
 janela interativa.
 
-### Pensando sobre a operacionalização
+## Operacionalização
 
 1.  Como a **Figura 3** do artigo de base se relaciona com o seu mapa
     mental? Pense na operacionalização que foi feita no estudo em
@@ -422,7 +434,7 @@ Escreva sua resposta aqui.
 ## Passos finais
 
 1.  Exporte este notebook com as suas respostas em formato HTML. Basta
-    digitar o seguinte código no `Console`:
+    copiar e colar o seguinte código no `Console`:
 
     `rmarkdown::render("interacoes.Rmd", output_format = "html_document")`
 

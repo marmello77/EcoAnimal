@@ -1,10 +1,10 @@
 # EcoAnimal
 
-Códigos, dados e tutoriais usados nas práticas da disciplina "**Tópicos Avançados em Ecologia Animal**" ([BIE0315](https://uspdigital.usp.br/jupiterweb/obterDisciplina?nomdis=&sgldis=bie0315)), oferecida para o núcleo avançado do curso de graduação em Ciências Biológicas do Instituto de Biociências, Universidade de São Paulo. A disciplina é ministrada pelos docentes Prof. [Marco A. R. Mello](http://lattes.cnpq.br/7861179238186694) e Dr. [Francisco V. Dénes](http://lattes.cnpq.br/5139370160420533).
+Códigos, dados e tutoriais usados nas práticas da disciplina "**Tópicos Avançados em Ecologia Animal**" ([BIE0315](https://uspdigital.usp.br/jupiterweb/obterDisciplina?nomdis=&sgldis=bie0315)), oferecida para o núcleo avançado do curso de graduação em Ciências Biológicas do Instituto de Biociências, Universidade de São Paulo. A disciplina é ministrada pelos professores [Marco A. R. Mello](http://lattes.cnpq.br/7861179238186694) e [Francisco V. Dénes](http://lattes.cnpq.br/5139370160420533).
 
 Laboratório de Síntese Ecológica ([SintECO](https://marcomellolab.wordpress.com)).
 
-Autor: Marco A. R. Mello.
+Autor do repositório: Marco A. R. Mello.
 
 E-mail: [marmello\@usp.br](mailto:marmello@usp.br){.email}.
 
