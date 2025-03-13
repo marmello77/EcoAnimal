@@ -100,4 +100,4 @@ Se você quiser fazer perguntas, sugestões ou correções, por favor, abra um [
 
 ## Agradecimentos
 
-Agradecemos ao Prof. [José Carlos Motta Jr.](https://bv.fapesp.br/pt/pesquisador/6205/jose-carlos-motta-junior/), antigo coordenador da disciplina, a todos os tutores e monitores que ao longo dos anos foram nos ajudando a melhorar estas práticas, e aos diversos colegas que nos ajudaram a desatar nós computacionais. Um salve especial vai para a comunidade do [StackOverflow](https://stackoverflow.com), onde resolvemos a maioria dos nossos dilemas de programação.
+Agradecemos ao Prof. [José Carlos Motta Jr.](http://lattes.cnpq.br/8990024384011469), antigo coordenador da disciplina, a todos os tutores e monitores que ao longo dos anos foram nos ajudando a melhorar estas práticas, e aos diversos colegas que nos ajudaram a desatar nós computacionais. Um salve especial vai para a comunidade do [StackOverflow](https://stackoverflow.com), onde resolvemos a maioria dos nossos dilemas de programação.

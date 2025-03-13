@@ -1,0 +1,281 @@
+---
+title: 'EcoAnimal USP, Prática: Interações'
+author: "Marco A. R. Mello"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+  word_document: default
+editor_options:
+  markdown:
+    wrap: 72
+---
+
+Clique no triângulo colorido dentro da caixa de código abaixo:
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::knit_hooks$set(inline = function(x) {
+prettyNum(x, big.mark=",")
+})
+```
+
+Para entender o contexto deste tutorial e creditar seus autores, leia o
+[README](https://github.com/marmello77/EcoAnimal/blob/main/README.md).
+
+## Atenção!
+
+Siga à risca as instruções dadas a seguir. Qualquer desvio delas pode
+acarretar em problemas técnicos que nos farão perder tempo em sala
+desnecessariamente. Faça a prática com atenção e sem pressa.
+
+1.  Mude o modo de visualização aqui no RStudio para `Visual`, clicando
+    no botão que fica no canto esquerdo da barra de formatação da aba
+    deste arquivo;
+
+2.  Clique no triângulo colorido da primeira caixa de código (no alto à
+    direita), logo acima desta seção;
+
+3.  Leia atentamente este roteiro e faça a prática seguindo as
+    orientações da equipe docente;
+
+4.  Toda vez que for responder perguntas usando as caixas de texto deste
+    tutorial, salve cópias de seguraça em um editor de texto externo,
+    por via das dúvidas;
+
+5.  O relatório deve ser entregue através da tarefa criada no moodle da
+    disciplina. Não serão aceitos relatórios entregues fora do prazo.
+
+## Cabeçalho
+
+Escreva na caixa de texto abaixo os nomes completos dos integrantes do
+seu grupo, junto com seus respectivos NUSP. Inclua também a data da
+prática.
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Nomes + NUSP:
+
+Data:
+:::
+
+## **Objetivo**
+
+Nesta prática, interpretaremos mais a fundo o artigo de base,
+aprenderemos um pouco mais sobre o método científico e treinaremos
+algumas habilidades básicas em ciência de dados.
+
+## Artigo de base
+
+Matsumura et al. ([2020,
+BiolLett](https://doi.org/10.1098/rsbl.2020.0601)).
+
+## **Passos iniciais**
+
+1.  Discuta os pontos principais do artigo de base com a turma e os
+    docentes em sala;
+
+2.  Responda as questões apresentadas neste tutorial.
+
+3.  Verifique e instale os pacotes necessários:
+
+```{r}
+if(!require(ggplot2)){
+  install.packages("ggplot2")
+  library(ggplot2)
+}
+
+if(!require(rstudioapi)){
+  install.packages("rstudioapi")
+  library(rstudioapi)
+}
+```
+
+## Elementos argumentativos
+
+1.  Identifique no texto os seguintes *elementos argumentativos*
+    baseados no método científico. Descreva-os sinteticamente dentro do
+    contexto do artigo de base, usando frases bem curtas. Anote essas
+    descrições nas caixas de texto abaixo:
+
+### Problema
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+### Hipótese
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+## Operacionalização
+
+1.  Quais variáveis operacionais foram definidas para análise no estudo?
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+2.  Como os autores esperavam que essas variáveis operacionais afetassem
+    umas às outras? Ou seja, quais foram as previsões testadas no
+    estudo?
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+## Teste das previsões
+
+Que tal testarmos as previsões do estudo visualmente, reproduzindo os
+gráficos apresentados na **Figura 2** do artigo de base?
+
+Limpe os objetos criados anteriormente:
+
+```{r}
+rm(list= ls())
+```
+
+Informe para o R que o diretório de trabalho é o mesmo onde se encontra
+este tutorial:
+
+```{r}
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+getwd()
+```
+
+De quais variáveis operacionais precisamos para reproduzir a **Figura
+2a**? Localize-se no arquivo `dados.xlsx`.
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+Vamos reproduzir a Figura 2a:
+
+```{r}
+# Carregar pacotes necessários
+library(ggplot2)
+
+# Carregar os dados
+dados <- read.csv("../dados/dados.csv", header = T)
+
+# Visualizar as primeiras linhas do dataset
+head(dados)
+
+# Criar o scatterplot
+ggplot(dados, aes(x = `Residual mandible length`, y = `Duration of thanatosis`)) +
+  geom_point(color = "blue", alpha = 0.6) +
+  labs(x = "Residual Mandible Length", y = "Duration of Thanatosis",
+       title = "Scatterplot: Duration of Thanatosis vs Residual Mandible Length") +
+  theme_minimal()
+
+```
+
+## Conclusão
+
+Você acha que as previsões do artigo de base foram confirmadas ou não?
+Por que?
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+## Passos finais
+
+1.  Exporte este notebook com as suas respostas em formato HTML. Basta
+    copiar e colar o seguinte código no `Console`:
+
+    `rmarkdown::render("interacoes.Rmd", output_format = "html_document")`
+
+2.  Carregue este notebook respondido no link do moodle para entrega do
+    relatório, junto com a figura do mapa mental exportada
+    anteriormente.
+
+## Para saber mais
+
+1.  [O que é uma
+    teoria?](https://marcoarmello.wordpress.com/2012/03/13/teoria/)
+
+2.  [Operacionalizando uma
+    hipótese](https://marcoarmello.wordpress.com/2012/03/13/operacionalizando/)
+
+3.  [Mapa mental: organizando as suas
+    ideias](https://marcoarmello.wordpress.com/2015/04/15/mapasmentais/)
