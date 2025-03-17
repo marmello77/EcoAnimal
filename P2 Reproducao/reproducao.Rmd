@@ -155,7 +155,7 @@ Escreva sua resposta aqui.
 
 ## Operacionalização
 
-Quais variáveis operacionais foram definidas para análise no estudo?
+Quais variáveis operacionais foram definidas para análise?
 
 ```{=html}
 <style>
@@ -173,7 +173,8 @@ Escreva sua resposta aqui.
 :::
 
 Como os autores esperavam que essas variáveis operacionais afetassem
-umas às outras? Ou seja, quais foram as previsões testadas no estudo?
+umas às outras? Ou seja, quais foram as previsões testadas
+concretamente?
 
 ```{=html}
 <style>
@@ -192,8 +193,15 @@ Escreva sua resposta aqui.
 
 ## Teste das previsões
 
-Que tal testarmos as previsões do estudo visualmente, reproduzindo os
-gráficos apresentados na **Figura 2** do artigo de base?
+Antes de analisarmos os dados, que tal assistir aos **vídeos do
+experimento** com os
+[besouros](https://en.m.wikipedia.org/wiki/Gnatocerus_cornutus),
+disponibilizados no suplemento do artigo? Eles estão disponíveis no
+subdiretório `dados`.
+
+Agora vamos testar as previsões do estudo visualmente, reproduzindo os
+gráficos apresentados na **Figura 2** do artigo de base. Não se preocupe
+com os detalhes sobre as análises numéricas.
 
 ### Figura 2a
 
@@ -201,7 +209,7 @@ Começando pela **Figura 2a**, ela represente um tipo de gráfico muito
 usado, conhecido como **diagrama de dispersão de pontos**, que serve
 para ilustrar a relação entre duas variáveis contínuas nos eixos X e Y.
 
-Felzimente, os autores do artigo de base incluíram um suplemento, com os
+Felizmente, os autores do artigo de base incluíram um suplemento, com os
 dados usados anas análises e também vídeos dos experimentos. Você pode
 conferir os dados e metadados no arquivo `dados.xlsx`, que está
 disponível aqui no repositório. Criamos ainda uma versão simplificada,
@@ -221,7 +229,7 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 ```
 
 De quais variáveis operacionais precisamos para reproduzir a Figura 2a?
-Localize-se no arquivo `dados.xlsx`.
+Localize-se no arquivo `dados.xlsx`, disponível no subdiretório `dados`.
 
 ```{=html}
 <style>
@@ -267,10 +275,13 @@ ggplot(dados, aes(x = `Residual.mandible.length`, y = `Duration.of.thanatosis`))
 
 O gráfico ficou igual ao do artigo? Discuta com o seu grupo.
 
-Olhe os valores do eixo Y. Tem algo diferente?
+Discutiu? Então agora olhe o eixo Y.
 
-Transforme a variável Y, da mesma maneira como fizeram no artigo de
-base:
+Nota algo diferente? Pois é, os valores estão diferentes, não? Parece
+que, na versão final da figura, esses dados foram transformados.
+
+Transforme a variável Y pelo logaritmo, da mesma maneira como fizeram no
+artigo de base:
 
 ```{r}
 dados$Duration.of.thanatosis.log <- log10(dados$Duration.of.thanatosis)
@@ -283,7 +294,7 @@ Confira a variável transformada:
 head(dados)
 ```
 
-Plote um novo gráfico:
+Plote o o gráfico de novo, usando a variável transformada:
 
 ```{r}
 ggplot(dados, aes(x = `Residual.mandible.length`, y = `Duration.of.thanatosis.log`)) +
@@ -326,9 +337,15 @@ de diagrama de dispersão de pontos, conhecido como **diagrama
 logístico**. Nesse tipo de gráfico, a variável X é contínua, enquanto a
 variável Y assume apenas valores binários (0 ou 1).
 
+Esse tipo de gráfico é ótimo para analisar visualmente relações do tipo
+"sim ou não", "ganha ou perde", "acontece ou não acontece".
+
 Infelizmente, os autores não incluíram no suplemento os dados exatos que
 usaram para fazer essa figura. Logo, precisamos transformar a variável
-que eles provavelmente usaram nesta análise:
+que eles provavelmente usaram na análise.
+
+Converta a variável contínua em binária, usando para isso um teste
+lógico:
 
 ```{r}
 dados$Duration.of.thanatosis.bin <- ifelse(dados$Duration.of.thanatosis == 0, 0, 1)
@@ -338,10 +355,12 @@ dados$Duration.of.thanatosis.bin <- ifelse(dados$Duration.of.thanatosis == 0, 0,
 Confira a variável transformada:
 
 ```{r}
-table(dados$Duration.of.thanatosis.bin)
+head(dados)
+tail(dados)
 ```
 
-Plote um gráfico igual ao da Figura 2b:
+Usando essa variável transformada, plote um gráfico igual ao da Figura
+2b:
 
 ```{r}
 ggplot(dados, aes(x=Residual.mandible.length, y=Duration.of.thanatosis.bin)) + 
@@ -395,20 +414,25 @@ Escreva sua resposta aqui.
 
 ## Passos finais
 
-1.  Exporte este notebook com as suas respostas em formato HTML. Basta
-    copiar e colar o seguinte código no `Console`:
+1.  Exporte este notebook com as suas respostas em formato HTML. Clique
+    no botão `Knit`, que fica na barra de control deste arquivo RMD, e
+    escolha `Knit to HTML`;
+
+2.  Se não der certo, basta copiar e colar o seguinte código no
+    `Console`:
 
     `rmarkdown::render("reproducao.Rmd", output_format = "html_document")`
 
-2.  Carregue este notebook respondido no link do moodle para entrega do
-    relatório, junto com a figura do mapa mental exportada
-    anteriormente.
+3.  Carregue este notebook respondido no link do moodle para entrega do
+    relatório.
 
 ## Para saber mais
 
 1.  [Qual gráfico devo
     fazer?](https://marcoarmello.wordpress.com/2020/05/29/qualgrafico/)
-2.  [Como fazer figuras para artigos
-    científicos](https://marcoarmello.wordpress.com/2012/03/13/figuras/)
-3.  [Como escrever legendas de
+
+2.  [Como escrever legendas de
     figuras](https://marcoarmello.wordpress.com/2018/03/28/legendas/)
+
+3.  [Como fazer figuras para artigos
+    científicos](https://marcoarmello.wordpress.com/2012/03/13/figuras/)
