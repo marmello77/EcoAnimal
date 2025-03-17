@@ -95,6 +95,11 @@ if(!require(ggplot2)){
   library(ggplot2)
 }
 
+if(!require(readxl)){
+  install.packages("readxl")
+  library(readxl)
+}
+
 if(!require(rstudioapi)){
   install.packages("rstudioapi")
   library(rstudioapi)
@@ -109,6 +114,9 @@ if(!require(rstudioapi)){
     descrições nas caixas de texto abaixo:
 
 ### Problema
+
+Qual problema científico os autores se propuseram a resolver nesse
+estudo?
 
 ```{=html}
 <style>
@@ -127,6 +135,9 @@ Escreva sua resposta aqui.
 
 ### Hipótese
 
+Qual ideia sobre o funcionamento da natureza os autores pretendiam
+testar nesse estudo?
+
 ```{=html}
 <style>
 .answer-box {
@@ -144,7 +155,7 @@ Escreva sua resposta aqui.
 
 ## Operacionalização
 
-1.  Quais variáveis operacionais foram definidas para análise no estudo?
+Quais variáveis operacionais foram definidas para análise no estudo?
 
 ```{=html}
 <style>
@@ -161,9 +172,8 @@ Escreva sua resposta aqui.
 Escreva sua resposta aqui.
 :::
 
-2.  Como os autores esperavam que essas variáveis operacionais afetassem
-    umas às outras? Ou seja, quais foram as previsões testadas no
-    estudo?
+Como os autores esperavam que essas variáveis operacionais afetassem
+umas às outras? Ou seja, quais foram as previsões testadas no estudo?
 
 ```{=html}
 <style>
@@ -185,6 +195,18 @@ Escreva sua resposta aqui.
 Que tal testarmos as previsões do estudo visualmente, reproduzindo os
 gráficos apresentados na **Figura 2** do artigo de base?
 
+### Figura 2a
+
+Começando pela **Figura 2a**, ela represente um tipo de gráfico muito
+usado, conhecido como **diagrama de dispersão de pontos**, que serve
+para ilustrar a relação entre duas variáveis contínuas nos eixos X e Y.
+
+Felzimente, os autores do artigo de base incluíram um suplemento, com os
+dados usados anas análises e também vídeos dos experimentos. Você pode
+conferir os dados e metadados no arquivo `dados.xlsx`, que está
+disponível aqui no repositório. Criamos ainda uma versão simplificada,
+`dados.csv`, que usaremos diretamente nos códigos a seguir.
+
 Limpe os objetos criados anteriormente:
 
 ```{r}
@@ -196,11 +218,10 @@ este tutorial:
 
 ```{r}
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-getwd()
 ```
 
-De quais variáveis operacionais precisamos para reproduzir a **Figura
-2a**? Localize-se no arquivo `dados.xlsx`.
+De quais variáveis operacionais precisamos para reproduzir a Figura 2a?
+Localize-se no arquivo `dados.xlsx`.
 
 ```{=html}
 <style>
@@ -217,26 +238,140 @@ De quais variáveis operacionais precisamos para reproduzir a **Figura
 Escreva sua resposta aqui.
 :::
 
-Vamos reproduzir a Figura 2a:
+Vamos reproduzir a Figura 2a, passo a passo.
+
+Importe os dados para dentro de um objeto do R:
 
 ```{r}
-# Carregar pacotes necessários
-library(ggplot2)
-
-# Carregar os dados
-dados <- read.csv("../dados/dados.csv", header = T)
-
-# Visualizar as primeiras linhas do dataset
-head(dados)
-
-# Criar o scatterplot
-ggplot(dados, aes(x = `Residual mandible length`, y = `Duration of thanatosis`)) +
-  geom_point(color = "blue", alpha = 0.6) +
-  labs(x = "Residual Mandible Length", y = "Duration of Thanatosis",
-       title = "Scatterplot: Duration of Thanatosis vs Residual Mandible Length") +
-  theme_minimal()
+dados <- read.csv("dados/dados.csv", header = T, sep = ";")
 
 ```
+
+Inspecione os dados para ver se estão ok:
+
+```{r}
+head(dados)
+```
+
+Plote o gráfico com as mesmas variáveis usadas no artigo de base:
+
+```{r}
+ggplot(dados, aes(x = `Residual.mandible.length`, y = `Duration.of.thanatosis`)) +
+  geom_point(color = "blue", alpha = 0.4) +
+  labs(x = "residual mandible length (µm)", y = "duration of tonic immobility (log)",
+       title = "Figura 2a") +
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  scale_x_continuous(breaks = seq(-200, 150, by = 50))
+```
+
+O gráfico ficou igual ao do artigo? Discuta com o seu grupo.
+
+Olhe os valores do eixo Y. Tem algo diferente?
+
+Transforme a variável Y, da mesma maneira como fizeram no artigo de
+base:
+
+```{r}
+dados$Duration.of.thanatosis.log <- log10(dados$Duration.of.thanatosis)
+
+```
+
+Confira a variável transformada:
+
+```{r}
+head(dados)
+```
+
+Plote um novo gráfico:
+
+```{r}
+ggplot(dados, aes(x = `Residual.mandible.length`, y = `Duration.of.thanatosis.log`)) +
+  geom_point(color = "blue", alpha = 0.4) +
+  labs(x = "residual mandible length (µm)", y = "duration of tonic immobility (log)",
+       title = "Figura 2a") +
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  scale_x_continuous(breaks = seq(-200, 150, by = 50)) +
+  scale_y_continuous(breaks = seq(0, 3, by = 0.5))
+
+
+```
+
+Agora o gráfico igual à Figura 2a do artigo de base? Discuta com o seu
+grupo.
+
+A previsão testada visualmente na Figura 2a se confirmou? Justifique a
+sua resposta.
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+### Figura 2b
+
+Agora vamos reproduzir a **Figura 2b**. Ela representa um tipo especial
+de diagrama de dispersão de pontos, conhecido como **diagrama
+logístico**. Nesse tipo de gráfico, a variável X é contínua, enquanto a
+variável Y assume apenas valores binários (0 ou 1).
+
+Infelizmente, os autores não incluíram no suplemento os dados exatos que
+usaram para fazer essa figura. Logo, precisamos transformar a variável
+que eles provavelmente usaram nesta análise:
+
+```{r}
+dados$Duration.of.thanatosis.bin <- ifelse(dados$Duration.of.thanatosis == 0, 0, 1)
+
+```
+
+Confira a variável transformada:
+
+```{r}
+table(dados$Duration.of.thanatosis.bin)
+```
+
+Plote um gráfico igual ao da Figura 2b:
+
+```{r}
+ggplot(dados, aes(x=Residual.mandible.length, y=Duration.of.thanatosis.bin)) + 
+  geom_point(colour = "#1855FA", size=2, alpha = 0.5) + 
+  stat_smooth(method="glm", method.args=list(family="binomial"), se=FALSE) +
+  labs(x="residual mandible length (µm)", y = "frequency of tonic immobility",
+       title = "Figura 2b") +
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  scale_x_continuous(breaks = seq(-200, 150, by = 50)) +
+  scale_y_continuous(breaks = seq(0, 1, by = 1))
+```
+
+A previsão testada visualmente na Figura 2b se confirmou? Justifique a
+sua resposta.
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Escreva sua resposta aqui.
+:::
 
 ## Conclusão
 
@@ -263,7 +398,7 @@ Escreva sua resposta aqui.
 1.  Exporte este notebook com as suas respostas em formato HTML. Basta
     copiar e colar o seguinte código no `Console`:
 
-    `rmarkdown::render("interacoes.Rmd", output_format = "html_document")`
+    `rmarkdown::render("reproducao.Rmd", output_format = "html_document")`
 
 2.  Carregue este notebook respondido no link do moodle para entrega do
     relatório, junto com a figura do mapa mental exportada
@@ -271,11 +406,9 @@ Escreva sua resposta aqui.
 
 ## Para saber mais
 
-1.  [O que é uma
-    teoria?](https://marcoarmello.wordpress.com/2012/03/13/teoria/)
-
-2.  [Operacionalizando uma
-    hipótese](https://marcoarmello.wordpress.com/2012/03/13/operacionalizando/)
-
-3.  [Mapa mental: organizando as suas
-    ideias](https://marcoarmello.wordpress.com/2015/04/15/mapasmentais/)
+1.  [Qual gráfico devo
+    fazer?](https://marcoarmello.wordpress.com/2020/05/29/qualgrafico/)
+2.  [Como fazer figuras para artigos
+    científicos](https://marcoarmello.wordpress.com/2012/03/13/figuras/)
+3.  [Como escrever legendas de
+    figuras](https://marcoarmello.wordpress.com/2018/03/28/legendas/)
