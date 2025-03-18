@@ -77,8 +77,7 @@ algumas habilidades básicas em ciência de dados.
 
 ## Artigo de base
 
-Matsumura et al. ([2020,
-BiolLett](https://doi.org/10.1098/rsbl.2020.0601)).
+Graham et al [2020, BiolLett](https://doi.org/10.1098/rsbl.2020.0601)).
 
 ## **Passos iniciais**
 
@@ -90,6 +89,11 @@ BiolLett](https://doi.org/10.1098/rsbl.2020.0601)).
 3.  Verifique e instale os pacotes necessários:
 
 ```{r}
+if(!require(dplyr)){
+  install.packages("dplyr")
+  library(dplyr)
+}
+
 if(!require(ggplot2)){
   install.packages("ggplot2")
   library(ggplot2)
@@ -104,14 +108,36 @@ if(!require(rstudioapi)){
   install.packages("rstudioapi")
   library(rstudioapi)
 }
+
+if(!require(tidyr)){
+  install.packages("tidyr")
+  library(tidyr)
+}
 ```
 
-## Elementos argumentativos
+4.  Limpe os objetos criados anteriormente:
 
-1.  Identifique no texto os seguintes *elementos argumentativos*
-    baseados no método científico. Descreva-os sinteticamente dentro do
-    contexto do artigo de base, usando frases bem curtas. Anote essas
-    descrições nas caixas de texto abaixo:
+```{r}
+rm(list= ls())
+```
+
+5.  Informe ao RStudio que o diretório de trabalho é o mesmo onde se
+    encontra este tutorial:
+
+```{r}
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+```
+
+## Argumentação
+
+Antes de começar as tarefas, que tal assistir a um [excelente vídeo
+sobre as narvais](https://youtu.be/YO58kt-jETA?si=0hsB7feu0qc2ua2x), o
+modelo de estudo usado?
+
+Identifique no artigo de base os seguintes **elementos argumentativos**
+baseados no método científico. Descreva-os sinteticamente dentro do
+contexto do estudo, usando frases bem curtas. Anote essas descrições nas
+caixas de texto abaixo:
 
 ### Problema
 
@@ -135,8 +161,8 @@ Escreva sua resposta aqui.
 
 ### Hipótese
 
-Qual ideia sobre o funcionamento da natureza os autores pretendiam
-testar nesse estudo?
+Qual ideia sobre uma entidade, sistema ou fenômeno natural os autores
+pretendiam testar nesse estudo?
 
 ```{=html}
 <style>
@@ -155,7 +181,34 @@ Escreva sua resposta aqui.
 
 ## Operacionalização
 
-Quais variáveis operacionais foram definidas para análise?
+### Previsões
+
+Quais foram as previsões testadas concretamente no estudo? Liste-as e
+descreva-as sucintamente, em frases curtas.
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Previsão 1
+
+Previsão 2
+
+etc.
+:::
+
+### Variáveis
+
+Com base nas previsões que você identificou anteriormente, quais
+variáveis operacionais foram definidas para análise? Liste-as abaixo.
 
 ```{=html}
 <style>
@@ -172,64 +225,63 @@ Quais variáveis operacionais foram definidas para análise?
 Escreva sua resposta aqui.
 :::
 
-Como os autores esperavam que essas variáveis operacionais afetassem
-umas às outras? Ou seja, quais foram as previsões testadas
-concretamente?
-
-```{=html}
-<style>
-.answer-box {
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-</style>
-```
-
-::: answer-box
-Escreva sua resposta aqui.
-:::
-
-## Teste das previsões
-
-Antes de analisarmos os dados, que tal assistir aos **vídeos do
-experimento** com os
-[besouros](https://en.m.wikipedia.org/wiki/Gnatocerus_cornutus),
-disponibilizados no suplemento do artigo? Eles estão disponíveis no
-subdiretório `dados`.
+## Testes das previsões
 
 Agora vamos testar as previsões do estudo visualmente, reproduzindo os
-gráficos apresentados na **Figura 2** do artigo de base. Não se preocupe
-com os detalhes sobre as análises numéricas.
+gráficos apresentados no artigo de base. Não se preocupe com os detalhes
+sobre as análises numéricas.
 
-### Figura 2a
+### Dados
 
-Começando pela **Figura 2a**, ela represente um tipo de gráfico muito
-usado, conhecido como **diagrama de dispersão de pontos**, que serve
-para ilustrar a relação entre duas variáveis contínuas nos eixos X e Y.
+Para começar, precisamos ter acesso aos **dados** efetivamente usados
+nas análises do estudo.
 
-Felizmente, os autores do artigo de base incluíram um suplemento, com os
-dados usados anas análises e também vídeos dos experimentos. Você pode
-conferir os dados e metadados no arquivo `dados.xlsx`, que está
-disponível aqui no repositório. Criamos ainda uma versão simplificada,
-`dados.csv`, que usaremos diretamente nos códigos a seguir.
+Felizmente, os autores disponibilizaram os dados processados em um
+suplemento. Confira o arquivo `dados.xlsx`, no subdiretório `dados`.
 
-Limpe os objetos criados anteriormente:
+Importe os dados para dentro de um **objeto** **de R**. Vamos começar
+usando apenas uma das **planilhas** disponíveis dentro do arquivo de
+origem:
 
 ```{r}
-rm(list= ls())
+dados1 <- read_excel("dados/dados.xlsx", sheet = "narwhal")
 ```
 
-Informe para o R que o diretório de trabalho é o mesmo onde se encontra
-este tutorial:
+Inspecione o **começo** e o **fim** do novo objeto, para ver se os dados
+foram importados corretamente:
 
 ```{r}
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+head(dados1)
+tail(dados1)
 ```
 
-De quais variáveis operacionais precisamos para reproduzir a Figura 2a?
-Localize-se no arquivo `dados.xlsx`, disponível no subdiretório `dados`.
+Inspecione as **propriedades** do objeto:
+
+```{r}
+str(dados1)
+```
+
+Inspecie os **estatísticas** dos dados:
+
+```{r}
+summary(dados1)
+```
+
+### Figuras
+
+Que tal reproduzirmos a **Figura 2** do artigo de base? Ela é central
+para testarmos visualmente as principais previsões deduzidas a partir da
+hipótese de trabalho.
+
+De quais **variáveis operacionais** precisamos para reproduzir a
+**Figura 2a**,especificamente? Localize-se no objeto com os dados,
+checando todas as variáveis contidas nele:
+
+```{r}
+colnames(dados1)
+```
+
+Liste aqui as variáveis localizadas:
 
 ```{=html}
 <style>
@@ -246,136 +298,27 @@ Localize-se no arquivo `dados.xlsx`, disponível no subdiretório `dados`.
 Escreva sua resposta aqui.
 :::
 
-Vamos reproduzir a Figura 2a, passo a passo.
+Primeiro, reveja com atenção a figura em questão. Aproveite para tirar
+eventuais dúvidas sobre ela.
 
-Importe os dados para dentro de um objeto do R:
-
-```{r}
-dados <- read.csv("dados/dados.csv", header = T, sep = ";")
-
-```
-
-Inspecione os dados para ver se estão ok:
+Pronto. Agora plote o gráfico mostrado na **Figura 2a**:
 
 ```{r}
-head(dados)
+
+dados2 <- pivot_longer(dados1, cols = c("TAIL", "TUSK"), names_to = "Medida", values_to = "Valor") %>%
+  select(LEN, Medida, Valor)
+
+ggplot(dados2, aes(x = LEN, y = Valor, color = Medida)) +
+  geom_point(size = 3, alpha = 0.7) +
+  labs(title = "TAIL e TUSK em função de LEN",
+       x = "Comprimento do corpo (LEN)",
+       y = "Valor",
+       color = "Medida") +
+  theme_minimal()
 ```
 
-Plote o gráfico com as mesmas variáveis usadas no artigo de base:
-
-```{r}
-ggplot(dados, aes(x = `Residual.mandible.length`, y = `Duration.of.thanatosis`)) +
-  geom_point(color = "blue", alpha = 0.4) +
-  labs(x = "residual mandible length (µm)", y = "duration of tonic immobility (log)",
-       title = "Figura 2a") +
-  theme_classic() +
-  theme(plot.title = element_text(hjust = 0.5)) + 
-  scale_x_continuous(breaks = seq(-200, 150, by = 50))
-```
-
-O gráfico ficou igual ao do artigo? Discuta com o seu grupo.
-
-Discutiu? Então agora olhe o eixo Y.
-
-Nota algo diferente? Pois é, os valores estão diferentes, não? Parece
-que, na versão final da figura, esses dados foram transformados.
-
-Transforme a variável Y pelo logaritmo, da mesma maneira como fizeram no
-artigo de base:
-
-```{r}
-dados$Duration.of.thanatosis.log <- log10(dados$Duration.of.thanatosis)
-
-```
-
-Confira a variável transformada:
-
-```{r}
-head(dados)
-```
-
-Plote o o gráfico de novo, usando a variável transformada:
-
-```{r}
-ggplot(dados, aes(x = `Residual.mandible.length`, y = `Duration.of.thanatosis.log`)) +
-  geom_point(color = "blue", alpha = 0.4) +
-  labs(x = "residual mandible length (µm)", y = "duration of tonic immobility (log)",
-       title = "Figura 2a") +
-  theme_classic() +
-  theme(plot.title = element_text(hjust = 0.5)) + 
-  scale_x_continuous(breaks = seq(-200, 150, by = 50)) +
-  scale_y_continuous(breaks = seq(0, 3, by = 0.5))
-
-
-```
-
-Agora o gráfico igual à Figura 2a do artigo de base? Discuta com o seu
-grupo.
-
-A previsão testada visualmente na Figura 2a se confirmou? Justifique a
-sua resposta.
-
-```{=html}
-<style>
-.answer-box {
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-</style>
-```
-
-::: answer-box
-Escreva sua resposta aqui.
-:::
-
-### Figura 2b
-
-Agora vamos reproduzir a **Figura 2b**. Ela representa um tipo especial
-de diagrama de dispersão de pontos, conhecido como **diagrama
-logístico**. Nesse tipo de gráfico, a variável X é contínua, enquanto a
-variável Y assume apenas valores binários (0 ou 1).
-
-Esse tipo de gráfico é ótimo para analisar visualmente relações do tipo
-"sim ou não", "ganha ou perde", "acontece ou não acontece".
-
-Infelizmente, os autores não incluíram no suplemento os dados exatos que
-usaram para fazer essa figura. Logo, precisamos transformar a variável
-que eles provavelmente usaram na análise.
-
-Converta a variável contínua em binária, usando para isso um teste
-lógico:
-
-```{r}
-dados$Duration.of.thanatosis.bin <- ifelse(dados$Duration.of.thanatosis == 0, 0, 1)
-
-```
-
-Confira a variável transformada:
-
-```{r}
-head(dados)
-tail(dados)
-```
-
-Usando essa variável transformada, plote um gráfico igual ao da Figura
-2b:
-
-```{r}
-ggplot(dados, aes(x=Residual.mandible.length, y=Duration.of.thanatosis.bin)) + 
-  geom_point(colour = "#1855FA", size=2, alpha = 0.5) + 
-  stat_smooth(method="glm", method.args=list(family="binomial"), se=FALSE) +
-  labs(x="residual mandible length (µm)", y = "frequency of tonic immobility",
-       title = "Figura 2b") +
-  theme_classic() +
-  theme(plot.title = element_text(hjust = 0.5)) + 
-  scale_x_continuous(breaks = seq(-200, 150, by = 50)) +
-  scale_y_continuous(breaks = seq(0, 1, by = 1))
-```
-
-A previsão testada visualmente na Figura 2b se confirmou? Justifique a
-sua resposta.
+A previsão testada através desse gráfico se confirmou? Justifique sua
+resposta.
 
 ```{=html}
 <style>
@@ -394,8 +337,8 @@ Escreva sua resposta aqui.
 
 ## Conclusão
 
-Você acha que as previsões do artigo de base foram confirmadas ou não?
-Por que?
+Você acha que as previsões listadas lá no começo deste tutorial foram
+confirmadas ou não? Por que?
 
 ```{=html}
 <style>
