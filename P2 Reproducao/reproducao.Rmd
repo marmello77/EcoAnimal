@@ -84,7 +84,7 @@ Graham et al [2020, BiolLett](https://doi.org/10.1098/rsbl.2020.0601)).
 1.  Discuta os pontos principais do artigo de base com a turma e os
     docentes em sala;
 
-2.  Responda as questões apresentadas neste tutorial.
+2.  Dê uma lida rápidas nas questões apresentadas neste tutorial;
 
 3.  Verifique e instale os pacotes necessários:
 
@@ -126,6 +126,13 @@ rm(list= ls())
 
 ```{r}
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+```
+
+6.  Carregue as funções personalizadas (UDFs) necessárias para rodar
+    este tutorial:
+
+```{r}
+source("codigos/remover_outliers.R")
 ```
 
 ## Argumentação
@@ -247,6 +254,28 @@ origem:
 dados1 <- read_excel("dados/dados.xlsx", sheet = "narwhal")
 ```
 
+Remova as linhas com valores **ausentes** (NA):
+
+```{r}
+dados1 <- dados1 %>% filter(!is.na(LEN) & !is.na(TAIL) & !is.na(TUSK))
+```
+
+Garanta que os dados principais a serem usados nas análises são
+entedidos como **numéricos**:
+
+```{r}
+dados1$LEN <- as.numeric(dados1$LEN)
+dados1$TAIL <- as.numeric(dados1$TAIL)
+dados1$TUSK <- as.numeric(dados1$TUSK)
+```
+
+Remova dados outliers sem explicação:
+
+```{r}
+dados1 <- remover_outliers(dados1, "TAIL")
+dados1 <- remover_outliers(dados1, "TUSK")
+```
+
 Inspecione o **começo** e o **fim** do novo objeto, para ver se os dados
 foram importados corretamente:
 
@@ -271,17 +300,17 @@ summary(dados1)
 
 Que tal reproduzirmos a **Figura 2** do artigo de base? Ela é central
 para testarmos visualmente as principais previsões deduzidas a partir da
-hipótese de trabalho.
+hipótese de trabalho. Vamos por partes.
 
 De quais **variáveis operacionais** precisamos para reproduzir a
-**Figura 2a**,especificamente? Localize-se no objeto com os dados,
+**Figura 2a**,especificamente? Localize-a no objeto criado com os dados,
 checando todas as variáveis contidas nele:
 
 ```{r}
 colnames(dados1)
 ```
 
-Liste aqui as variáveis localizadas:
+Liste aqui as variáveis necessárias:
 
 ```{=html}
 <style>
@@ -298,8 +327,8 @@ Liste aqui as variáveis localizadas:
 Escreva sua resposta aqui.
 :::
 
-Primeiro, reveja com atenção a figura em questão. Aproveite para tirar
-eventuais dúvidas sobre ela.
+Antes de prosseguirmos, reveja com atenção a **Figura 2a**. Aproveite
+para tirar eventuais dúvidas sobre ela.
 
 Pronto. Agora plote o gráfico mostrado na **Figura 2a**:
 
@@ -308,17 +337,26 @@ Pronto. Agora plote o gráfico mostrado na **Figura 2a**:
 dados2 <- pivot_longer(dados1, cols = c("TAIL", "TUSK"), names_to = "Medida", values_to = "Valor") %>%
   select(LEN, Medida, Valor)
 
-ggplot(dados2, aes(x = LEN, y = Valor, color = Medida)) +
+plot <- ggplot(dados2, aes(x = LEN, y = Valor, color = Medida)) +
   geom_point(size = 3, alpha = 0.7) +
-  labs(title = "TAIL e TUSK em função de LEN",
-       x = "Comprimento do corpo (LEN)",
-       y = "Valor",
-       color = "Medida") +
-  theme_minimal()
+  geom_smooth(data = subset(dados2, Medida == "TAIL"), method = "lm", formula = y ~ x, se = FALSE) +
+  geom_smooth(data = subset(dados2, Medida == "TUSK"), method = "lm", formula = y ~ poly(x, 2), se = FALSE) + 
+  scale_color_manual(values = c("TAIL" = "grey", "TUSK" = "red")) +
+  labs(title = "Figura 2a",
+       x = "body length (cm)",
+       y = "trait length (cm)",
+       color = "trait") +
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 0.5)) 
+
+
+# Exibir o gráfico
+print(plot)
+
 ```
 
-A previsão testada através desse gráfico se confirmou? Justifique sua
-resposta.
+As previsões testadas através desse gráfico se confirmaram? Justifique
+sua resposta.
 
 ```{=html}
 <style>
@@ -337,8 +375,7 @@ Escreva sua resposta aqui.
 
 ## Conclusão
 
-Você acha que as previsões listadas lá no começo deste tutorial foram
-confirmadas ou não? Por que?
+Você acha que hipótese de trabalho foi corroborada ou não? Por que?
 
 ```{=html}
 <style>
@@ -371,11 +408,4 @@ Escreva sua resposta aqui.
 
 ## Para saber mais
 
-1.  [Qual gráfico devo
-    fazer?](https://marcoarmello.wordpress.com/2020/05/29/qualgrafico/)
-
-2.  [Como escrever legendas de
-    figuras](https://marcoarmello.wordpress.com/2018/03/28/legendas/)
-
-3.  [Como fazer figuras para artigos
-    científicos](https://marcoarmello.wordpress.com/2012/03/13/figuras/)
+1.  [Tidy data](https://vita.had.co.nz/papers/tidy-data.html)
