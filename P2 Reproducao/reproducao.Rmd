@@ -364,6 +364,21 @@ ggplot(dados2, aes(x = LEN, y = Valor, color = Medida)) +
 
 O gráfico ficou exatamente igual ao do artigo? Justifique sua resposta.
 
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
 As previsões testadas através desse gráfico se confirmaram? Justifique
 sua resposta.
 
@@ -419,4 +434,6 @@ Escreva sua resposta aqui.
 
 ## Para saber mais
 
-1.  [Tidy data](https://vita.had.co.nz/papers/tidy-data.html)
+1.  [Narval](https://pt.wikipedia.org/wiki/Narval)
+2.  [Seleção sexual](https://pt.wikipedia.org/wiki/Seleção_sexual)
+3.  [Tidy data](https://vita.had.co.nz/papers/tidy-data.html)
