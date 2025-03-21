@@ -140,6 +140,11 @@ sobre os
 morcegos-vampiros](https://youtu.be/iLp-ls8AoaU?si=1SKCMMfH0odn8n71), o
 modelo de estudo usado?
 
+Recomendamos também outro interassantíssimo vídeo curto sobre o
+[compartilhamento de
+comida](https://youtu.be/rZTAW0vPE1o?si=wKYu8PQvzMT9QW0v) entre
+morcegos-vampiros.
+
 Identifique no artigo de base os seguintes **elementos argumentativos**
 baseados no método científico. Descreva-os sinteticamente dentro do
 contexto do estudo, usando frases bem curtas. Anote essas descrições nas
@@ -202,6 +207,7 @@ de origem. Depois você pode conferir a outra planilha, com os metadados:
 
 ```{r}
 dados1 <- read_excel("dados/dados.xlsx", sheet = "dados")
+#write.csv(dados1, "dados/dados1.csv", row.names = FALSE)
 ```
 
 Inspecione o **começo** e o **fim** do objeto, para checar se os dados
@@ -224,11 +230,64 @@ Inspecie os **estatísticas** dos dados:
 summary(dados1)
 ```
 
-## Rede social
+## A rede social
 
-Que tal construirmos e plotarmos a **rede social** de relações de
-compartilhamento de comida entre morcegos-vampiros mencionada no artigo,
-mas não apresentada nele?
+### Ciência de redes
+
+Toda a análise de dados no artigo de base foi fundamentada na estrutura
+da **rede social** de relações de compartilhamento de comida entre
+morcegos-vampiros. Que tal então aprender um pouco sobre **ciência de
+redes** nesta prática?
+
+Basicamente, uma **rede complexa** é composta por **elementos** e as
+**relações** entre eles. Aos elementos, damos o apelido de **nós**; as
+relações nós apelidamos de **elos**.
+
+No estudo em questão, os nós eram **indivíduos** da espécie *Desmodus*
+*rotundus*, o morcego-vampiro-comum. As conexões eram as relações de
+**compartilhamento** **de comida** entre esses indivíduos mantidos em
+cativeiro.
+
+### Construindo a rede
+
+Que tal estudarmos a **parte principal** da rede analisada no artigo de
+base, mas não apresentada explicitamente nele?
+
+Para isso, primeiro temos que identificar os dados necessários. Vamos
+examinar as colunas daquele objeto que criamos há pouco, que representam
+as variáveis disponibilizadas no suplemento do artigo de base:
+
+```{r}
+colnames(dados1)
+```
+
+Vamos focar nas variáveis `subject`, o morcego individual que passou
+pelo experimento de remoção do principal parceiro doados, e `keydonor`,
+o morcego individual que era o principal doador do primeiro. Notem quem
+é quem, em cada caso:
+
+```{r}
+dados1$subject
+```
+
+```{r}
+dados1$keydonor
+```
+
+Vamos ver a cara da rede?
+
+```{r}
+# Criar o grafo
+g <- graph_from_data_frame(dados1[, c("keydonor", "subject")], directed = TRUE)
+
+# Definir cores
+V(g)$color <- "blue"      # Nós azuis
+E(g)$color <- "red"       # Elos vermelhos
+V(g)$label.color <- "white" # Rótulos brancos
+
+# Plotar com linhas curvas
+plot(g, edge.curved = TRUE, vertex.size = 15)
+```
 
 ## Conclusão
 
