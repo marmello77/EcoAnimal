@@ -1,0 +1,273 @@
+---
+title: 'EcoAnimal USP, Prática: Socialidade'
+author: "Marco A. R. Mello"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+  word_document: default
+editor_options:
+  markdown:
+    wrap: 72
+---
+
+Clique no triângulo colorido dentro da caixa de código abaixo:
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::knit_hooks$set(inline = function(x) {
+prettyNum(x, big.mark=",")
+})
+```
+
+Para entender o contexto deste tutorial e creditar seus autores, leia o
+[README](https://github.com/marmello77/EcoAnimal/blob/main/README.md).
+
+## Atenção!
+
+Siga à risca as instruções dadas a seguir. Qualquer desvio delas pode
+acarretar em problemas técnicos que nos farão perder tempo em sala
+desnecessariamente. Faça a prática com atenção e sem pressa.
+
+1.  Mude o modo de visualização aqui no RStudio para `Visual`, clicando
+    no botão que fica no canto esquerdo da barra de formatação da aba
+    deste arquivo;
+
+2.  Clique no triângulo colorido da primeira caixa de código (no alto à
+    direita), logo acima desta seção;
+
+3.  Leia atentamente este roteiro e faça a prática seguindo as
+    orientações da equipe docente;
+
+4.  Toda vez que for responder perguntas usando as caixas de texto deste
+    tutorial, salve cópias de seguraça em um editor de texto externo,
+    por via das dúvidas;
+
+5.  O relatório deve ser entregue através da tarefa criada no moodle da
+    disciplina. Não serão aceitos relatórios entregues fora do prazo.
+
+## Cabeçalho
+
+Escreva na caixa de texto abaixo os nomes completos dos integrantes do
+seu grupo, junto com seus respectivos NUSP. Inclua também a data da
+prática.
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Nomes + NUSP:
+
+Data:
+:::
+
+## **Objetivo**
+
+Nesta prática, interpretaremos mais a fundo o artigo de base,
+aprenderemos um pouco mais sobre o método científico e treinaremos
+algumas habilidades básicas em ciência de dados.
+
+## Artigo de base
+
+Carter et al. ([2017, BioLet](https://doi.org/10.1098/rsbl.2017.0112)).
+
+## **Passos iniciais**
+
+1.  Discuta os pontos principais do artigo de base com a turma e os
+    docentes em sala;
+
+2.  Dê uma lida rápidas nas questões apresentadas neste tutorial;
+
+3.  Verifique e instale os pacotes necessários:
+
+```{r}
+if(!require(dplyr)){
+  install.packages("dplyr")
+  library(dplyr)
+}
+
+if(!require(ggplot2)){
+  install.packages("ggplot2")
+  library(ggplot2)
+}
+
+if(!require(igraph)){
+  install.packages("igraph")
+  library(igraph)
+}
+
+if(!require(readxl)){
+  install.packages("readxl")
+  library(readxl)
+}
+
+if(!require(rstudioapi)){
+  install.packages("rstudioapi")
+  library(rstudioapi)
+}
+
+if(!require(tidyr)){
+  install.packages("tidyr")
+  library(tidyr)
+}
+```
+
+4.  Limpe os objetos criados anteriormente:
+
+```{r}
+rm(list= ls())
+```
+
+5.  Informe ao RStudio que o diretório de trabalho é o mesmo onde se
+    encontra este tutorial:
+
+```{r}
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+```
+
+## Argumentação
+
+Antes de começar as tarefas, que tal assistir a um [excelente vídeo
+sobre os
+morcegos-vampiros](https://youtu.be/iLp-ls8AoaU?si=1SKCMMfH0odn8n71), o
+modelo de estudo usado?
+
+Identifique no artigo de base os seguintes **elementos argumentativos**
+baseados no método científico. Descreva-os sinteticamente dentro do
+contexto do estudo, usando frases bem curtas. Anote essas descrições nas
+caixas de texto abaixo:
+
+### Problema
+
+Qual problema científico os autores se propuseram a resolver nesse
+estudo?
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+### Hipótese
+
+Qual ideia sobre uma entidade, sistema ou fenômeno natural os autores
+pretendiam testar nesse estudo?
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+## Operacionalização
+
+### Dados
+
+Para começar, precisamos ter acesso aos **dados** efetivamente usados
+nas análises do estudo.
+
+Felizmente, os autores disponibilizaram os dados processados em um
+suplemento do artigo. Confira o arquivo `dados.xlsx`, no subdiretório
+`dados`.
+
+Importe os dados para dentro de um **objeto** **de R**. Vamos começar
+usando apenas a **planilha** que contém os dados, dentro do arquivo XLSX
+de origem. Depois você pode conferir a outra planilha, com os metadados:
+
+```{r}
+dados1 <- read_excel("dados/dados.xlsx", sheet = "dados")
+```
+
+Inspecione o **começo** e o **fim** do objeto, para checar se os dados
+foram importados corretamente:
+
+```{r}
+head(dados1)
+tail(dados1)
+```
+
+Inspecione as **propriedades** do objeto:
+
+```{r}
+str(dados1)
+```
+
+Inspecie os **estatísticas** dos dados:
+
+```{r}
+summary(dados1)
+```
+
+## Rede social
+
+Que tal construirmos e plotarmos a **rede social** de relações de
+compartilhamento de comida entre morcegos-vampiros mencionada no artigo,
+mas não apresentada nele?
+
+## Conclusão
+
+Com base nos resultados mostrados na **Figura 2** do artigo de base,
+reproduzida parcialmente nesta prática, você acha que hipótese de
+trabalho do artigo de base foi corroborada ou não? Por que?
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
+## Passos finais
+
+1.  Exporte este notebook com as suas respostas em formato HTML. Clique
+    no botão `Knit`, que fica na barra de control deste arquivo RMD, e
+    escolha `Knit to HTML`;
+
+2.  Se não der certo, basta copiar e colar o seguinte código no
+    `Console`:
+
+    `rmarkdown::render("reproducao.Rmd", output_format = "html_document")`
+
+3.  Carregue este notebook respondido no link do moodle para entrega do
+    relatório.
+
+## Para saber mais
+
+1.  [Bet hedging](https://en.wikipedia.org/wiki/Bet_hedging_(biology))
+2.  [Morcego-vampiro](https://casadosmorcegos.wordpress.com/biologia/vampiros/)
+3.  [Network
+    science](https://en.wikipedia.org/wiki/Network_science#:~:text=Network%20science%20is%20an%20academic,connections%20between%20the%20elements%20or)
