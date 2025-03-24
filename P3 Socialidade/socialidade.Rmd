@@ -236,8 +236,8 @@ summary(dados1)
 
 Toda a análise de dados no artigo de base foi fundamentada na estrutura
 da **rede social** de relações de compartilhamento de comida entre
-morcegos-vampiros. Que tal então aprender um pouco sobre **ciência de
-redes** nesta prática?
+morcegos-vampiros de uma mesma colônia mantida em cativeiro. Que tal
+então aprender um pouco sobre **ciência de redes** nesta prática?
 
 Basicamente, uma **rede complexa** é composta por **elementos** e as
 **relações** entre eles. Aos elementos, damos o apelido de **nós**; as
@@ -274,19 +274,68 @@ dados1$subject
 dados1$keydonor
 ```
 
-Vamos ver a cara da rede?
+Vamos agora criar um novo objeto de R com esses dados, que possa ser
+lido como uma rede:
 
 ```{r}
-# Criar o grafo
-g <- graph_from_data_frame(dados1[, c("keydonor", "subject")], directed = TRUE)
+rede1 <- graph_from_data_frame(dados1[, c("keydonor", "subject")], directed = FALSE)
+```
 
-# Definir cores
-V(g)$color <- "blue"      # Nós azuis
-E(g)$color <- "red"       # Elos vermelhos
-V(g)$label.color <- "white" # Rótulos brancos
+Inspecione as propriedades do novo objeto:
 
-# Plotar com linhas curvas
-plot(g, edge.curved = TRUE, vertex.size = 15)
+```{r}
+rede1
+```
+
+Que tal dar um pouco de cor à rede? Os nós, elos e rótulos receberão
+cores diferentes:
+
+```{r}
+V(rede1)$color <- "blue"      # Nós azuis
+E(rede1)$color <- "red"       # Elos vermelhos
+V(rede1)$label.color <- "white" # Rótulos brancos
+```
+
+Plote a rede para ver como ela ficou:
+
+```{r}
+plot(rede1,
+     layout = layout.circle,
+     edge.curved = 0.3,
+     edge.arrow.size = 0.5,
+     edge.width = 1,
+     vertex.size = 17,
+     vertex.label.cex = 0.5,
+     asp = 0)
+```
+
+```{r}
+set.seed(42)  # Para reprodutibilidade
+num_novos_elos <- round(0.5 * gsize(rede1))  # Adicionar 50% de elos extras
+
+novos_elos <- data.frame(
+  keydonor = sample(V(rede1)$name, num_novos_elos, replace = TRUE),
+  subject  = sample(V(rede1)$name, num_novos_elos, replace = TRUE)
+)
+
+novos_elos <- novos_elos[novos_elos$keydonor != novos_elos$subject, ]
+novos_elos <- novos_elos[!duplicated(novos_elos), ]
+
+rede1 <- add_edges(rede1, t(as.matrix(novos_elos)))
+
+E(rede1)$color[(gsize(rede1) - nrow(novos_elos) + 1):gsize(rede1)] <- "orange"
+
+```
+
+```{r}
+plot(rede1,
+     layout = layout_nicely,
+     edge.curved = 0.3,
+     edge.arrow.size = 0.5,
+     edge.width = 1,
+     vertex.size = 17,
+     vertex.label.cex = 0.5,
+     asp = 0)
 ```
 
 ## Conclusão
@@ -316,8 +365,8 @@ Escreva sua resposta aqui.
     no botão `Knit`, que fica na barra de control deste arquivo RMD, e
     escolha `Knit to HTML`;
 
-2.  Se não der certo, basta copiar e colar o seguinte código no
-    `Console`:
+2.  Se a maneira acima não der certo, basta copiar e colar o seguinte
+    código no `Console`:
 
     `rmarkdown::render("reproducao.Rmd", output_format = "html_document")`
 
