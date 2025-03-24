@@ -12,7 +12,7 @@ Publicado originalmente em 02/mai/2022 e atualizado constantemente.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11357553.svg)](https://doi.org/10.5281/zenodo.11357553)
 
-Feito em R version 4.4.2 (2024-10-31) -- "Pile of Leaves"
+Feito em R version 4.4.3 (2025-02-28) -- "Trophy Case"
 
 ## Avisos legais
 
@@ -100,4 +100,4 @@ Se você quiser fazer perguntas, sugestões ou correções, por favor, abra um [
 
 ## Agradecimentos
 
-Agradecemos ao Prof. [José Carlos Motta Jr.](http://lattes.cnpq.br/8990024384011469), antigo coordenador da disciplina, a todos os tutores e monitores que ao longo dos anos foram nos ajudando a melhorar estas práticas, e aos diversos colegas que nos ajudaram a desatar nós computacionais. Um salve especial vai para a comunidade do [StackOverflow](https://stackoverflow.com), onde resolvemos a maioria dos nossos dilemas de programação.
+Agradecemos ao Prof. [José Carlos Motta Jr.](http://lattes.cnpq.br/8990024384011469), antigo coordenador da disciplina, a todos os outros professores que a ministraram ao longo de décadas, a todos os tutores e monitores que têm nos ajudado a aplicar estas práticas, e aos diversos colegas que nos ajudaram a desatar nós computacionais. Um salve especial vai para a comunidade do [StackOverflow](https://stackoverflow.com), onde resolvemos a maioria dos nossos dilemas de programação.
