@@ -169,7 +169,8 @@ Escreva sua resposta aqui.
 ### Hipótese
 
 Qual ideia sobre uma entidade, sistema ou fenômeno natural os autores
-pretendiam testar nesse estudo?
+pretendiam testar nesse estudo? Havia apenas uma hipótese ou mais de
+uma? Como as hipóteses se relacionavam entre si?
 
 ```{=html}
 <style>
@@ -191,7 +192,8 @@ Escreva sua resposta aqui.
 ### Previsões
 
 Quais foram as previsões testadas concretamente no estudo? Liste-as e
-descreva-as sucintamente, em frases curtas.
+descreva-as sucintamente, em frases curtas. Como as hipóteses e
+previsões se relacionavam entre si?
 
 ```{=html}
 <style>
@@ -424,8 +426,8 @@ Escreva sua resposta aqui.
     no botão `Knit`, que fica na barra de control deste arquivo RMD, e
     escolha `Knit to HTML`;
 
-2.  Se não der certo, basta copiar e colar o seguinte código no
-    `Console`:
+2.  Se a maneira acima não der certo, basta copiar e colar o seguinte
+    código no `Console`:
 
     `rmarkdown::render("reproducao.Rmd", output_format = "html_document")`
 
@@ -436,4 +438,4 @@ Escreva sua resposta aqui.
 
 1.  [Narval](https://pt.wikipedia.org/wiki/Narval)
 2.  [Seleção sexual](https://pt.wikipedia.org/wiki/Seleção_sexual)
-3.  [Tidy data](https://vita.had.co.nz/papers/tidy-data.html)
+3.  [Inferência forte](https://en.wikipedia.org/wiki/Strong_inference)
