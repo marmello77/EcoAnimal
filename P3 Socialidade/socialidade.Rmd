@@ -297,9 +297,7 @@ unique(dados1$receiver)
 Há muita repetição desses nomes no objeto, já que mais de um evento de
 doação foi registrado para cada dupla de *donor*-*receiver*. Por isso,
 precisamos **resumir os dados** com base na frequência dos eventos de
-doação registrados no experimento. Essa frequência pode ser considerada
-um termômetro da **força das relações sociais** entre os pares de
-morcegos estudados:
+doação registrados no experimento:
 
 ```{r}
 dados2 <- dados1 %>%
@@ -410,9 +408,9 @@ Confira as **propriedades** dos nós da rede:
 vertex_attr(rede2)
 ```
 
-Notou que existem 3 propriedades (`$`) com dados sobre os nós da rede?
-Depois você pode criar novas propriedades com outras informações que
-obtiver do suplemento.
+Notou que existem **3 propriedades** (`$`) que efetivamente contêm dados
+sobre os nós da rede? Depois você pode criar novas propriedades com as
+outras informações que obtiver do suplemento.
 
 Adicione à rede informações sobre o **peso dos elos**, com base na
 frequência de eventos de doação registrados entre os pares de morcegos
@@ -435,16 +433,17 @@ edge.attributes(rede2)
 ```
 
 Até aqui, a única propridade que os elos têm nessa rede é seu **peso**
-(`weight`). Neste caso, equivalente à frequência de doação de sangue
-entre pares de morcegos.
+(`weight`), criada no passo anterior. Neste caso, ela é equivalente à
+frequência de doação de sangue entre pares de morcegos e pode ser
+considerada uma medida da **força de suas relações sociais**.
 
 ### Desenhando a rede
 
 Esses valores de frequência podem ficar feios ou confusos na hora de
 plotar o grafo. Vale então fazer um *make* *over* para melhorar o
 design. Defina a **espessura** (`width`) dos elos como sendo os valores
-normalizados das frequências. Assim, o valor máximo registrado fica
-sendo igual a 1, enquanto os demais ficam proporcionais a ele:
+normalizados de seus pesos. Assim, o valor máximo registrado fica sendo
+igual a 1, enquanto os demais ficam proporcionais a ele:
 
 ```{r}
 E(rede2)$width <- ((E(rede2)$weight - min(E(rede2)$weight)) /
@@ -452,8 +451,8 @@ E(rede2)$width <- ((E(rede2)$weight - min(E(rede2)$weight)) /
 ```
 
 Defina as **cores** dos elos, nós e rótulos. No caso dos nós, machos
-ficarão em azul, fêmeas em vermelho e morcegos sem o sexo identificado
-em cinza.
+ficarão em azul, fêmeas em vermelho e morcegos sem o sexo determinado em
+cinza.
 
 ```{r}
 V(rede2)$color <- ifelse(is.na(V(rede2)$sex), "gray",    
@@ -474,7 +473,7 @@ Defina o **layout** do grafo, ou seja, o algoritmo que determina a
 maneira como ele será desenhado. Escolhemos aqui um algortimo do tipo
 "minimização de energia". Na prática, ele plota os nós com mais conexões
 ou que ligam regiões da rede mais próximos ao centro, enquanto os demais
-nós ficam na periferia. Por tabela, eventuais subgrupos de nós
+nós ficam mais para a periferia. Por tabela, eventuais subgrupos de nós
 densamente conectados entre si acabam sendo destacados:
 
 ```{r}
