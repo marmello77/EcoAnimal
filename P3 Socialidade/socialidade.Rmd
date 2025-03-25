@@ -77,7 +77,7 @@ algumas habilidades básicas em ciência de dados.
 
 ## Artigo de base
 
-Carter et al. ([2017, BioLet](https://doi.org/10.1098/rsbl.2017.0112)).
+Carter et al. ([2017, BioLett](https://doi.org/10.1098/rsbl.2017.0112)).
 
 ## **Passos iniciais**
 
