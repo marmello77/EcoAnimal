@@ -199,18 +199,19 @@ nas análises do estudo.
 
 Felizmente, os autores disponibilizaram os dados processados em um
 suplemento do artigo. Confira o arquivo `dados.xlsx`, no subdiretório
-`dados`. Além dos dados oficialmente publicados no suplemento, após
-pedido por e-mail os autores nos cederam também dados adicionais.
-Confira as planilhas disponíveis no arquivo mencionado, usando a
-planilha `metadados` para entender seu contexto.
+`dados`.
+
+Para melhorar, além dos dados oficialmente publicados no suplemento, os
+autores também nos cederam diretamente dados adicionais. Confira as
+planilhas disponíveis no arquivo mencionado, usando a planilha
+`metadados` para entender seu contexto.
 
 Ok, agora importe os dados para dentro de um **objeto** **de R**. Vamos
-começar usando apenas a **planilha** que contém os dados, dentro do
-arquivo XLSX de origem. Depois você pode conferir a outra planilha, com
-os metadados.
+começar usando apenas a **planilha** que contém os dados principais,
+dentro do arquivo XLSX de origem.
 
-Vamos garantir que as **datas** estão no formato correto e que apenas os
-**eventos efetivos** de compartilhamento de sangue, que duraram mais do
+É bom garantir que as **datas** estão no formato correto e que apenas os
+**eventos efetivos** de compartilhamento de sangue, com duração maior do
 que 0 segundos, serão importados:
 
 ```{r}
@@ -218,6 +219,11 @@ dados1 <- read_excel("dados/dados.xlsx", sheet = "food_sharing_donations") %>%
         mutate(date = as.Date(date, format = "%Y.%m.%d")) %>%
         filter(donation.sec > 0) 
 ```
+
+Notou uma coisa interessante? O pacote `dplyr`, que faz parte do
+`tidyverse`, permite combinar vários comandos em um, usando os famosos
+`pipes` (). Isso é muito útil para tornar seu código mais limpo e
+coerente.
 
 Inspecione o **começo** e o **fim** do objeto, para checar se os dados
 foram importados corretamente:
@@ -245,17 +251,23 @@ summary(dados1)
 
 Toda a análise de dados no artigo de base foi fundamentada na estrutura
 da **rede social** de relações de compartilhamento de sangue entre
-morcegos-vampiros de uma mesma colônia mantida em cativeiro. Que tal
-então aprender um pouco sobre **ciência de redes** nesta prática?
+morcegos-vampiros de uma mesma colônia mantida em cativeiro. Essas
+relações são fundamentais, porque o sangue de outros vertebrados é o
+único alimento da espécie. Para complicar, esses morcegos têm um
+metabolismo muito alto, então podem morrer se não se alimentarem por
+dois dias seguidos.
 
-Basicamente, uma **rede complexa** é composta por **elementos** e as
+Que tal então aprendermos um pouco sobre **ciência de redes** nesta
+prática, usando essa **estrutura social** como objeto de estudo?
+
+No geral, uma **rede complexa** é composta por **elementos** e as
 **relações** entre eles. Aos elementos, damos o apelido de **nós**; as
-relações nós apelidamos de **elos**.
+relações nós chamamos de **elos**.
 
 No estudo em questão, os nós eram **indivíduos** da espécie *Desmodus*
 *rotundus* (Chiroptera: Phyllostomidae), o morcego-vampiro-comum. As
-conexões eram as relações de **compartilhamento** **de sangue**, seu
-único alimento, entre esses indivíduos mantidos em cativeiro.
+conexões eram as relações de **compartilhamento** **de sangue** entre
+eles.
 
 ### Construindo a rede
 
@@ -264,15 +276,15 @@ base, mas não apresentada explicitamente nele?
 
 Para isso, primeiro temos que identificar os dados necessários. Vamos
 examinar as colunas daquele objeto que criamos há pouco, que representam
-as variáveis disponibilizadas no suplemento do artigo de base:
+as variáveis disponibilizadas pelos autores:
 
 ```{r}
 colnames(dados1)
 ```
 
 Vamos focar nas variáveis `donor`, o morcego individual que doou sangue
-regurgitado, e `receiver`, o morcego individual que recebeu a doação de
-alimento. Notem quem é quem, em cada caso:
+regurgitado, e `receiver`, o morcego individual que bebeu o sangue
+doado. Note quem é quem, em cada caso:
 
 ```{r}
 unique(dados1$donor)
@@ -282,9 +294,12 @@ unique(dados1$donor)
 unique(dados1$receiver)
 ```
 
-Como havia repetição desses nomes no objeto, já que mais de um evento de
-doação foi registrado para cada dupla de donor-receiver, precisamos
-**resumir os dados** pela frequência dos eventos:
+Há muita repetição desses nomes no objeto, já que mais de um evento de
+doação foi registrado para cada dupla de *donor*-*receiver*. Por isso,
+precisamos **resumir os dados** com base na frequência dos eventos de
+doação registrados no experimento. Essa frequência pode ser considerada
+um termômetro da **força das relações sociais** entre os pares de
+morcegos estudados:
 
 ```{r}
 dados2 <- dados1 %>%
@@ -293,7 +308,7 @@ dados2 <- dados1 %>%
 ```
 
 Inspecione o **começo** e o **fim** do objeto, para checar se os dados
-foram importados corretamente:
+foram resumidos corretamente:
 
 ```{r}
 head(dados2)
@@ -307,7 +322,7 @@ str(dados2)
 ```
 
 Vamos agora criar um novo objeto de R com esses dados, que possa ser
-lido como uma rede:
+lido como um **grafo** (i.e., rede**)** pelo pacote `igraph`:
 
 ```{r}
 rede1 <- dados2[, c("donor", "receiver")] %>%
@@ -315,11 +330,15 @@ rede1 <- dados2[, c("donor", "receiver")] %>%
         { V(.)$name <- as.character(V(.)$name); . }
 ```
 
-Inspecione as propriedades do novo objeto:
+Inspecione as **propriedades** do novo objeto:
 
 ```{r}
 rede1
 ```
+
+O pacote `igraph` cria **cabeçalhos** complexos para os objetos criados
+em seu formato. Depois vale a pena estudar com calma o que esses códigos
+significam.
 
 Vamos criar também um novo objeto com as propriedades dos nós da rede,
 ou seja, os dados sobre o **sexo** e a **idade** dos morcegos usados no
@@ -338,7 +357,7 @@ str(nos1)
 ```
 
 **Elimine** da rede os nós que não tenham informações sobre sexo e
-idade, criando um novo objeto:
+idade, criando um novo objeto de `igraph`:
 
 ```{r}
 # Verificar se todos os nós do grafo possuem dados em nos1
@@ -355,15 +374,19 @@ if(length(missing_nodes) > 0) {
 }
 ```
 
-Crie um novo objeto com as **propriedades dos nós**, unindo as
-informações dos objetos anteriores:
+Viu a mensagem de aviso? A função personalizada está dizendo quais nós
+do objeto `rede1` não tinham correspondência no objeto `nos1`.
+
+Crie um novo objeto com as **propriedades dos nós**, cruzando as
+informações dos objetos `rede2` e `nos1`:
 
 ```{r}
 nos2 <- data.frame(name = V(rede2)$name) %>%
         left_join(nos1, by = "name")
 ```
 
-Adicione à rede as **informações** sobre sexo e idade:
+Agora que os dados foram reorganizados, adicione à rede as
+**informações** sobre sexo e idade:
 
 ```{r}
 rede2 <- rede2 %>%
@@ -375,14 +398,25 @@ rede2 <- rede2 %>%
         }
 ```
 
+Confira as **propriedades** dessa nova versão da rede:
+
+```{r}
+rede2
+```
+
 Confira as **propriedades** dos nós da rede:
 
 ```{r}
 vertex_attr(rede2)
 ```
 
+Notou que existem 3 propriedades (`$`) com dados sobre os nós da rede?
+Depois você pode criar novas propriedades com outras informações que
+obtiver do suplemento.
+
 Adicione à rede informações sobre o **peso dos elos**, com base na
-frequência de eventos de doação entre os pares de morcegos:
+frequência de eventos de doação registrados entre os pares de morcegos
+no experimento:
 
 ```{r}
 rede2 <- rede2 %>%
@@ -400,16 +434,26 @@ Confira as **propriedades** dos elos da rede:
 edge.attributes(rede2)
 ```
 
-Antes de plotar o grafo, ou seja, o desenho que representa a rede,
-defina a **espessura** dos elos como sendo os valores normalizados das
-frequências:
+Até aqui, a única propridade que os elos têm nessa rede é seu **peso**
+(`weight`). Neste caso, equivalente à frequência de doação de sangue
+entre pares de morcegos.
+
+### Desenhando a rede
+
+Esses valores de frequência podem ficar feios ou confusos na hora de
+plotar o grafo. Vale então fazer um *make* *over* para melhorar o
+design. Defina a **espessura** (`width`) dos elos como sendo os valores
+normalizados das frequências. Assim, o valor máximo registrado fica
+sendo igual a 1, enquanto os demais ficam proporcionais a ele:
 
 ```{r}
 E(rede2)$width <- ((E(rede2)$weight - min(E(rede2)$weight)) /
         (max(E(rede2)$weight) - min(E(rede2)$weight)))*30
 ```
 
-Defina as **cores** dos elos, nós e rótulos:
+Defina as **cores** dos elos, nós e rótulos. No caso dos nós, machos
+ficarão em azul, fêmeas em vermelho e morcegos sem o sexo identificado
+em cinza.
 
 ```{r}
 V(rede2)$color <- ifelse(is.na(V(rede2)$sex), "gray",    
@@ -419,13 +463,19 @@ E(rede2)$color <- adjustcolor("orange", alpha = 0.3)
 V(rede2)$label.color <- "white"  
 ```
 
-**Elimine** os nós que não tenham todas as informações sobre idade:
+**Elimine** os nós que não tenham informações sobre idade. Por tabela,
+os nós sem informação sobre sexo também serão eliminados:
 
 ```{r}
 rede2 <- delete_vertices(rede2, V(rede2)[is.na(V(rede2)$age)])
 ```
 
-Defina o **layout** do grafo, ou seja, seu algoritmo de desenho:
+Defina o **layout** do grafo, ou seja, o algoritmo que determina a
+maneira como ele será desenhado. Escolhemos aqui um algortimo do tipo
+"minimização de energia". Na prática, ele plota os nós com mais conexões
+ou que ligam regiões da rede mais próximos ao centro, enquanto os demais
+nós ficam na periferia. Por tabela, eventuais subgrupos de nós
+densamente conectados entre si acabam sendo destacados:
 
 ```{r}
 layout <- layout_nicely(rede2)
@@ -444,11 +494,32 @@ plot(rede2,
      asp = 0)
 ```
 
+### Interpretando a rede
+
+O que você observa na rede em termos do **posicionamento dos nós**? E
+quanto **à distribuição e à força das relações sociais** entre os pares
+de morcegos?
+
+```{=html}
+<style>
+.answer-box {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+</style>
+```
+
+::: answer-box
+Escreva sua resposta aqui.
+:::
+
 ## Conclusão
 
-Com base nos resultados mostrados na **Figura 2** do artigo de base,
-reproduzida parcialmente nesta prática, você acha que hipótese de
-trabalho do artigo de base foi corroborada ou não? Por que?
+Com base na rede que reproduzimos aqui e nos resultados apresentados na
+**Figura 1** do artigo de base, você acha que hipótese de trabalho foi
+corroborada ou não? Por que?
 
 ```{=html}
 <style>
@@ -474,7 +545,7 @@ Escreva sua resposta aqui.
 2.  Se a maneira acima não der certo, basta copiar e colar o seguinte
     código no `Console`:
 
-    `rmarkdown::render("reproducao.Rmd", output_format = "html_document")`
+    `rmarkdown::render("socialidade.Rmd", output_format = "html_document")`
 
 3.  Carregue este notebook respondido no link do moodle para entrega do
     relatório.
