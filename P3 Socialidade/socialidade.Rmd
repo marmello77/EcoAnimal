@@ -141,8 +141,8 @@ morcegos-vampiros](https://youtu.be/iLp-ls8AoaU?si=1SKCMMfH0odn8n71), o
 modelo de estudo usado?
 
 Recomendamos também outro interassantíssimo vídeo curto sobre o
-[compartilhamento de
-comida](https://youtu.be/rZTAW0vPE1o?si=wKYu8PQvzMT9QW0v) entre
+[compartilhamento de sangue
+(alimento)](https://youtu.be/rZTAW0vPE1o?si=wKYu8PQvzMT9QW0v) entre
 morcegos-vampiros.
 
 Identifique no artigo de base os seguintes **elementos argumentativos**
@@ -199,15 +199,24 @@ nas análises do estudo.
 
 Felizmente, os autores disponibilizaram os dados processados em um
 suplemento do artigo. Confira o arquivo `dados.xlsx`, no subdiretório
-`dados`.
+`dados`. Além dos dados oficialmente publicados no suplemento, após
+pedido por e-mail os autores nos cederam também dados adicionais.
+Confira as planilhas disponíveis no arquivo mencionado, usando a
+planilha `metadados` para entender seu contexto.
 
-Importe os dados para dentro de um **objeto** **de R**. Vamos começar
-usando apenas a **planilha** que contém os dados, dentro do arquivo XLSX
-de origem. Depois você pode conferir a outra planilha, com os metadados:
+Ok, agora importe os dados para dentro de um **objeto** **de R**. Vamos
+começar usando apenas a **planilha** que contém os dados, dentro do
+arquivo XLSX de origem. Depois você pode conferir a outra planilha, com
+os metadados.
+
+Vamos garantir que as **datas** estão no formato correto e que apenas os
+**eventos efetivos** de compartilhamento de sangue, que duraram mais do
+que 0 segundos, serão importados:
 
 ```{r}
-dados1 <- read_excel("dados/dados.xlsx", sheet = "dados")
-#write.csv(dados1, "dados/dados1.csv", row.names = FALSE)
+dados1 <- read_excel("dados/dados.xlsx", sheet = "food_sharing_donations") %>%
+        mutate(date = as.Date(date, format = "%Y.%m.%d")) %>%
+        filter(donation.sec > 0) 
 ```
 
 Inspecione o **começo** e o **fim** do objeto, para checar se os dados
@@ -235,7 +244,7 @@ summary(dados1)
 ### Ciência de redes
 
 Toda a análise de dados no artigo de base foi fundamentada na estrutura
-da **rede social** de relações de compartilhamento de comida entre
+da **rede social** de relações de compartilhamento de sangue entre
 morcegos-vampiros de uma mesma colônia mantida em cativeiro. Que tal
 então aprender um pouco sobre **ciência de redes** nesta prática?
 
@@ -244,13 +253,13 @@ Basicamente, uma **rede complexa** é composta por **elementos** e as
 relações nós apelidamos de **elos**.
 
 No estudo em questão, os nós eram **indivíduos** da espécie *Desmodus*
-*rotundus*, o morcego-vampiro-comum. As conexões eram as relações de
-**compartilhamento** **de comida** entre esses indivíduos mantidos em
-cativeiro.
+*rotundus* (Chiroptera: Phyllostomidae), o morcego-vampiro-comum. As
+conexões eram as relações de **compartilhamento** **de sangue**, seu
+único alimento, entre esses indivíduos mantidos em cativeiro.
 
 ### Construindo a rede
 
-Que tal estudarmos a **parte principal** da rede analisada no artigo de
+Que tal estudarmos então a **estrutura da rede** analisada no artigo de
 base, mas não apresentada explicitamente nele?
 
 Para isso, primeiro temos que identificar os dados necessários. Vamos
@@ -261,24 +270,49 @@ as variáveis disponibilizadas no suplemento do artigo de base:
 colnames(dados1)
 ```
 
-Vamos focar nas variáveis `subject`, o morcego individual que passou
-pelo experimento de remoção do principal parceiro doados, e `keydonor`,
-o morcego individual que era o principal doador do primeiro. Notem quem
-é quem, em cada caso:
+Vamos focar nas variáveis `donor`, o morcego individual que doou sangue
+regurgitado, e `receiver`, o morcego individual que recebeu a doação de
+alimento. Notem quem é quem, em cada caso:
 
 ```{r}
-dados1$subject
+unique(dados1$donor)
 ```
 
 ```{r}
-dados1$keydonor
+unique(dados1$receiver)
+```
+
+Como havia repetição desses nomes no objeto, já que mais de um evento de
+doação foi registrado para cada dupla de donor-receiver, precisamos
+**resumir os dados** pela frequência dos eventos:
+
+```{r}
+dados2 <- dados1 %>%
+        count(donor, receiver, name = "frequency") %>%
+        filter(frequency > 0) 
+```
+
+Inspecione o **começo** e o **fim** do objeto, para checar se os dados
+foram importados corretamente:
+
+```{r}
+head(dados2)
+tail(dados2)
+```
+
+Inspecione as **propriedades** do objeto:
+
+```{r}
+str(dados2)
 ```
 
 Vamos agora criar um novo objeto de R com esses dados, que possa ser
 lido como uma rede:
 
 ```{r}
-rede1 <- graph_from_data_frame(dados1[, c("keydonor", "subject")], directed = FALSE)
+rede1 <- dados2[, c("donor", "receiver")] %>%
+        graph_from_data_frame(directed = TRUE) %>%
+        { V(.)$name <- as.character(V(.)$name); . }
 ```
 
 Inspecione as propriedades do novo objeto:
@@ -287,53 +321,125 @@ Inspecione as propriedades do novo objeto:
 rede1
 ```
 
-Que tal dar um pouco de cor à rede? Os nós, elos e rótulos receberão
-cores diferentes:
+Vamos criar também um novo objeto com as propriedades dos nós da rede,
+ou seja, os dados sobre o **sexo** e a **idade** dos morcegos usados no
+experimento:
 
 ```{r}
-V(rede1)$color <- "blue"      # Nós azuis
-E(rede1)$color <- "red"       # Elos vermelhos
-V(rede1)$label.color <- "white" # Rótulos brancos
+nos1 <- read_excel("dados/dados.xlsx", sheet = "vamp_sex_age") %>%
+        mutate(name = as.character(name)) %>%
+        mutate(age = as.numeric(age))
 ```
 
-Plote a rede para ver como ela ficou:
+Inspecione as propriedades do novo objeto:
 
 ```{r}
-plot(rede1,
-     layout = layout.circle,
+str(nos1)
+```
+
+**Elimine** da rede os nós que não tenham informações sobre sexo e
+idade, criando um novo objeto:
+
+```{r}
+# Verificar se todos os nós do grafo possuem dados em nos1
+missing_nodes <- setdiff(V(rede1)$name, nos1$name)
+
+# Verificando se há nós ausentes e excluindo-os de rede1
+if(length(missing_nodes) > 0) {
+        print(paste("Os seguintes nós estão ausentes em nos1:", paste(missing_nodes, collapse = ", ")))
+        
+        # Remover os nós ausentes em nos1 de rede1
+        rede2 <- delete_vertices(rede1, V(rede1)[V(rede1)$name %in% missing_nodes])
+} else {
+        print("Todos os nós têm correspondência em nos1.")
+}
+```
+
+Crie um novo objeto com as **propriedades dos nós**, unindo as
+informações dos objetos anteriores:
+
+```{r}
+nos2 <- data.frame(name = V(rede2)$name) %>%
+        left_join(nos1, by = "name")
+```
+
+Adicione à rede as **informações** sobre sexo e idade:
+
+```{r}
+rede2 <- rede2 %>%
+        { 
+                V(.)$sex <- nos2$sex
+                V(.)$age <- nos2$age
+                V(.)$age <- round(V(.)$age)
+                . 
+        }
+```
+
+Confira as **propriedades** dos nós da rede:
+
+```{r}
+vertex_attr(rede2)
+```
+
+Adicione à rede informações sobre o **peso dos elos**, com base na
+frequência de eventos de doação entre os pares de morcegos:
+
+```{r}
+rede2 <- rede2 %>%
+        { 
+                elos1 <- as.data.frame(as_edgelist(.))
+                E(.)$weight <- match(paste(elos1$V1, elos1$V2), paste(dados2$donor, dados2$receiver)) %>%
+                        sapply(function(x) if(!is.na(x)) dados2$frequency[x] else NA)
+                . 
+        }
+```
+
+Confira as **propriedades** dos elos da rede:
+
+```{r}
+edge.attributes(rede2)
+```
+
+Antes de plotar o grafo, ou seja, o desenho que representa a rede,
+defina a **espessura** dos elos como sendo os valores normalizados das
+frequências:
+
+```{r}
+E(rede2)$width <- ((E(rede2)$weight - min(E(rede2)$weight)) /
+        (max(E(rede2)$weight) - min(E(rede2)$weight)))*30
+```
+
+Defina as **cores** dos elos, nós e rótulos:
+
+```{r}
+V(rede2)$color <- ifelse(is.na(V(rede2)$sex), "gray",    
+                         ifelse(V(rede2)$sex == "m", "blue",  
+                                ifelse(V(rede2)$sex == "f", "red", "gray")))  
+E(rede2)$color <- adjustcolor("orange", alpha = 0.3)       
+V(rede2)$label.color <- "white"  
+```
+
+**Elimine** os nós que não tenham todas as informações sobre idade:
+
+```{r}
+rede2 <- delete_vertices(rede2, V(rede2)[is.na(V(rede2)$age)])
+```
+
+Defina o **layout** do grafo, ou seja, seu algoritmo de desenho:
+
+```{r}
+layout <- layout_nicely(rede2)
+```
+
+**Plote o grafo** para ver o jeitão da rede estudada:
+
+```{r}
+plot(rede2,
+     layout = layout,
      edge.curved = 0.3,
      edge.arrow.size = 0.5,
-     edge.width = 1,
-     vertex.size = 17,
-     vertex.label.cex = 0.5,
-     asp = 0)
-```
-
-```{r}
-set.seed(42)  # Para reprodutibilidade
-num_novos_elos <- round(0.5 * gsize(rede1))  # Adicionar 50% de elos extras
-
-novos_elos <- data.frame(
-  keydonor = sample(V(rede1)$name, num_novos_elos, replace = TRUE),
-  subject  = sample(V(rede1)$name, num_novos_elos, replace = TRUE)
-)
-
-novos_elos <- novos_elos[novos_elos$keydonor != novos_elos$subject, ]
-novos_elos <- novos_elos[!duplicated(novos_elos), ]
-
-rede1 <- add_edges(rede1, t(as.matrix(novos_elos)))
-
-E(rede1)$color[(gsize(rede1) - nrow(novos_elos) + 1):gsize(rede1)] <- "orange"
-
-```
-
-```{r}
-plot(rede1,
-     layout = layout_nicely,
-     edge.curved = 0.3,
-     edge.arrow.size = 0.5,
-     edge.width = 1,
-     vertex.size = 17,
+     edge.width = E(rede2)$width,
+     vertex.size = 7,
      vertex.label.cex = 0.5,
      asp = 0)
 ```
