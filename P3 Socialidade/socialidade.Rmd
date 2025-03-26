@@ -551,7 +551,9 @@ Escreva sua resposta aqui.
 
 ## Para saber mais
 
-1.  [Bet hedging](https://en.wikipedia.org/wiki/Bet_hedging_(biology))
-2.  [Morcego-vampiro](https://casadosmorcegos.wordpress.com/biologia/vampiros/)
-3.  [Network
-    science](https://en.wikipedia.org/wiki/Network_science#:~:text=Network%20science%20is%20an%20academic,connections%20between%20the%20elements%20or)
+1.  [Morcego-vampiro](https://casadosmorcegos.wordpress.com/biologia/vampiros/)
+2.  [Bet hedging](https://en.wikipedia.org/wiki/Bet_hedging_(biology))
+3.  [Curso online sobre redes
+    ecológicas](https://www.coursera.org/learn/redesecologicas) (grauito
+    para alunos, funcionários e professores da USP e de outras
+    universidades parceiras)
