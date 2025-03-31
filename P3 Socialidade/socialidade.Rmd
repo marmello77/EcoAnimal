@@ -99,6 +99,11 @@ if(!require(ggplot2)){
   library(ggplot2)
 }
 
+if(!require(here)){
+  install.packages("here")
+  library(here)
+}
+
 if(!require(igraph)){
   install.packages("igraph")
   library(igraph)
@@ -124,13 +129,6 @@ if(!require(tidyr)){
 
 ```{r}
 rm(list= ls())
-```
-
-5.  Informe ao RStudio que o diretório de trabalho é o mesmo onde se
-    encontra este tutorial:
-
-```{r}
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 ```
 
 ## Argumentação
