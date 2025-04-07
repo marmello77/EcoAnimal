@@ -200,9 +200,9 @@ suplemento do artigo. Confira o arquivo `dados.xlsx`, no subdiretório
 `dados`.
 
 Para melhorar, além dos dados oficialmente publicados no suplemento, os
-autores também nos cederam diretamente dados adicionais. Confira as
-planilhas disponíveis no arquivo mencionado, usando a planilha
-`metadados` para entender seu contexto.
+autores gentilmente nos cederam dados adicionais. Confira as planilhas
+disponíveis no arquivo mencionado, usando a planilha `metadados` para
+entender seu contexto.
 
 Ok, agora importe os dados para dentro de um **objeto** **de R**. Vamos
 começar usando apenas a **planilha** que contém os dados principais,
@@ -220,7 +220,7 @@ dados1 <- read_excel("dados/dados.xlsx", sheet = "food_sharing_donations") %>%
 
 Notou uma coisa interessante? O pacote `dplyr`, que faz parte do
 `tidyverse`, permite combinar vários comandos em um, usando os famosos
-`pipes` (). Isso é muito útil para tornar seu código mais limpo e
+`pipes` (`%>%`). Isso é muito útil para tornar o seu código mais limpo e
 coerente.
 
 Inspecione o **começo** e o **fim** do objeto, para checar se os dados
@@ -259,8 +259,8 @@ Que tal então aprendermos um pouco sobre **ciência de redes** nesta
 prática, usando essa **estrutura social** como objeto de estudo?
 
 No geral, uma **rede complexa** é composta por **elementos** e as
-**relações** entre eles. Aos elementos, damos o apelido de **nós**; as
-relações nós chamamos de **elos**.
+**relações** entre eles. Aos elementos, damos o apelido de **nós** (ou
+vértices); as relações nós chamamos de **elos** (ou arestas).
 
 No estudo em questão, os nós eram **indivíduos** da espécie *Desmodus*
 *rotundus* (Chiroptera: Phyllostomidae), o morcego-vampiro-comum. As
@@ -269,8 +269,8 @@ eles.
 
 ### Construindo a rede
 
-Que tal estudarmos então a **estrutura da rede** analisada no artigo de
-base, mas não apresentada explicitamente nele?
+Que tal construirmos então a **estrutura da rede** analisada no artigo
+de base, mas não apresentada explicitamente nele?
 
 Para isso, primeiro temos que identificar os dados necessários. Vamos
 examinar as colunas daquele objeto que criamos há pouco, que representam
@@ -281,8 +281,8 @@ colnames(dados1)
 ```
 
 Vamos focar nas variáveis `donor`, o morcego individual que doou sangue
-regurgitado, e `receiver`, o morcego individual que bebeu o sangue
-doado. Note quem é quem, em cada caso:
+regurgitado, e `receiver`, o morcego individual que bebeu o sangue. Note
+quem é quem, em cada caso:
 
 ```{r}
 unique(dados1$donor)
@@ -333,8 +333,14 @@ rede1
 ```
 
 O pacote `igraph` cria **cabeçalhos** complexos para os objetos criados
-em seu formato. Depois vale a pena estudar com calma o que esses códigos
-significam.
+em seu formato. Vale a pena estudar com calma o que esses códigos
+significam. Para facilitar a nossa vida, todos os pacotes de R,
+incluindo esse, vem com um *help* embutido. Depois você pode ler esse
+manual com calma:
+
+```{r}
+?igraph
+```
 
 Vamos criar também um novo objeto com as propriedades dos nós da rede,
 ou seja, os dados sobre o **sexo** e a **idade** dos morcegos usados no
@@ -407,8 +413,9 @@ vertex_attr(rede2)
 ```
 
 Notou que existem **3 propriedades** (`$`) que efetivamente contêm dados
-sobre os nós da rede? Depois você pode criar novas propriedades com as
-outras informações que obtiver do suplemento.
+sobre os nós da rede? Depois você pode criar novas propriedades para
+esse mesmo objeto de R com as outras informações que obtiver do
+suplemento.
 
 Adicione à rede informações sobre o **peso dos elos**, com base na
 frequência de eventos de doação registrados entre os pares de morcegos
@@ -430,18 +437,20 @@ Confira as **propriedades** dos elos da rede:
 edge.attributes(rede2)
 ```
 
-Até aqui, a única propridade que os elos têm nessa rede é seu **peso**
+Até aqui, a única propridade que os elos têm nessa rede é o seu **peso**
 (`weight`), criada no passo anterior. Neste caso, ela é equivalente à
 frequência de doação de sangue entre pares de morcegos e pode ser
-considerada uma medida da **força de suas relações sociais**.
+considerada uma medida operacional da **força de suas relações
+sociais**.
 
 ### Desenhando a rede
 
 Esses valores de frequência podem ficar feios ou confusos na hora de
-plotar o grafo. Vale então fazer um *make* *over* para melhorar o
-design. Defina a **espessura** (`width`) dos elos como sendo os valores
-normalizados de seus pesos. Assim, o valor máximo registrado fica sendo
-igual a 1, enquanto os demais ficam proporcionais a ele:
+plotar o grafo. Vale então fazer ajuestes estéticos antes de plotar a
+rede. Defina a **espessura** (`width`) dos elos como sendo os valores
+normalizados de seus pesos. Assim, o valor máximo registrado no
+experimento fica sendo igual a 1, enquanto os demais ficam proporcionais
+a ele:
 
 ```{r}
 E(rede2)$width <- ((E(rede2)$weight - min(E(rede2)$weight)) /
@@ -469,10 +478,11 @@ rede2 <- delete_vertices(rede2, V(rede2)[is.na(V(rede2)$age)])
 
 Defina o **layout** do grafo, ou seja, o algoritmo que determina a
 maneira como ele será desenhado. Escolhemos aqui um algortimo do tipo
-"minimização de energia". Na prática, ele plota os nós com mais conexões
-ou que ligam regiões da rede mais próximos ao centro, enquanto os demais
-nós ficam mais para a periferia. Por tabela, eventuais subgrupos de nós
-densamente conectados entre si acabam sendo destacados:
+"force-directed". Na prática, ele plota os nós com mais conexões ou que
+ligam regiões da rede mais próximos ao centro, enquanto os demais nós
+ficam mais para a periferia. Por tabela, eventuais subgrupos de nós
+densamente conectados entre si acabam sendo destacados. Fora isso, ele
+ainda minimiza o cruzamento de arestas:
 
 ```{r}
 layout <- layout_nicely(rede2)
@@ -552,6 +562,6 @@ Escreva sua resposta aqui.
 1.  [Morcego-vampiro](https://casadosmorcegos.wordpress.com/biologia/vampiros/)
 2.  [Bet hedging](https://en.wikipedia.org/wiki/Bet_hedging_(biology))
 3.  [Curso online sobre redes
-    ecológicas](https://www.coursera.org/learn/redesecologicas) (grauito
-    para alunos, funcionários e professores da USP e de outras
-    universidades parceiras)
+    ecológicas](https://www.coursera.org/learn/redesecologicas)
+    (gratuito para alunos, funcionários e professores da USP e de outras
+    universidades parceiras da Coursera)
