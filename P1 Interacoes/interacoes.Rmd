@@ -266,6 +266,9 @@ ui <- fluidPage(
       
       actionButton("clear_map", "Limpar Conexões"),
       
+      selectInput("remove_node_select", "Remover Nó:", choices = NULL),
+      actionButton("remove_node_btn", "Remover Nó Selecionado"),
+      
       actionButton("gerar", "Gerar Mapa Mental"),
       
       br(), br(),
@@ -289,7 +292,7 @@ server <- function(input, output, session) {
   
   observeEvent(input$add_node, {
     current_nodes <- nodes_list()
-    new_id <- nrow(current_nodes) + 1
+    new_id <- ifelse(nrow(current_nodes) == 0, 1, max(current_nodes$id) + 1)
     new_node <- data.frame(id = new_id, label = paste("Nó", new_id), stringsAsFactors = FALSE)
     nodes_list(rbind(current_nodes, new_node))
   })
@@ -326,6 +329,10 @@ server <- function(input, output, session) {
     )
   })
   
+  observe({
+    updateSelectInput(session, "remove_node_select", choices = nodes_list()$id)
+  })
+  
   observeEvent(input$confirm_edge, {
     from_node <- input$from
     to_node <- input$to
@@ -353,6 +360,17 @@ server <- function(input, output, session) {
   
   observeEvent(input$clear_map, {
     edges_list(data.frame(from = numeric(), to = numeric(), stringsAsFactors = FALSE))
+  })
+  
+  observeEvent(input$remove_node_btn, {
+    node_to_remove <- as.numeric(input$remove_node_select)
+    
+    if (!is.na(node_to_remove)) {
+      updated_nodes <- nodes_list()[nodes_list()$id != node_to_remove, ]
+      updated_edges <- edges_list()[!(edges_list()$from == node_to_remove | edges_list()$to == node_to_remove), ]
+      nodes_list(updated_nodes)
+      edges_list(updated_edges)
+    }
   })
   
   current_graph <- reactive({
@@ -387,7 +405,7 @@ server <- function(input, output, session) {
     content = function(file) {
       temp_html <- tempfile(fileext = ".html")
       saveWidget(current_graph(), temp_html, selfcontained = TRUE)
-      webshot(temp_html, file = file, vwidth = 1200, vheight = 900, zoom = 3, selector = "body", delay = 0.2, filetype = "pdf")
+      webshot(temp_html, file = file, vwidth = 1200, vheight = 900, zoom = 3, filetype = "pdf")
     }
   )
 }
