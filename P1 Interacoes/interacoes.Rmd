@@ -102,6 +102,11 @@ if(!require(here)){
   library(here)
 }
 
+if(!require(htmlwidgets)){
+  install.packages("htmlwidgets")
+  library(htmlwidgets)
+}
+
 if(!require(igraph)){
   install.packages("igraph")
   library(igraph)
@@ -121,6 +126,12 @@ if(!require(visNetwork)){
   install.packages("visNetwork")
   library(visNetwork)
 }
+
+if(!require(webshot2)){
+  install.packages("webshot2")
+  library(webshot2)
+}
+
 ```
 
 ## Elementos argumentativos
@@ -245,37 +256,37 @@ ui <- fluidPage(
     sidebarPanel(
       actionButton("add_node", "Adicionar Novo Nó"),
       
-      uiOutput("nodes_ui"),  # Interface dinâmica para rótulos dos nós
+      uiOutput("nodes_ui"),
       
       actionButton("add_edge", "Adicionar Conexão"),
       
-      uiOutput("edges_ui"),  # Interface dinâmica para conexões
+      uiOutput("edges_ui"),
       
       actionButton("remove_edge", "Remover Conexão"),
       
-      actionButton("clear_map", "Limpar Conexões"),  # Alterado para limpar apenas conexões
+      actionButton("clear_map", "Limpar Conexões"),
       
       actionButton("gerar", "Gerar Mapa Mental"),
       
-      downloadButton("save_map", "Salvar como PNG (300 DPI)")  # Botão para salvar o mapa
+      br(), br(),
+      downloadButton("download_png", "Exportar Mapa como PNG (Alta Resolução)"),
+      downloadButton("download_pdf", "Exportar Mapa como PDF")
     ),
     
     mainPanel(
-      visNetworkOutput("mapa", height = "600px"),  # Mapa mental interativo
+      visNetworkOutput("mapa", height = "600px"),
       
       h3("Detalhes do Nó Selecionado:"),
-      textOutput("node_details")  # Exibe detalhes do nó clicado
+      textOutput("node_details")
     )
   )
 )
 
 server <- function(input, output, session) {
-  # Inicializa com os rótulos padrão
   initial_labels <- c("Problema", "Pergunta", "Hipótese", "Previsão", "Premissa 1", "Premissa 2")
   nodes_list <- reactiveVal(data.frame(id = 1:6, label = initial_labels, stringsAsFactors = FALSE))
   edges_list <- reactiveVal(data.frame(from = numeric(), to = numeric(), stringsAsFactors = FALSE))
   
-  # Adiciona novo nó
   observeEvent(input$add_node, {
     current_nodes <- nodes_list()
     new_id <- nrow(current_nodes) + 1
@@ -283,7 +294,6 @@ server <- function(input, output, session) {
     nodes_list(rbind(current_nodes, new_node))
   })
   
-  # Atualiza rótulos dos nós
   observe({
     current_nodes <- nodes_list()
     updated_nodes <- current_nodes
@@ -296,7 +306,6 @@ server <- function(input, output, session) {
     nodes_list(updated_nodes)
   })
   
-  # Interface dinâmica para entrada dos rótulos dos nós
   output$nodes_ui <- renderUI({
     nodes <- nodes_list()
     tagList(
@@ -306,7 +315,6 @@ server <- function(input, output, session) {
     )
   })
   
-  # Interface dinâmica para adicionar conexões
   output$edges_ui <- renderUI({
     tagList(
       selectInput("from", "De:", choices = nodes_list()$id),
@@ -318,7 +326,6 @@ server <- function(input, output, session) {
     )
   })
   
-  # Adiciona uma nova conexão à lista de arestas
   observeEvent(input$confirm_edge, {
     from_node <- input$from
     to_node <- input$to
@@ -326,15 +333,12 @@ server <- function(input, output, session) {
     if (!is.null(from_node) && !is.null(to_node) && from_node != to_node) {
       current_edges <- edges_list()
       new_edge <- data.frame(from = as.numeric(from_node), to = as.numeric(to_node), stringsAsFactors = FALSE)
-      
-      # Evita conexões duplicadas
       if (!any(current_edges$from == new_edge$from & current_edges$to == new_edge$to)) {
         edges_list(rbind(current_edges, new_edge))
       }
     }
   })
   
-  # Remove conexão selecionada
   observeEvent(input$confirm_remove_edge, {
     current_edges <- edges_list()
     selected_edge <- strsplit(input$remove_edge_select, " -> ")[[1]]
@@ -342,27 +346,50 @@ server <- function(input, output, session) {
     if (length(selected_edge) == 2) {
       from <- as.numeric(selected_edge[1])
       to <- as.numeric(selected_edge[2])
-      
       updated_edges <- current_edges[!(current_edges$from == from & current_edges$to == to), ]
       edges_list(updated_edges)
     }
   })
   
-  # Limpa apenas as conexões, mantendo os nós
   observeEvent(input$clear_map, {
     edges_list(data.frame(from = numeric(), to = numeric(), stringsAsFactors = FALSE))
   })
   
-  # Gera o mapa mental com os rótulos atualizados
+  current_graph <- reactive({
+    visNetwork(nodes_list(), edges_list()) %>%
+      visNodes(shape = "box") %>%
+      visEdges(arrows = "to") %>%
+      visPhysics(enabled = TRUE) %>%
+      visInteraction(dragNodes = TRUE, dragView = TRUE, zoomView = TRUE)
+  })
+  
   observeEvent(input$gerar, {
     output$mapa <- renderVisNetwork({
-      visNetwork(nodes_list(), edges_list()) %>%
-        visNodes(shape = "box") %>%
-        visEdges(arrows = "to") %>%
-        visPhysics(enabled = TRUE) %>%
-        visInteraction(dragNodes = TRUE, dragView = TRUE, zoomView = TRUE)
+      current_graph()
     })
   })
+  
+  output$download_png <- downloadHandler(
+    filename = function() {
+      paste0("mapa_mental_", Sys.Date(), ".png")
+    },
+    content = function(file) {
+      temp_html <- tempfile(fileext = ".html")
+      saveWidget(current_graph(), temp_html, selfcontained = TRUE)
+      webshot(temp_html, file = file, vwidth = 1200, vheight = 900, zoom = 3)
+    }
+  )
+  
+  output$download_pdf <- downloadHandler(
+    filename = function() {
+      paste0("mapa_mental_", Sys.Date(), ".pdf")
+    },
+    content = function(file) {
+      temp_html <- tempfile(fileext = ".html")
+      saveWidget(current_graph(), temp_html, selfcontained = TRUE)
+      webshot(temp_html, file = file, vwidth = 1200, vheight = 900, zoom = 3, selector = "body", delay = 0.2, filetype = "pdf")
+    }
+  )
 }
 
 shinyApp(ui, server)
