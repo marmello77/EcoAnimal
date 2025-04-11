@@ -54,9 +54,9 @@ Atualize o [R](https://www.r-project.org) e o [RStudio](https://posit.co) instal
 
 2.  Para fazer as atividades da prática escolhida, primeiro abra a respectiva pasta e familiarize-se com os arquivos contidos nela;
 
-3.  Depois, abra o respectivo tutorial (arquivo de R notebook em formato `RMD`), mude para o modo `Visual`, e dê lida geral nele, a fim de entender a proposta da prática;
+3.  Depois, abra o respectivo tutorial (arquivo de R notebook em formato `RMD`), mude para o modo `Visual` e dê uma lida geral nele, a fim de entender a proposta da prática;
 
-4.  Quando houver, examine na mesma pasta os arquivos `XLSX`, que contêm a versão completa dos dados e metadados, fornecendo informações valiosas sobre seu contexto. Os arquivos `CSV` e `TXT` contêm apenas os dados processados ou simplificados que serão usados diretamente nas análises;
+4.  Quando houver, examine na mesma pasta o arquivo `XLSX`, que contêm a versão completa dos dados e metadados, fornecendo informações valiosas sobre seu contexto. Os arquivos `CSV` e `TXT` que eventualmente houver na pasta contêm apenas os dados processados ou simplificados que serão usados diretamente nas análises;
 
 5.  Por fim, faça as análises, simplesmente seguindo os passos do tutorial na ordem proposta e clicando nos botões de ação indicados.
 
