@@ -8,7 +8,7 @@ E-mail: [marmello\@usp.br](mailto:marmello@usp.br){.email}.
 
 Publicado originalmente em 02/mai/2022 e atualizado constantemente.
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15091365.svg)](https://doi.org/10.5281/zenodo.15091365)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15627704.svg)](https://doi.org/10.5281/zenodo.15627704)
 
 Feito em R version 4.5.0 (2025-04-11) -- "How About a Twenty-Six"
 
