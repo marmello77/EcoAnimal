@@ -1,6 +1,6 @@
 # EcoAnimal
 
-Códigos, dados e tutoriais usados nas práticas da disciplina "**Tópicos Avançados em Ecologia Animal**" ([BIE0315](https://uspdigital.usp.br/jupiterweb/obterDisciplina?nomdis=&sgldis=bie0315)), oferecida para o núcleo avançado do curso de graduação em Ciências Biológicas do Instituto de Biociências, Universidade de São Paulo. A disciplina é ministrada pelos professores [Marco A. R. Mello](http://lattes.cnpq.br/7861179238186694) e [Francisco V. Dénes](http://lattes.cnpq.br/5139370160420533).
+Códigos, dados e tutoriais usados nas práticas da disciplina "**Tópicos Avançados em Ecologia Animal**" ([BIE0315](https://uspdigital.usp.br/jupiterweb/obterDisciplina?nomdis=&sgldis=bie0315)), oferecida para o núcleo avançado do curso de graduação em Ciências Biológicas do Instituto de Biociências, Universidade de São Paulo. A disciplina é ministrada pelos professores [Marco A. R. Mello](http://lattes.cnpq.br/7861179238186694) e [Isabel A. Santos](http://lattes.cnpq.br/4429236648294115).
 
 Laboratório de Síntese Ecológica ([SintECO](https://marcomellolab.wordpress.com)).
 
@@ -10,7 +10,7 @@ Publicado originalmente em 02/mai/2022 e atualizado constantemente.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15627704.svg)](https://doi.org/10.5281/zenodo.15627704)
 
-Feito em R version 4.5.0 (2025-04-11) -- "How About a Twenty-Six"
+Feito em R version 4.5.2 (2025-10-31) -- "[Not] Part in a Rumble"
 
 ## Avisos legais
 

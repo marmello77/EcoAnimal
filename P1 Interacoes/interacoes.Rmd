@@ -87,29 +87,9 @@ Science](https://doi.org/10.1126/science.adg1464)).
 3.  Verifique e instale os pacotes necessários:
 
 ```{r}
-if(!require(ggplot2)){
-  install.packages("ggplot2")
-  library(ggplot2)
-}
-
-if(!require(ggraph)){
-  install.packages("ggraph")
-  library(ggraph)
-}
-
 if(!require(here)){
   install.packages("here")
   library(here)
-}
-
-if(!require(htmlwidgets)){
-  install.packages("htmlwidgets")
-  library(htmlwidgets)
-}
-
-if(!require(igraph)){
-  install.packages("igraph")
-  library(igraph)
 }
 
 if(!require(rstudioapi)){
@@ -120,16 +100,6 @@ if(!require(rstudioapi)){
 if(!require(shiny)){
   install.packages("shiny")
   library(shiny)
-}
-
-if(!require(visNetwork)){
-  install.packages("visNetwork")
-  library(visNetwork)
-}
-
-if(!require(webshot2)){
-  install.packages("webshot2")
-  library(webshot2)
 }
 
 ```
@@ -238,186 +208,17 @@ Escreva sua resposta aqui.
 
 ### Desenhando o mapa mental
 
-Limpe os objetos criados anteriormente:
+Lembra das leituras adicionais disponíveis no moodle, que tratavam de
+método científico e mapas mentais?
 
-```{r}
-rm(list= ls())
-```
+Agora chegou a hora de elaborar um o mapa mental, com base nos elementos
+argumentativos que você identificou no texto. Use o programa de sua
+preferência (editor gráfico, editor de slides etc.), offline ou online,
+seja em um computador ou tablet.
 
-Agora desenhe o mapa mental usando uma interface gráfica. Ao terminar,
-não feche a janela que se abriu, pois ainda precisará dela para o
-próximo passo:
-
-```{r}
-ui <- fluidPage(
-  titlePanel("Mapa Mental"),
-  
-  sidebarLayout(
-    sidebarPanel(
-      actionButton("add_node", "Adicionar Novo Nó"),
-      
-      uiOutput("nodes_ui"),
-      
-      actionButton("add_edge", "Adicionar Conexão"),
-      
-      uiOutput("edges_ui"),
-      
-      actionButton("remove_edge", "Remover Conexão"),
-      
-      actionButton("clear_map", "Limpar Conexões"),
-      
-      selectInput("remove_node_select", "Remover Nó:", choices = NULL),
-      actionButton("remove_node_btn", "Remover Nó Selecionado"),
-      
-      actionButton("gerar", "Gerar Mapa Mental"),
-      
-      br(), br(),
-      downloadButton("download_png", "Exportar Mapa como PNG (Alta Resolução)"),
-      downloadButton("download_pdf", "Exportar Mapa como PDF")
-    ),
-    
-    mainPanel(
-      visNetworkOutput("mapa", height = "600px"),
-      
-      h3("Detalhes do Nó Selecionado:"),
-      textOutput("node_details")
-    )
-  )
-)
-
-server <- function(input, output, session) {
-  initial_labels <- c("Problema", "Pergunta", "Hipótese", "Previsão", "Premissa 1", "Premissa 2")
-  nodes_list <- reactiveVal(data.frame(id = 1:6, label = initial_labels, stringsAsFactors = FALSE))
-  edges_list <- reactiveVal(data.frame(from = numeric(), to = numeric(), stringsAsFactors = FALSE))
-  
-  observeEvent(input$add_node, {
-    current_nodes <- nodes_list()
-    new_id <- ifelse(nrow(current_nodes) == 0, 1, max(current_nodes$id) + 1)
-    new_node <- data.frame(id = new_id, label = paste("Nó", new_id), stringsAsFactors = FALSE)
-    nodes_list(rbind(current_nodes, new_node))
-  })
-  
-  observe({
-    current_nodes <- nodes_list()
-    updated_nodes <- current_nodes
-    for (i in 1:nrow(current_nodes)) {
-      input_id <- paste0("node_", current_nodes$id[i])
-      if (!is.null(input[[input_id]])) {
-        updated_nodes$label[i] <- input[[input_id]]
-      }
-    }
-    nodes_list(updated_nodes)
-  })
-  
-  output$nodes_ui <- renderUI({
-    nodes <- nodes_list()
-    tagList(
-      lapply(1:nrow(nodes), function(i) {
-        textInput(paste0("node_", nodes$id[i]), label = paste("Rótulo do Nó", nodes$id[i]), value = nodes$label[i])
-      })
-    )
-  })
-  
-  output$edges_ui <- renderUI({
-    tagList(
-      selectInput("from", "De:", choices = nodes_list()$id),
-      selectInput("to", "Para:", choices = nodes_list()$id),
-      actionButton("confirm_edge", "Confirmar Conexão"),
-      
-      selectInput("remove_edge_select", "Remover Conexão:", choices = paste(edges_list()$from, "->", edges_list()$to)),
-      actionButton("confirm_remove_edge", "Remover")
-    )
-  })
-  
-  observe({
-    updateSelectInput(session, "remove_node_select", choices = nodes_list()$id)
-  })
-  
-  observeEvent(input$confirm_edge, {
-    from_node <- input$from
-    to_node <- input$to
-    
-    if (!is.null(from_node) && !is.null(to_node) && from_node != to_node) {
-      current_edges <- edges_list()
-      new_edge <- data.frame(from = as.numeric(from_node), to = as.numeric(to_node), stringsAsFactors = FALSE)
-      if (!any(current_edges$from == new_edge$from & current_edges$to == new_edge$to)) {
-        edges_list(rbind(current_edges, new_edge))
-      }
-    }
-  })
-  
-  observeEvent(input$confirm_remove_edge, {
-    current_edges <- edges_list()
-    selected_edge <- strsplit(input$remove_edge_select, " -> ")[[1]]
-    
-    if (length(selected_edge) == 2) {
-      from <- as.numeric(selected_edge[1])
-      to <- as.numeric(selected_edge[2])
-      updated_edges <- current_edges[!(current_edges$from == from & current_edges$to == to), ]
-      edges_list(updated_edges)
-    }
-  })
-  
-  observeEvent(input$clear_map, {
-    edges_list(data.frame(from = numeric(), to = numeric(), stringsAsFactors = FALSE))
-  })
-  
-  observeEvent(input$remove_node_btn, {
-    node_to_remove <- as.numeric(input$remove_node_select)
-    
-    if (!is.na(node_to_remove)) {
-      updated_nodes <- nodes_list()[nodes_list()$id != node_to_remove, ]
-      updated_edges <- edges_list()[!(edges_list()$from == node_to_remove | edges_list()$to == node_to_remove), ]
-      nodes_list(updated_nodes)
-      edges_list(updated_edges)
-    }
-  })
-  
-  current_graph <- reactive({
-    visNetwork(nodes_list(), edges_list()) %>%
-      visNodes(shape = "box") %>%
-      visEdges(arrows = "to") %>%
-      visPhysics(enabled = TRUE) %>%
-      visInteraction(dragNodes = TRUE, dragView = TRUE, zoomView = TRUE)
-  })
-  
-  observeEvent(input$gerar, {
-    output$mapa <- renderVisNetwork({
-      current_graph()
-    })
-  })
-  
-  output$download_png <- downloadHandler(
-    filename = function() {
-      paste0("mapa_mental_", Sys.Date(), ".png")
-    },
-    content = function(file) {
-      temp_html <- tempfile(fileext = ".html")
-      saveWidget(current_graph(), temp_html, selfcontained = TRUE)
-      webshot(temp_html, file = file, vwidth = 1200, vheight = 900, zoom = 3)
-    }
-  )
-  
-  output$download_pdf <- downloadHandler(
-    filename = function() {
-      paste0("mapa_mental_", Sys.Date(), ".pdf")
-    },
-    content = function(file) {
-      temp_html <- tempfile(fileext = ".html")
-      saveWidget(current_graph(), temp_html, selfcontained = TRUE)
-      webshot(temp_html, file = file, vwidth = 1200, vheight = 900, zoom = 3, filetype = "pdf")
-    }
-  )
-}
-
-shinyApp(ui, server)
-
-```
-
-### Exportando o mapa mental
-
-Exporte o seu mapa mental como uma figura, usando o botão disponível na
-janela interativa.
+Depois de pronto, exporte o seu mapa mental como uma figura, de
+preferência JPG. Você deverá anexar também essa figura ao entregar o
+texto do relatório via moodle.
 
 ## Operacionalização
 
