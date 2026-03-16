@@ -249,7 +249,8 @@ nas análises do estudo.
 
 Felizmente, os autores disponibilizaram os dados processados em um
 suplemento do artigo. Confira o arquivo `dados.xlsx`, no subdiretório
-`dados`.
+`dados`. Leia especialmente os metadados e se familiarize com as
+variáveis incluidas no arquivo.
 
 Importe os dados para dentro de um **objeto** **de R**. Vamos começar
 usando apenas uma das **planilhas** disponíveis dentro do arquivo XLSX
@@ -312,7 +313,8 @@ hipótese de trabalho. Vamos por partes.
 
 De quais **variáveis operacionais** precisamos para reproduzir a
 **Figura 2a**,especificamente? Localize-a no objeto criado com os dados
-importados, checando todas as variáveis contidas nele:
+importados, checando todas as variáveis contidas nele. Confira também os
+metadados do arquivo original em formato Excel (`dados.xlsx`).
 
 ```{r}
 colnames(dados1)
@@ -362,7 +364,8 @@ ggplot(dados2, aes(x = LEN, y = Valor, color = Medida)) +
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
-O gráfico ficou exatamente igual ao do artigo? Justifique sua resposta.
+O gráfico que plotamos ficou mesmo igual ao do artigo? Justifique sua
+resposta.
 
 ```{=html}
 <style>
