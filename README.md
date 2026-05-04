@@ -10,7 +10,7 @@ Publicado originalmente em 02/mai/2022 e atualizado constantemente.
 
 [![](https://zenodo.org/badge/DOI/10.5281/zenodo.18757029.svg)](https://doi.org/10.5281/zenodo.18757029)
 
-Feito em R version 4.5.2 (2025-10-31) -- "[Not] Part in a Rumble"
+Feito em R version 4.6.0 (2026-04-24) -- "Because it was There".
 
 ## Avisos legais
 
