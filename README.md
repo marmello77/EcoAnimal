@@ -8,7 +8,7 @@ E-mail: [marmello\@usp.br](mailto:marmello@usp.br){.email}.
 
 Publicado originalmente em 02/mai/2022 e atualizado constantemente.
 
-[![](https://zenodo.org/badge/DOI/10.5281/zenodo.18757029.svg)](https://doi.org/10.5281/zenodo.18757029)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20022418.svg)](https://doi.org/10.5281/zenodo.20022418)
 
 Feito em R version 4.6.0 (2026-04-24) -- "Because it was There".
 
