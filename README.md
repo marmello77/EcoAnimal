@@ -4,7 +4,7 @@ Códigos, dados e tutoriais usados nas práticas da disciplina "**Tópicos Avan�
 
 Laboratório de Síntese Ecológica ([SintECO](https://marcomellolab.wordpress.com)).
 
-E-mail: [marmello\@usp.br](mailto:marmello@usp.br){.email}.
+E-mail: [marmello\@usp.br](mailto:marmello@usp.br).
 
 Publicado originalmente em 02/mai/2022 e atualizado constantemente.
 
